@@ -44,7 +44,7 @@ class HarikerjapuasaController extends Controller
 
         // Simpan data ke dalam database
         Tjamkerja::create($validatedData);
-        
+
         // dd($validatedData);
         return redirect()->route('harikerjapuasa.index')->with('success', 'Data berhasil disimpan.');
     }
@@ -94,8 +94,15 @@ class HarikerjapuasaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tjamkerja $tjamkerja)
+    public function destroy($id)
     {
         //
+        $harikerjapuasa = Tjamkerja::findOrFail($id);
+        $harikerjapuasa->delete();
+
+        return redirect()
+            ->route('harikerjapuasa.index')
+            ->with('success', 'Jam kerja berhasil diperbarui.');
     }
 }
+
