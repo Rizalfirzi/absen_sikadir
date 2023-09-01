@@ -94,8 +94,15 @@ class HarikerjapuasaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tjamkerja $tjamkerja)
+    public function destroy($id)
     {
         //
+        $harikerjapuasa = Tjamkerja::findOrFail($id);
+        $harikerjapuasa->delete();
+
+        return redirect()
+            ->route('harikerjapuasa.index')
+            ->with('success', 'Jam kerja berhasil diperbarui.');
     }
 }
+

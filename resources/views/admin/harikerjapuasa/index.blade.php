@@ -44,12 +44,12 @@
                     <td>{{ $hkp->jam_keluar }}</td>
                     <td>{{ $hkp->ket }}</td>
                     <td>
-                        <form action="" method="POST">
+                        <a href="{{ route('harikerjapuasa.edit', $hkp->id) }}" class="btn btn-sm btn-primary">
+                            Edit
+                        </a>
+                        <form action="{{ route('harikerjapuasa.destroy', $hkp->id) }}" method="POST" class="d-inline">
 
                             <center>
-                            <a href="{{ route('harikerjapuasa.edit', $hkp->id) }}" class="btn btn-sm btn-primary">
-                                Edit
-                            </a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger"

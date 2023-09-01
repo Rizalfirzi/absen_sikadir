@@ -54,8 +54,9 @@ Route::middleware('auth.route')->group(function () {
     // route SkpController
     Route::resource('skp', SkpController::class);
     Route::get('/get-satker/{direktoratId}', [SkpController::class, 'getSatker']);
+    Route::get('/edit-skp/{direktoratId}', [SkpController::class, 'editSkp']);
     Route::post('/skp', [SkpController::class, 'filter'])->name('skp.filter');
-    Route::post('/skp/update/{id}', [SkpController::class, 'update'])->name('skp.update');
+    Route::post('/simpan_skp', [SkpController::class, 'simpanSkp'])->name('simpan_skp');
 
     // route TukinController
     Route::resource('tukin', TukinController::class);

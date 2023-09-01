@@ -24,7 +24,7 @@ class SkpController extends Controller
             $years[] = $year;
         }
         $direktorats = Direktorat::all();
-        $tahun = 2022;
+        $tahun = 2021;
 
         $skps = DB::table('skp')
             ->join('t_pegawai', 'skp.nip', '=', 't_pegawai.nip')
@@ -48,6 +48,13 @@ class SkpController extends Controller
         $satkers = Satker::where('direktorat_id', $direktoratId)->get();
 
         return response()->json($satkers);
+    }
+
+    public function editSkp($direktoratId)
+    {
+        $edits = Satker::where('direktorat_id', $direktoratId)->get();
+
+        return response()->json($edits);
     }
 
     public function filter(Request $request)
