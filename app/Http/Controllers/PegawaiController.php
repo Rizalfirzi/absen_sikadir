@@ -72,6 +72,7 @@ class PegawaiController extends Controller
 
         $pegawai = $pegawaiQuery
             ->orderBy('t_pegawai.satker_id')
+            ->orderBy('t_pegawai.nip')
             ->orderBy('t_pegawai.nama', 'asc')
             ->get();
 

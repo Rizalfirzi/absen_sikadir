@@ -9,6 +9,7 @@ use App\Http\Controllers\TukinController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LiburlokalController;
+use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\HargajabatanController;
 use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
@@ -73,5 +74,9 @@ Route::middleware('auth.route')->group(function () {
     Route::resource('izin', IzinController::class);
     Route::post('/izin', [IzinController::class, 'filter'])->name('izin.filter');
 
-
+    // route konfirmasi
+    Route::resource('konfirmasi', PermintaanController::class);
+    Route::post('/konfirmasi', [PermintaanController::class, 'filter'])->name('konfirmasi.filter');
+    Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
+    Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
 });

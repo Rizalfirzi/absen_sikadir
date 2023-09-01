@@ -167,3 +167,8 @@
 }
 
 </style>
+<style>
+    .dotted-line {
+        border-top: 1px dotted #7d7b7b; /* Ganti #000 dengan warna yang diinginkan */
+    }
+</style>

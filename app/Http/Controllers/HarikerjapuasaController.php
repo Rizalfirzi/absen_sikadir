@@ -33,7 +33,7 @@ class HarikerjapuasaController extends Controller
     public function store(Request $request)
     {
          // Validasi data input jika diperlukan
-        $validatedData = $request->validate([
+         $validatedData = $request->validate([
             'hari' => 'required',
             'tgl_awal' => 'required|date',
             'tgl_akhir' => 'required|date',
