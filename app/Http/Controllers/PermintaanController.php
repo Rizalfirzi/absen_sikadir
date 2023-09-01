@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Izin;
-use Illuminate\Http\Request;
-use App\Models\Direktorat;
 use App\Models\Satker;
+use App\Models\Direktorat;
+use App\Models\Permintaan;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class IzinController extends Controller
+class PermintaanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +18,8 @@ class IzinController extends Controller
     {
         //
         $direktorats = Direktorat::all();
-        return view('admin.izin.index', compact('direktorats'));
+
+        return view('admin.konfirmasi_izin.index', compact('direktorats'));
     }
 
     public function getSatker($direktoratId)
@@ -31,27 +33,23 @@ class IzinController extends Controller
         $satkerId = $request->input('satker');
         $direktoratId = $request->input('direktorat');
         $tipePegawai = $request->input('tipe_pegawai');
-        $awal = $request->input('awal');
-        $akhir = $request->input('akhir');
 
         $direktorats = Direktorat::all();
 
         $filteredData = DB::table('t_pegawai')
             ->join('izin', 't_pegawai.nip', '=', 'izin.nik')
-            ->where(function ($query) use ($satkerId, $tipePegawai, $awal, $akhir) {
+            ->where(function ($query) use ($satkerId, $tipePegawai) {
                 $query
-                    ->where('t_pegawai.satker_id', $satkerId) 
+                    ->where('t_pegawai.satker_id', $satkerId)
                     ->where('t_pegawai.status', $tipePegawai)
-                    ->whereBetween('izin.tanggal', [$awal, $akhir])
-                    ->where('izin.st', '1')
+                    ->where('izin.st', '0')
                     ->where('izin.deleted', '0');
             })
-            ->orWhere(function ($query) use ($satkerId, $tipePegawai, $awal, $akhir) {
+            ->orWhere(function ($query) use ($satkerId, $tipePegawai) {
                 $query
                     ->where('t_pegawai.ppk_id', $satkerId)
                     ->where('t_pegawai.status', $tipePegawai)
-                    ->whereBetween('izin.tanggal', [$awal, $akhir])
-                    ->where('izin.st', '1')
+                    ->where('izin.st', '0')
                     ->where('izin.deleted', '0');
             });
 
@@ -82,12 +80,27 @@ class IzinController extends Controller
             $satkerName = 'All Satker';
         }
 
-        $filteredData = $filteredData
+        $filtered = $filteredData
             ->orderBy('t_pegawai.nama', 'asc')
             ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 't_pegawai.nama')
             ->get();
 
-        return view('admin.izin.filtered', compact('filteredData', 'direktorats', 'satkerName'));
+        return view('admin.konfirmasi_izin.filtered', compact('filtered', 'direktorats', 'satkerName'));
+    }
+
+    public function getKonfirmasiNotification(Request $request)
+    {
+        $notif = DB::table('t_pegawai')
+        ->join('izin', 't_pegawai.nip', '=', 'izin.nik')
+        ->where(function ($query) {
+            $query
+                ->where('izin.st', '0')
+                ->where('izin.deleted', '0')
+                ->where('t_pegawai.aktif', 'Aktif');
+        })
+        ->count();
+        // dd($notif);
+        return response()->json(['notif' => $notif]);
     }
     /**
      * Show the form for creating a new resource.
@@ -95,14 +108,6 @@ class IzinController extends Controller
     public function create()
     {
         //
-        $employees = DB::table('t_pegawai')
-            ->select('nip', 'nama')
-            ->where('aktif', '=', 'Aktif')
-            ->where('status', '=', '1')
-            ->orderBy('nama', 'asc')
-            ->get();
-
-        return view('admin.izin.create', compact('employees'));
     }
 
     /**
@@ -116,7 +121,7 @@ class IzinController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Izin $izin)
+    public function show(Permintaan $permintaan)
     {
         //
     }
@@ -124,7 +129,7 @@ class IzinController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Izin $izin)
+    public function edit(Permintaan $permintaan)
     {
         //
     }
@@ -132,7 +137,7 @@ class IzinController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Izin $izin)
+    public function update(Request $request, Permintaan $permintaan)
     {
         //
     }
@@ -140,7 +145,7 @@ class IzinController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Izin $izin)
+    public function destroy(Permintaan $permintaan)
     {
         //
     }

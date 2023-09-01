@@ -49,7 +49,7 @@
 
                 @if (Auth::user()->roles[0]->name == 'SUPER ADMIN')
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{'/user'}}" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ '/user' }}" aria-expanded="false">
                             <span>
                                 <i class="ti ti-user"></i>
                             </span>
@@ -59,7 +59,7 @@
                 @endif
                 <hr>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('pegawai.index')}}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('pegawai.index') }}" aria-expanded="false">
                         <span>
                             <i class="fa fa-users fa-fw"></i>
                         </span>
@@ -85,7 +85,7 @@
                 @if (Auth::user()->roles[0]->name == 'SUPER ADMIN')
                     <hr>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{route('hargajabatan.index')}}" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('hargajabatan.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-list-alt fa-fw"></i>
                             </span>
@@ -93,7 +93,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{route('harikerjapuasa.index')}}" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('harikerjapuasa.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-list-alt fa-fw"></i>
                             </span>
@@ -101,7 +101,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="{{route('libur.index')}}" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('libur.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-calendar fa-fw"></i>
                             </span>
@@ -110,7 +110,7 @@
                     </li>
                 @endif
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('skp.index')}}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('skp.index') }}" aria-expanded="false">
                         <span>
                             <i class="fa fa-trophy fa-fw"></i>
                         </span>
@@ -118,7 +118,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('liburlokal.index')}}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('liburlokal.index') }}" aria-expanded="false">
                         <span>
                             <i class="fa fa-calendar fa-fw"></i>
                         </span>
@@ -127,7 +127,7 @@
                 </li>
                 <hr>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('izin.index')}}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('izin.index') }}" aria-expanded="false">
                         <span>
                             <i class="fa fa-close fa-fw"></i>
                         </span>
@@ -135,11 +135,14 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('konfirmasi.index') }}" aria-expanded="false"
+                        style="position: relative;">
                         <span>
                             <i class="fa fa-envelope-o fa-fw"></i>
                         </span>
                         <b><span class="hide-menu">PERMINTAAN <br>BERHALANGAN <br>HADIR BARU</span></b>
+                        <span class="badge badge-pill badge-danger" id="notification-badge"
+                            style="background-color: red; position: absolute; top: 1px; right: 1px;">0</span>
                     </a>
                 </li>
                 <hr>
@@ -152,7 +155,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{route('tukin.index')}}" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('tukin.index') }}" aria-expanded="false">
                         <span>
                             <i class="fa fa-files-o fa-fw"></i>
                         </span>
@@ -274,7 +277,7 @@
                     </li>
                     <hr>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('pegawai.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-users fa-fw"></i>
                             </span>
@@ -299,7 +302,7 @@
                     </li>
                     <hr>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('skp.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-trophy fa-fw"></i>
                             </span>
@@ -307,7 +310,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('liburlokal.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-calendar fa-fw"></i>
                             </span>
@@ -316,7 +319,7 @@
                     </li>
                     <hr>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-forms.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('izin.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-close fa-fw"></i>
                             </span>
@@ -324,7 +327,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./ui-typography.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('konfirmasi.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-envelope-o fa-fw"></i>
                             </span>
@@ -372,3 +375,16 @@
         <!-- End Sidebar scroll-->
     </aside>
 @endif
+
+<script>
+    // Menggunakan JavaScript untuk mengambil data notifikasi dari endpoint
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("{{ route('get.notifications') }}")
+            .then(response => response.json())
+            .then(data => {
+                if (data.notif > 0) {
+                    document.getElementById("notification-badge").textContent = data.notif;
+                }
+            });
+    });
+</script>

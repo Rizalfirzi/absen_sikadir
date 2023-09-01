@@ -9,6 +9,7 @@ use App\Http\Controllers\TukinController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LiburlokalController;
+use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\HargajabatanController;
 use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
@@ -54,7 +55,7 @@ Route::middleware('auth.route')->group(function () {
     Route::resource('skp', SkpController::class);
     Route::get('/get-satker/{direktoratId}', [SkpController::class, 'getSatker']);
     Route::post('/skp', [SkpController::class, 'filter'])->name('skp.filter');
-    Route::post('/simpan_skp', [SkpController::class, 'simpanSkp'])->name('simpan_skp');
+    Route::post('/skp/update/{id}', [SkpController::class, 'update'])->name('skp.update');
 
     // route TukinController
     Route::resource('tukin', TukinController::class);
@@ -71,5 +72,9 @@ Route::middleware('auth.route')->group(function () {
     Route::resource('izin', IzinController::class);
     Route::post('/izin', [IzinController::class, 'filter'])->name('izin.filter');
 
-
+    // route konfirmasi
+    Route::resource('konfirmasi', PermintaanController::class);
+    Route::post('/konfirmasi', [PermintaanController::class, 'filter'])->name('konfirmasi.filter');
+    Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
+    Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
 });

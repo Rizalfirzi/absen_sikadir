@@ -101,22 +101,6 @@ class SkpController extends Controller
 
         return view('admin.skp.filtered', compact('results', 'direktorats', 'satkerOptions', 'years'));
     }
-
-    public function simpanSKP(Request $request)
-    {
-        $this->validate($request, [
-            'ket' => 'required'
-        ]);
-
-        // Simpan data atau lakukan tindakan lain sesuai kebutuhan
-        // Misalnya, menyimpan data keterangan pada database
-        // $nip = $request->input('nip');
-        // $ket = $request->input('ket');
-        // ... lakukan tindakan sesuai kebutuhan ...
-
-        // Mengembalikan respons ke JavaScript
-        return response()->json(['message' => 'Data berhasil disimpan']);
-    }
     /**
      * Show the form for creating a new resource.
      */
@@ -152,9 +136,16 @@ class SkpController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, skp $skp)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nilai' => 'required'
+        ]);
+        $skp = Skp::findOrFail($id);
+        $skp->nilai = $request->input('nilai');
+        $skp->save();
+
+        return response()->json(['message' => 'Data updated successfully']);
     }
 
     /**

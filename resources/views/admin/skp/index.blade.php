@@ -74,23 +74,13 @@
                             <td>{{ $data->tahun }}</td>
                             <td>{{ $data->persentase }}</td>
                             <td id="ket_{{ $index }}">
-                                @if ($data->nilai >= 100)
-                                    Sangat Baik
-                                @elseif ($data->nilai >= 76 && $data->nilai <= 90)
-                                    Baik
-                                @elseif ($data->nilai >= 61 && $data->nilai <= 75)
-                                    Butuh Perbaikan
-                                @elseif ($data->nilai >= 51 && $data->nilai <= 60)
-                                    Kurang
-                                @else
-                                    Sangat Kurang
-                                @endif
+                                {{ $data->nilai }}
                             </td>
                             <td>
-                                <button id="buttonE{{ $index }}"  class="btn btn-sm btn-primary"
+                                <button id="buttonE{{ $index }}" class="btn btn-sm btn-primary"
                                     onclick="EditSKP({{ $index }})">Edit</button>
                                 <button id="buttonS{{ $index }}" onclick="SimpanSKP({{ $index }})"
-                                    style="display: none;" class="btn btn-sm btn-primary" >Simpan</button>
+                                    style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
                                 <button id="buttonC{{ $index }}" onclick="CancelSKP({{ $index }})"
                                     style="display: none;" class="btn btn-sm btn-danger">Cancel</button>
                             </td>
@@ -99,86 +89,65 @@
                 </tbody>
             </table>
         </div>
+        <script>
+            function EditSKP(str) {
+                $('#buttonE' + str).hide();
+                $('#buttonS' + str).show();
+                $('#buttonC' + str).show();
 
-        {{-- <script>
-            $(document).ready(function() {
-                $(".edit-button").click(function() {
-                    var index = $(this).data("index");
-                    editSKP(index);
-                });
+                var nilaiCell = $('#ket_' + str);
+                var nilai = nilaiCell.text().trim();
 
-                $(".save-button").click(function() {
-                    var index = $(this).data("index");
-                    simpanSKP(index);
-                });
+                var selectOptions = `
+                    <select id="nilai-select-${str}">
+                        <option value='-1'>- Pilih Predikat -</option>
+                        <option value='Sangat Baik'>Sangat Baik</option>
+                        <option value='Baik'>Baik</option>
+                        <option value='Butuh Perbaikan'>Butuh Perbaikan</option>
+                        <option value='Kurang'>Kurang</option>
+                        <option value='Sangat Kurang'>Sangat Kurang</option>
+                    </select>
+                `;
 
-                $(".cancel-button").click(function() {
-                    var index = $(this).data("index");
-                    cancelSKP(index);
-                });
-            });
-
-            function editSKP(index) {
-                var persentase = $("#persentase_" + index).text(); // Ambil persentase
-                var selectElement = `
-            <select name='ket${index}' id='ket${index}'>
-                <option value='-1'>- Pilih Predikat -</option>
-                <option value='Sangat Baik'>Sangat Baik</option>
-                <option value='Baik'>Baik</option>
-                <option value='Butuh Perbaikan'>Butuh Perbaikan</option>
-                <option value='Kurang'>Kurang</option>
-                <option value='Sangat Kurang'>Sangat Kurang</option>
-            </select>`;
-                $("#ket_" + index).html(selectElement);
-                $(`#ket${index}`).val(getPredikatFromPersentase(persentase)); // Set predikat sesuai presentase
-                $(`.edit-button[data-index="${index}"]`).hide();
-                $(`.save-button[data-index="${index}"]`).show();
-                $(`.cancel-button[data-index="${index}"]`).show();
+                nilaiCell.empty().append(selectOptions);
+                $('#nilai-select-' + str).val(nilai);
             }
 
-            function getPredikatFromPersentase(persentase) {
-                if (persentase >= 100) {
-                    return "Sangat Baik";
-                } else if (persentase >= 76 && persentase <= 90) {
-                    return "Baik";
-                } else if (persentase >= 61 && persentase <= 75) {
-                    return "Butuh Perbaikan";
-                } else if (persentase >= 51 && persentase <= 60) {
-                    return "Kurang";
-                } else {
-                    return "Sangat Kurang";
-                }
-            }
+            function SimpanSKP(str) {
+                var id = {{ $skps[$index]->id }};
+                var newValue = $('#nilai-select-' + str).val();
 
-            function simpanSKP(index) {
-                var ket = $(`select[name="ket${index}"]`).val();
-                // Lakukan permintaan AJAX ke server
                 $.ajax({
-                    type: "PATCH",
-                    url: `{{ route('simpan_skp', ['id' => 'REPLACE_WITH_SKP_ID']) }}`,
+                    type: 'POST',
+                    url: '{{ route("skp.update", ["id" => "_id_"]) }}'.replace('_id_', id),
                     data: {
                         _token: '{{ csrf_token() }}',
-                        ket: ket,
-                        id: id
+                        nilai: newValue
                     },
-                    success: function(response) {
-                        $(`.save-button[data-index="${index}"]`).hide();
-                        $(`.cancel-button[data-index="${index}"]`).hide();
-                        $(`.edit-button[data-index="${index}"]`).show();
-                        $(`#ket_${index}`).html(`<span class="predikat">${ket}</span>`);
+                    success: function (response) {
+                        $('#ket_' + str).text(newValue);
+                        $('#buttonE' + str).show();
+                        $('#buttonS' + str).hide();
+                        $('#buttonC' + str).hide();
+                    },
+                    error: function (error) {
+                        console.error(error);
                     }
                 });
             }
 
-            function cancelSKP(index) {
-                var ket = $(`#ket_${index} .predikat`).text();
-                $(`#ket_${index}`).html(`<span class="predikat">${ket}</span>`);
-                $(`.save-button[data-index="${index}"]`).hide();
-                $(`.cancel-button[data-index="${index}"]`).hide();
-                $(`.edit-button[data-index="${index}"]`).show();
+            function CancelSKP(str) {
+                $('#buttonE' + str).show();
+                $('#buttonS' + str).hide();
+                $('#buttonC' + str).hide();
+
+                var nilaiCell = $('#ket_' + str);
+                var nilai = nilaiCell.text().trim();
+                nilaiCell.text(nilai);
             }
-        </script> --}}
-        <script>
+        </script>
+
+        {{-- <script>
             function EditSKP(index) {
                 var ketElement = $("#ket_" + index);
                 var ket = ketElement.text();
@@ -210,7 +179,7 @@
                 // Lakukan permintaan AJAX ke server
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('simpan_skp') }}",
+                    url: "{{ route('') }}",
                     data: {
                         _token: '{{ csrf_token() }}',
                         nip: nip,
@@ -240,5 +209,5 @@
                 $(`#buttonC${index}`).hide();
                 $(`#buttonE${index}`).show();
             }
-        </script>
+        </script> --}}
     @endsection
