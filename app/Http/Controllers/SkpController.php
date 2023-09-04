@@ -143,18 +143,25 @@ class SkpController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // public function update(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'nilai' => 'required'
+    //     ]);
+    //     $skp = Skp::findOrFail($id);
+    //     $skp->nilai = $request->input('nilai');
+    //     $skp->save();
+
+    //     return response()->json(['message' => 'Data updated successfully']);
+    // }
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nilai' => 'required'
-        ]);
-        $skp = Skp::findOrFail($id);
-        $skp->nilai = $request->input('nilai');
-        $skp->save();
+        $nilai = $request->input('nilai');
 
-        return response()->json(['message' => 'Data updated successfully']);
+        DB::table('skp')->where('id', $id)->update(['nilai' => $nilai]);
+
+        return response()->json(['message' => 'Nilai berhasil diperbarui']);
     }
-
     /**
      * Remove the specified resource from storage.
      */

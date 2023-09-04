@@ -73,16 +73,16 @@
                             <td>{{ $data->nama_pegawai }}</td>
                             <td>{{ $data->tahun }}</td>
                             <td>{{ $data->persentase }}</td>
-                            <td id="ket_{{ $index }}">
-                                {{ $data->nilai }}
+                            <td>
+                                <span id="nilai{{ $data->id }}">{{ $data->nilai }}</span>
                             </td>
                             <td>
-                                <button id="buttonE{{ $index }}" class="btn btn-sm btn-primary"
-                                    onclick="EditSKP({{ $index }})">Edit</button>
-                                <button id="buttonS{{ $index }}" onclick="SimpanSKP({{ $index }})"
+                                <button id="editButton{{ $data->id }}" class="btn btn-sm btn-primary"
+                                    onclick="EditSKP({{ $data->id }})">Edit</button>
+                                <button id="simpanButton{{ $data->id }}" onclick="SimpanSKP({{ $data->id }})"
                                     style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
-                                <button id="buttonC{{ $index }}" onclick="CancelSKP({{ $index }})"
-                                    style="display: none;" class="btn btn-sm btn-danger">Cancel</button>
+                                <button id="cancelButton{{ $data->id }}" onclick="CancelSKP({{ $data->id }})"
+                                    style="display: none;" class="btn btn-sm btn-danger">Batal</button>
                             </td>
                         </tr>
                     @endforeach
@@ -90,124 +90,71 @@
             </table>
         </div>
         <script>
-            function EditSKP(str) {
-                $('#buttonE' + str).hide();
-                $('#buttonS' + str).show();
-                $('#buttonC' + str).show();
+            function EditSKP(id) {
+                // Sembunyikan tombol Edit
+                document.getElementById(`editButton${id}`).style.display = "none";
 
-                var nilaiCell = $('#ket_' + str);
-                var nilai = nilaiCell.text().trim();
+                // Tampilkan tombol Simpan dan Batal
+                document.getElementById(`simpanButton${id}`).style.display = "block";
+                document.getElementById(`cancelButton${id}`).style.display = "block";
 
-                var selectOptions = `
-                    <select id="nilai-select-${str}">
-                        <option value='-1'>- Pilih Predikat -</option>
-                        <option value='Sangat Baik'>Sangat Baik</option>
-                        <option value='Baik'>Baik</option>
-                        <option value='Butuh Perbaikan'>Butuh Perbaikan</option>
-                        <option value='Kurang'>Kurang</option>
-                        <option value='Sangat Kurang'>Sangat Kurang</option>
-                    </select>
-                `;
+                // Dapatkan nilai saat ini
+                var nilai = document.getElementById(`nilai${id}`).textContent;
 
-                nilaiCell.empty().append(selectOptions);
-                $('#nilai-select-' + str).val(nilai);
+                // Gantikan nilai dengan elemen select
+                document.getElementById(`nilai${id}`).innerHTML = `
+        <select id="nilaiSelect${id}">
+            <option value='Sangat Baik' ${nilai === 'Sangat Baik' ? 'selected' : ''}>Sangat Baik</option>
+            <option value='Baik' ${nilai === 'Baik' ? 'selected' : ''}>Baik</option>
+            <option value='Butuh Perbaikan' ${nilai === 'Butuh Perbaikan' ? 'selected' : ''}>Butuh Perbaikan</option>
+            <option value='Kurang' ${nilai === 'Kurang' ? 'selected' : ''}>Kurang</option>
+            <option value='Sangat Kurang' ${nilai === 'Sangat Kurang' ? 'selected' : ''}>Sangat Kurang</option>
+        </select>
+    `;
             }
 
-            function SimpanSKP(str) {
-                var id = {{ $skps[$index]->id }};
-                var newValue = $('#nilai-select-' + str).val();
+            function SimpanSKP(id) {
+                // Dapatkan nilai yang baru diinputkan
+                var nilaiBaru = document.getElementById(`nilaiSelect${id}`).value;
 
+                // Kirim permintaan Ajax untuk menyimpan nilai
                 $.ajax({
-                    type: 'POST',
-                    url: '{{ route("skp.update", ["id" => "_id_"]) }}'.replace('_id_', id),
+                    url: `/skp/${id}`,
+                    type: 'PUT',
                     data: {
                         _token: '{{ csrf_token() }}',
-                        nilai: newValue
-                    },
-                    success: function (response) {
-                        $('#ket_' + str).text(newValue);
-                        $('#buttonE' + str).show();
-                        $('#buttonS' + str).hide();
-                        $('#buttonC' + str).hide();
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            }
-
-            function CancelSKP(str) {
-                $('#buttonE' + str).show();
-                $('#buttonS' + str).hide();
-                $('#buttonC' + str).hide();
-
-                var nilaiCell = $('#ket_' + str);
-                var nilai = nilaiCell.text().trim();
-                nilaiCell.text(nilai);
-            }
-        </script>
-
-        {{-- <script>
-            function EditSKP(index) {
-                var ketElement = $("#ket_" + index);
-                var ket = ketElement.text();
-
-                // Simpan nilai keterangan awal
-                ketElement.html(`
-                    <select name='ket${index}' id='ket${index}'>
-                        <option value='-1'>- Pilih Predikat -</option>
-                        <option value='Sangat Baik'>Sangat Baik</option>
-                        <option value='Baik'>Baik</option>
-                        <option value='Butuh Perbaikan'>Butuh Perbaikan</option>
-                        <option value='Kurang'>Kurang</option>
-                        <option value='Sangat Kurang'>Sangat Kurang</option>
-                    </select>
-                `);
-
-                // Tampilkan tombol Simpan dan Batal, sembunyikan tombol Edit
-                $(`#buttonE${index}`).hide();
-                $(`#buttonS${index}`).show();
-                $(`#buttonC${index}`).show();
-
-                // Set nilai dropdown sesuai dengan keterangan awal
-                $(`select[name="ket${index}"]`).val(ket);
-            }
-
-            function SimpanSKP(index, nip) {
-                var ket = $(`select[name="ket${index}"]`).val();
-
-                // Lakukan permintaan AJAX ke server
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('') }}",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        nip: nip,
-                        ket: ket
+                        nilai: nilaiBaru
                     },
                     success: function(response) {
-                        // Tindakan setelah data disimpan
-                        console.log(response);
-                        // Misalnya, tampilkan notifikasi atau ubah tampilan tombol
-                        $(`#buttonS${index}`).hide();
-                        $(`#buttonC${index}`).hide();
-                        $(`#buttonE${index}`).show();
-                        $(`#ket_${index}`).text(ket);
+                        alert(response.message);
+
+                        // Tampilkan tombol Edit
+                        document.getElementById(`editButton${id}`).style.display = "block";
+
+                        // Sembunyikan tombol Simpan dan Batal
+                        document.getElementById(`simpanButton${id}`).style.display = "none";
+                        document.getElementById(`cancelButton${id}`).style.display = "none";
+
+                        // Gantikan elemen select dengan nilai yang baru disimpan
+                        document.getElementById(`nilai${id}`).innerHTML = nilaiBaru;
+                    },
+                    error: function(error) {
+                        alert('Gagal memperbarui nilai.');
                     }
                 });
             }
 
-            function CancelSKP(index) {
-                var ketElement = $(`#ket_${index}`);
-                var ket = ketElement.find('select option:selected').text();
+            function CancelSKP(id) {
+                // Tampilkan tombol Edit
+                document.getElementById(`editButton${id}`).style.display = "block";
 
-                // Hapus dropdown, tampilkan kembali nilai awal
-                ketElement.html(ket);
+                // Sembunyikan tombol Simpan dan Batal
+                document.getElementById(`simpanButton${id}`).style.display = "none";
+                document.getElementById(`cancelButton${id}`).style.display = "none";
 
-                // Sembunyikan tombol Simpan dan Batal, tampilkan tombol Edit
-                $(`#buttonS${index}`).hide();
-                $(`#buttonC${index}`).hide();
-                $(`#buttonE${index}`).show();
+                // Kembalikan elemen select ke nilai sebelumnya (tidak tersimpan)
+                var nilaiSebelumnya = document.getElementById(`nilai${id}`).getAttribute('data-nilai-sebelumnya');
+                document.getElementById(`nilai${id}`).innerHTML = nilaiSebelumnya;
             }
-        </script> --}}
+        </script>
     @endsection
