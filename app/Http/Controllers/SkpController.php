@@ -24,7 +24,7 @@ class SkpController extends Controller
             $years[] = $year;
         }
         $direktorats = Direktorat::all();
-        $tahun = 2021;
+        $tahun = 2022;
 
         $skps = DB::table('skp')
             ->join('t_pegawai', 'skp.nip', '=', 't_pegawai.nip')

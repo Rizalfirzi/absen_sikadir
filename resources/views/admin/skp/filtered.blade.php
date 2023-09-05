@@ -74,7 +74,24 @@
                             <td>{{ $data->nama_pegawai }}</td>
                             <td>{{ $data->tahun }}</td>
                             <td>{{ $data->persentase }}</td>
-                            <td>{{ $data->nilai }}</td>
+                            <td>
+                                {{-- {{ $data->nilai }} --}}
+                                @if (is_numeric($data->nilai))
+                                    @if ($data->nilai >= 96 && $data->nilai <= 100)
+                                        Sangat Baik
+                                        @elseif ($data->nilai >= 76 && $data->nilai <= 95)
+                                            Baik
+                                        @elseif ($data->nilai >= 61 && $data->nilai <= 75)
+                                            Butuh Perbaikan
+                                        @elseif ($data->nilai >= 51 && $data->nilai <= 60)
+                                            Kurang
+                                        @else
+                                        Sangat Kurang
+                                    @endif
+                                @else
+                                    {{ $data->nilai }}
+                                @endif
+                            </td>
 
                             <td>
                                 <a href="{{ route('skp.edit', $data->id) }}">Edit</a>
