@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SISTEM INFORMASI KEHADIRAN PEGAWAI - DITJEN CIPTA KARYA</title>
-<link href="{{ asset('assets/bower_components/js/chzn/chosen.css')}}" rel="stylesheet">
+<link href="{{ asset('assets/bower_components/js/chzn/chosen.css') }}" rel="stylesheet">
 <link rel="icon" type="images/jpg" href="{{ asset('assets/img/logo.jpg') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/styles.min.css') }}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -164,11 +164,24 @@
 
     .fontkecil {
         width: 10px;
-}
-
+    }
 </style>
 <style>
     .dotted-line {
-        border-top: 1px dotted #7d7b7b; /* Ganti #000 dengan warna yang diinginkan */
+        border-top: 1px dotted #7d7b7b;
+        /* Ganti #000 dengan warna yang diinginkan */
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        /* Menyusun tombol di tengah secara horizontal */
+        align-items: center;
+        /* Menyusun tombol di tengah secara vertikal */
+    }
+
+    .button-container button {
+        margin-right: 10px;
+        /* Jarak antara tombol */
     }
 </style>

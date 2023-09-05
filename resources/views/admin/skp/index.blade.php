@@ -79,27 +79,29 @@
                                     @if (is_numeric($data->nilai))
                                         @if ($data->nilai >= 96 && $data->nilai <= 100)
                                             Sangat Baik
-                                            @elseif ($data->nilai >= 76 && $data->nilai <= 95)
-                                                Baik
-                                            @elseif ($data->nilai >= 61 && $data->nilai <= 75)
-                                                Butuh Perbaikan
-                                            @elseif ($data->nilai >= 51 && $data->nilai <= 60)
-                                                Kurang
-                                            @else
+                                        @elseif ($data->nilai >= 76 && $data->nilai <= 95)
+                                            Baik
+                                        @elseif ($data->nilai >= 61 && $data->nilai <= 75)
+                                            Butuh Perbaikan
+                                        @elseif ($data->nilai >= 51 && $data->nilai <= 60)
+                                            Kurang
+                                        @else
                                             Sangat Kurang
                                         @endif
                                     @else
-                                            {{ $data->nilai }}
+                                        {{ $data->nilai }}
                                     @endif
                                 </span>
                             </td>
                             <td>
-                                <button id="editButton{{ $data->id }}" class="btn btn-sm btn-primary"
-                                    onclick="EditSKP({{ $data->id }})">Edit</button>
-                                <button id="simpanButton{{ $data->id }}" onclick="SimpanSKP({{ $data->id }})"
-                                    style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
-                                <button id="cancelButton{{ $data->id }}" onclick="CancelSKP({{ $data->id }})"
-                                    style="display: none;" class="btn btn-sm btn-danger">Batal</button>
+                                <div class="button-container">
+                                    <button id="editButton{{ $data->id }}" class="btn btn-sm btn-primary"
+                                        onclick="EditSKP({{ $data->id }})">Edit</button>
+                                    <button id="simpanButton{{ $data->id }}" onclick="SimpanSKP({{ $data->id }})"
+                                        style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
+                                    <button id="cancelButton{{ $data->id }}" onclick="CancelSKP({{ $data->id }})"
+                                        style="display: none;" class="btn btn-sm btn-danger">Batal</button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -176,6 +178,5 @@
                 var nilaiSebelumnya = document.getElementById(`nilai${id}`).getAttribute('data-nilai-sebelumnya');
                 document.getElementById(`nilai${id}`).innerHTML = nilaiSebelumnya;
             }
-
         </script>
     @endsection
