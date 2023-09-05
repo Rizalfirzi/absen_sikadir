@@ -72,6 +72,7 @@ Route::middleware('auth.route')->group(function () {
     Route::resource('izin', IzinController::class);
     Route::post('/izin', [IzinController::class, 'filter'])->name('izin.filter');
 
+
     // route konfirmasi
     Route::resource('konfirmasi', PermintaanController::class);
     Route::post('/konfirmasi', [PermintaanController::class, 'filter'])->name('konfirmasi.filter');

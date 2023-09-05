@@ -118,6 +118,9 @@
                 // Dapatkan nilai saat ini
                 var nilai = document.getElementById(`nilai${id}`).textContent;
 
+                // Simpan nilai saat ini sebagai nilai sebelumnya
+                document.getElementById(`nilai${id}`).setAttribute('data-nilai-sebelumnya', nilai);
+
                 // Gantikan nilai dengan elemen select
                 document.getElementById(`nilai${id}`).innerHTML = `
         <select id="nilaiSelect${id}">
@@ -173,5 +176,6 @@
                 var nilaiSebelumnya = document.getElementById(`nilai${id}`).getAttribute('data-nilai-sebelumnya');
                 document.getElementById(`nilai${id}`).innerHTML = nilaiSebelumnya;
             }
+
         </script>
     @endsection
