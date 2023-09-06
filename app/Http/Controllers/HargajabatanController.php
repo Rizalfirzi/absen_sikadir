@@ -33,7 +33,7 @@ class HargajabatanController extends Controller
     {
         //
         $harga_jabatan = HargaJabatan::create($request->all());
-        return redirect()->route('hargajabatan.index')->with('success', 'Jam kerja berhasil diperbarui!.');
+        return redirect()->route('hargajabatan.index')->with('status', ['type' => 'success', 'message' => 'Data berhasil ditambahkan!']);
     }
 
     /**
@@ -62,7 +62,7 @@ class HargajabatanController extends Controller
         //
         $harga_jabatan = HargaJabatan::find($id);
         $harga_jabatan->update($request->all());
-        return redirect()->route('hargajabatan.index')->with('success', 'Jam kerja berhasil diperbarui!.');
+        return redirect()->route('hargajabatan.index')->with('status', ['type' => 'info', 'message' => 'Data berhasil diubah!']);
     }
 
     /**
@@ -73,6 +73,6 @@ class HargajabatanController extends Controller
         //
         $harga_jabatan = HargaJabatan::findOrFail($id);
         $harga_jabatan->delete();
-        return redirect()->route('hargajabatan.index')->with('success', 'Jam kerja berhasil dihapus!.');
+        return redirect()->route('hargajabatan.index')->with('status', ['type' => 'danger', 'message' => 'Data berhasil dihapus!']);
     }
 }

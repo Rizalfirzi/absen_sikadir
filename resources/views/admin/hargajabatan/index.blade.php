@@ -22,6 +22,14 @@
         </div>
     </div>
     <table id="example2" class="table table-striped table-bordered" style="width:100%">
+        @if (session('status'))
+            <div class="alert alert-{{ session('status.type') }}">
+                {{ session('status.message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <thead>
             <tr>
                 <th>#</th>

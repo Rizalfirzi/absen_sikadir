@@ -184,4 +184,27 @@
         margin-right: 10px;
         /* Jarak antara tombol */
     }
+
+    .alert .close {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0.5rem 0.7rem;
+        background-color: transparent;
+        /* Latar belakang transparan dalam keadaan normal */
+        border: none;
+        outline: none;
+        cursor: pointer;
+        color: rgba(0, 0, 0, 0.5);
+        /* Warna teks dalam keadaan normal */
+    }
+
+    /* Gaya tombol Close saat dihover */
+    .alert .close:hover {
+        background-color: transparent;
+        /* Latar belakang tetap transparan saat dihover */
+        color: rgba(0, 0, 0, 0.7);
+        /* Warna teks menjadi lebih terang saat dihover */
+    }
 </style>

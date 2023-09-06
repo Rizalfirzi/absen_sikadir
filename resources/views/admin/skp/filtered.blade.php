@@ -75,10 +75,11 @@
                             <td>{{ $data->tahun }}</td>
                             <td>{{ $data->persentase }}</td>
                             <td>
-                                {{-- {{ $data->nilai }} --}}
-                                @if (is_numeric($data->nilai))
-                                    @if ($data->nilai >= 96 && $data->nilai <= 100)
-                                        Sangat Baik
+                                <span id="nilai{{ $data->id }}">
+                                    {{-- {{ $data->nilai }} --}}
+                                    @if (is_numeric($data->nilai))
+                                        @if ($data->nilai >= 96 && $data->nilai <= 100)
+                                            Sangat Baik
                                         @elseif ($data->nilai >= 76 && $data->nilai <= 95)
                                             Baik
                                         @elseif ($data->nilai >= 61 && $data->nilai <= 75)
@@ -86,22 +87,99 @@
                                         @elseif ($data->nilai >= 51 && $data->nilai <= 60)
                                             Kurang
                                         @else
-                                        Sangat Kurang
+                                            Sangat Kurang
+                                        @endif
+                                    @else
+                                        {{ $data->nilai }}
                                     @endif
-                                @else
-                                    {{ $data->nilai }}
-                                @endif
+                                </span>
                             </td>
-
                             <td>
-                                <a href="{{ route('skp.edit', $data->id) }}">Edit</a>
+                                <div class="button-container">
+                                    <button id="editButton{{ $data->id }}" class="btn btn-sm btn-primary"
+                                        onclick="EditSKP({{ $data->id }})">Edit</button>
+                                    <button id="simpanButton{{ $data->id }}" onclick="SimpanSKP({{ $data->id }})"
+                                        style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
+                                    <button id="cancelButton{{ $data->id }}" onclick="CancelSKP({{ $data->id }})"
+                                        style="display: none;" class="btn btn-sm btn-danger">Batal</button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+        <script>
+            function EditSKP(id) {
+                // Sembunyikan tombol Edit
+                document.getElementById(`editButton${id}`).style.display = "none";
 
+                // Tampilkan tombol Simpan dan Batal
+                document.getElementById(`simpanButton${id}`).style.display = "block";
+                document.getElementById(`cancelButton${id}`).style.display = "block";
+
+                // Dapatkan nilai saat ini
+                var nilai = document.getElementById(`nilai${id}`).textContent;
+
+                // Simpan nilai saat ini sebagai nilai sebelumnya
+                document.getElementById(`nilai${id}`).setAttribute('data-nilai-sebelumnya', nilai);
+
+                // Gantikan nilai dengan elemen select
+                document.getElementById(`nilai${id}`).innerHTML = `
+        <select id="nilaiSelect${id}">
+            <option value='Sangat Baik' ${nilai === 'Sangat Baik' ? 'selected' : ''}>Sangat Baik</option>
+            <option value='Baik' ${nilai === 'Baik' ? 'selected' : ''}>Baik</option>
+            <option value='Butuh Perbaikan' ${nilai === 'Butuh Perbaikan' ? 'selected' : ''}>Butuh Perbaikan</option>
+            <option value='Kurang' ${nilai === 'Kurang' ? 'selected' : ''}>Kurang</option>
+            <option value='Sangat Kurang' ${nilai === 'Sangat Kurang' ? 'selected' : ''}>Sangat Kurang</option>
+        </select>
+    `;
+            }
+
+            function SimpanSKP(id) {
+                // Dapatkan nilai yang baru diinputkan
+                var nilaiBaru = document.getElementById(`nilaiSelect${id}`).value;
+
+                // Kirim permintaan Ajax untuk menyimpan nilai
+                $.ajax({
+                    url: `/skp/${id}`,
+                    type: 'PUT',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        nilai: nilaiBaru
+                    },
+                    success: function(response) {
+                        alert(response.message);
+
+                        // Tampilkan tombol Edit
+                        document.getElementById(`editButton${id}`).style.display = "block";
+
+                        // Sembunyikan tombol Simpan dan Batal
+                        document.getElementById(`simpanButton${id}`).style.display = "none";
+                        document.getElementById(`cancelButton${id}`).style.display = "none";
+
+                        // Gantikan elemen select dengan nilai yang baru disimpan
+                        document.getElementById(`nilai${id}`).innerHTML = nilaiBaru;
+                    },
+                    error: function(error) {
+                        alert('Gagal memperbarui nilai.');
+                    }
+                });
+            }
+
+            function CancelSKP(id) {
+                // Tampilkan tombol Edit
+                document.getElementById(`editButton${id}`).style.display = "block";
+
+                // Sembunyikan tombol Simpan dan Batal
+                document.getElementById(`simpanButton${id}`).style.display = "none";
+                document.getElementById(`cancelButton${id}`).style.display = "none";
+
+                // Kembalikan elemen select ke nilai sebelumnya (tidak tersimpan)
+                var nilaiSebelumnya = document.getElementById(`nilai${id}`).getAttribute('data-nilai-sebelumnya');
+                document.getElementById(`nilai${id}`).innerHTML = nilaiSebelumnya;
+            }
+        </script>
         <script>
             // Automatically go back to the previous page without confirmation on refresh
             if (performance.navigation.type === 1) {
