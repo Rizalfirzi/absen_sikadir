@@ -88,7 +88,7 @@ class LiburlokalController extends Controller
 
         return redirect()
             ->route('liburlokal.index')
-            ->with('success', 'Data libur berhasil ditambahkan.');
+            ->with('status', ['type' => 'success', 'message' => 'Data berhasil ditambahkan!']);
     }
 
     /**

@@ -46,7 +46,7 @@ class HarikerjapuasaController extends Controller
         Tjamkerja::create($validatedData);
 
         // dd($validatedData);
-        return redirect()->route('harikerjapuasa.index')->with('success', 'Data berhasil disimpan.');
+        return redirect()->route('harikerjapuasa.index')->with('status', ['type' => 'success', 'message' => 'Data berhasil ditambahkan!']);
     }
 
     /**
@@ -88,7 +88,7 @@ class HarikerjapuasaController extends Controller
 
         return redirect()
             ->route('harikerjapuasa.index')
-            ->with('success', 'Jam kerja berhasil diperbarui.');
+            ->with('status', ['type' => 'info', 'message' => 'Data berhasil diubah!']);
     }
 
     /**
@@ -102,7 +102,7 @@ class HarikerjapuasaController extends Controller
 
         return redirect()
             ->route('harikerjapuasa.index')
-            ->with('success', 'Jam kerja berhasil diperbarui.');
+            ->with('status', ['type' => 'danger', 'message' => 'Data berhasil dihapus!']);
     }
 }
 

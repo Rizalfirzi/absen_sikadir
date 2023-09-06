@@ -40,7 +40,7 @@ class HariliburnasController extends Controller
 
         Hariliburnas::create($validatedData);
 
-        return redirect()->route('libur.index')->with('success', 'Data libur berhasil ditambahkan.');
+        return redirect()->route('libur.index')->with('status', ['type' => 'success', 'message' => 'Data berhasil ditambahkan!']);
     }
 
     /**
@@ -76,7 +76,7 @@ class HariliburnasController extends Controller
 
             $liburnas->update($request->all());
 
-            return redirect()->route('libur.index')->with('success', 'Data berhasil dihapus!');
+            return redirect()->route('libur.index')->with('status', ['type' => 'info', 'message' => 'Data berhasil diubah!']);
     }
 
     /**
@@ -88,6 +88,6 @@ class HariliburnasController extends Controller
         $liburnas = Hariliburnas::where('kdharilibur', $libur)->first();
         $liburnas->delete();
 
-        return redirect()->route('libur.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('libur.index')->with('status', ['type' => 'danger', 'message' => 'Data berhasil dihapus!']);
     }
 }

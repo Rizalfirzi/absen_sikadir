@@ -34,10 +34,9 @@ class SkpController extends Controller
             ->where('skp.tahun', $tahun)
             ->where('t_pegawai.status', 1)
             ->orderBy('skp.tahun', 'asc')
-            ->orderBy('skp.nip', 'asc')
             ->orderBy('t_pegawai.nama', 'asc')
             ->select('skp.id', 'skp.nip', 'skp.nilai', 'skp.persentase', 'skp.tahun', 't_pegawai.nama as nama_pegawai', 'satker.nama as nama_satker')
-            ->distinct('skp.tahun', 'skp.nip')
+            ->distinct('t_pegawai.nama','skp.tahun', 'skp.nip')
             ->get();
         // dd($skps);
         return view('admin.skp.index', compact('skps', 'tahun', 'direktorats', 'years'));
@@ -98,12 +97,11 @@ class SkpController extends Controller
 
         $query
             ->orderBy('skp.tahun', 'asc')
-            ->orderBy('skp.nip', 'asc')
             ->orderBy('t_pegawai.nama', 'asc');
 
         $results = $query
             ->select('skp.id', 'skp.nip', 'skp.nilai', 'skp.persentase', 'skp.tahun', 't_pegawai.nama as nama_pegawai', 'satker.nama as nama_satker')
-            ->distinct('skp.tahun', 'skp.nip')
+            ->distinct('t_pegawai.nama','skp.tahun', 'skp.nip')
             ->get();
 
         return view('admin.skp.filtered', compact('results', 'direktorats', 'satkerOptions', 'years'));
