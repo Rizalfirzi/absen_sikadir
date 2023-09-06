@@ -54,7 +54,6 @@ Route::middleware('auth.route')->group(function () {
     // route SkpController
     Route::resource('skp', SkpController::class);
     Route::get('/get-satker/{direktoratId}', [SkpController::class, 'getSatker']);
-    Route::put('/skp/update/{id}', [SkpController::class, 'update'])->name('skp.update');
     Route::post('/skp', [SkpController::class, 'filter'])->name('skp.filter');
 
     // route TukinController
@@ -65,8 +64,11 @@ Route::middleware('auth.route')->group(function () {
     //route hariliburlokal
     Route::resource('liburlokal', LiburlokalController::class);
     Route::get('/get-satker/{direktoratId}', [LiburlokalController::class, 'getSatker']);
+    Route::get('/liburlokal/{id}/edit', [LiburlokalController::class, 'edit'])->name('liburlokal.edit');
     Route::post('/liburlokal', [LiburlokalController::class, 'filter'])->name('liburlokal.filter');
     Route::post('/simpan', [LiburlokalController::class, 'store'])->name('liburlokal.store');
+    Route::put('/data/{id}', [LiburlokalController::class, 'update'])->name('liburlokal.update');
+
 
     //route izin
     Route::resource('izin', IzinController::class);

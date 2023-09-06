@@ -102,18 +102,36 @@ class LiburlokalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Liburlokal $liburlokal)
+    public function edit($liburlokal)
     {
-        //
+        $direktorats = Direktorat::all();
+        $liburlokal = Liburlokal::where('kdliburlokal', $liburlokal)->first();
+        return view('admin.liburlokal.edit', compact('liburlokal','direktorats'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Liburlokal $liburlokal)
+    public function update(Request $request, $liburlokal)
     {
         //
-    }
+        $request->validate([
+            'tanggal' => 'required',
+            'kdunitkerja' => 'required',
+            'keterangan' => 'required',
+
+        ]);
+        // dd($liburlokal);
+        $libur = Liburlokal::where('kdliburlokal', $liburlokal)->first();
+        $libur->tanggal = $request->tanggal;
+        $libur->kdunitkerja = $request->kdunitkerja;
+        $libur->keterangan = $request->keterangan;
+        $libur->save();
+
+
+        return redirect()->route('liburlokal.index')->with('success', 'Data berhasil dihapus!');
+}
+
 
     /**
      * Remove the specified resource from storage.

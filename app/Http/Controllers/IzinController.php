@@ -40,7 +40,7 @@ class IzinController extends Controller
             ->join('izin', 't_pegawai.nip', '=', 'izin.nik')
             ->where(function ($query) use ($satkerId, $tipePegawai, $awal, $akhir) {
                 $query
-                    ->where('t_pegawai.satker_id', $satkerId) 
+                    ->where('t_pegawai.satker_id', $satkerId)
                     ->where('t_pegawai.status', $tipePegawai)
                     ->whereBetween('izin.tanggal', [$awal, $akhir])
                     ->where('izin.st', '1')
