@@ -48,7 +48,7 @@
     <br>
     <hr>
     <div class="container">
-        <table id="example2" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
+        <table id="" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>#</th>
@@ -57,31 +57,42 @@
                     <th>KETERANGAN</th>
                     <th>ACTION</th>
                 </tr>
-            @foreach ($groupLokals as $namaSatker)
+            @php
+                $currentSatker = null;
+            @endphp
+
+            @foreach ($liburLokals as $lokal)
+            @if ($currentSatker !== $lokal->nama_satker)
+            
+            @php
+                $currentSatker = $lokal->nama_satker;
+            @endphp
+            
                 <tr>
                     <th colspan='26' class="highlight-cell bg-warning">
                         <i class='fa fa-list fa-fw'></i>  
-                        {{ $namaSatker->nama_satker }}
+                        {{ $currentSatker }}
                     </th>
                 </tr>
+            @endif
             </thead>
+                       
             <tbody>
-                @foreach ($liburLokals as $lokal)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $lokal->tanggal }}</td>
-                    <td>{{ $lokal->nama_satker }}</td>
-                    <td>{{ $lokal->keterangan }}</td>
-                    <td>
-                        <center>
-                            <a href="{{ route('liburlokal.edit', $lokal->kdliburlokal) }}" class="btn btn-sm btn-primary">
-                                Edit
-                            </a>
-                        </center>
-                    </td>
-                    </td>
-                </tr>
-                @endforeach
+                {{-- @foreach ($liburLokals as $libur) --}}
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $lokal->tanggal }}</td>
+                        <td>{{ $lokal->nama_satker }}</td>
+                        <td>{{ $lokal->keterangan }}</td>
+                        <td>
+                            <center>
+                                <a href="{{ route('liburlokal.edit', $lokal->kdliburlokal) }}" class="btn btn-sm btn-primary">
+                                    Edit
+                                </a>
+                            </center>
+                        </td>
+                    </tr>
+                {{-- @endforeach --}}
             @endforeach
             </tbody>
         </table>
