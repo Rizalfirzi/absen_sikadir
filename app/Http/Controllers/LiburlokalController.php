@@ -62,10 +62,23 @@ class LiburlokalController extends Controller
             }
         }
 
-        $liburLokals = $liburLokal->orderBy('liburlokal.tanggal')->get();
+        $liburLokals = $liburLokal->orderBy('satker.satker_id')->get();
+
+        $groupLokals = $liburLokals->groupBy('satker.satker_id');
+
+        $lokals = $groupLokals->sortBy('satker.satker_id');
+        
+        // $lokals = Lokal::orderBy('nama_satker')->get(); 
+
+        // Group data berdasarkan nama_satker
+        // $groupedLokals = $lokals->groupBy('nama_satker');
+
+        // $sortedLokals = $lokals->sortBy('nama');
+
         // dd($liburLokals);
-        return view('admin.liburlokal.filtered', compact('liburLokals', 'satkerName', 'direktorats'));
+        return view('admin.liburlokal.filtered', compact('groupLokals','liburLokals', 'satkerName', 'direktorats'));
     }
+    
     public function create()
     {
         //

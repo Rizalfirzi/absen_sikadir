@@ -114,7 +114,7 @@
                         <span>
                             <i class="fa fa-trophy fa-fw"></i>
                         </span>
-                        <b><span class="hide-menu">PREASTASI KINERJA</span>
+                        <b><span class="hide-menu">PRESTASI KINERJA</span>
                     </a>
                 </li>
                 <li class="sidebar-item">

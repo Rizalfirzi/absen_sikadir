@@ -13,7 +13,7 @@
             <!-- Kolom lg-12 -->
 
             <div class="col-md-12">
-                <form id="filterForm" action="" method="POST">
+                <form id="filterForm" action="{{ route('izin.store') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-5">
@@ -41,7 +41,7 @@
                         <div class='col-md-12'>&nbsp;</div>
                         <div class='col-md-5'>
                             <h5>JENIS IZIN</h5>
-                            <select name='jns' id='jns' class="col-md-12  well2 form-control">
+                            <select name='jenis' id='jenis' class="col-md-12  well2 form-control">
                                 <option value=""> -- PILIH JENIS -- </option>
                                 <option value="I">Izin (Terlambat, Pulang sebelum waktunya, Tidak berada di tempat
                                     tugas, Tidak mengisi daftar hadir)</option>
@@ -63,7 +63,7 @@
                         <div class='col-md-12'>&nbsp;</div>
                         <div class='col-md-5'>
                             <h5>ALASAN</h5>
-                            <textarea name='ket' id='ket' class="col-md-12 well2 form-control" rows='5'></textarea>
+                            <textarea name='alasan' id='alasan' class="col-md-12 well2 form-control" rows='5'></textarea>
                         </div>
                         <div class='col-md-12'>&nbsp;</div>
                         <div class="col-md-5">

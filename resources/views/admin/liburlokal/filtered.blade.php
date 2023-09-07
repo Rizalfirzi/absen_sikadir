@@ -56,13 +56,12 @@
                     <th>UNIT KERJA</th>
                     <th>KETERANGAN</th>
                     <th>ACTION</th>
-                 </tr>
-                 <tr>
+                </tr>
+            @foreach ($groupLokals as $namaSatker)
+                <tr>
                     <th colspan='26' class="highlight-cell bg-warning">
-                        <i class='fa fa-list fa-fw'></i>
-                        @if ($satkerName)
-                            {{ $satkerName }}
-                        @endif
+                        <i class='fa fa-list fa-fw'></i>  
+                        {{ $namaSatker->nama_satker }}
                     </th>
                 </tr>
             </thead>
@@ -74,7 +73,7 @@
                     <td>{{ $lokal->nama_satker }}</td>
                     <td>{{ $lokal->keterangan }}</td>
                     <td>
-                            <center>
+                        <center>
                             <a href="{{ route('liburlokal.edit', $lokal->kdliburlokal) }}" class="btn btn-sm btn-primary">
                                 Edit
                             </a>
@@ -82,6 +81,7 @@
                     </td>
                     </td>
                 </tr>
+                @endforeach
             @endforeach
             </tbody>
         </table>
