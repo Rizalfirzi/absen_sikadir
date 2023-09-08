@@ -28,7 +28,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-@endif
+    @endif
     <thead>
         <tr>
             <th>#</th>

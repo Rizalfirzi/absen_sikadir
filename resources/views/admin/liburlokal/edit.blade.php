@@ -15,7 +15,7 @@
             <div class="col-md-12">
                 <div class='col-md-5'>
                     <h5>Tanggal</h5>
-                    <input type="text" name='tanggal' id="tanggal" class="col-md-12 well1 datepicker" value="{{ $liburlokal->tanggal }}" requied>
+                    <input type="text" name='tanggal' id="tanggal" class="col-md-12 well1 datepicker form-control" value="{{ $liburlokal->tanggal }}" requied>
                 </div>
             <div class='col-md-12'></div>
             <div class="col-md-5">

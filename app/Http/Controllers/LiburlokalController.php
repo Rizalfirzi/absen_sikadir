@@ -129,7 +129,7 @@ class LiburlokalController extends Controller
         $libur->save();
 
 
-        return redirect()->route('liburlokal.index')->with('success', 'Data berhasil dihapus!');
+        return redirect()->route('liburlokal.index')->with('status', ['type' => 'info', 'message' => 'Data berhasil diubah!']);
 }
 
 

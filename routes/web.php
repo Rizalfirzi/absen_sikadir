@@ -13,6 +13,7 @@ use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\HargajabatanController;
 use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
+use App\Http\Controllers\ImportKehadiranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,4 +81,6 @@ Route::middleware('auth.route')->group(function () {
     Route::post('/konfirmasi', [PermintaanController::class, 'filter'])->name('konfirmasi.filter');
     Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
+
+    Route::resource('import', ImportKehadiranController::class);
 });
