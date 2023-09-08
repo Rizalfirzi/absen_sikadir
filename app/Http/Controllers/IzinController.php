@@ -89,12 +89,12 @@ class IzinController extends Controller
 
         return view('admin.izin.filtered', compact('filteredData', 'direktorats', 'satkerName'));
     }
+    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
+    {  
         $employees = DB::table('t_pegawai')
             ->select('nip', 'nama')
             ->where('aktif', '=', 'Aktif')
@@ -110,7 +110,43 @@ class IzinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Membuat validasi data
+        $request->validate([
+            'nip'       => 'required',
+            'awal'      => 'required|date',
+            'akhir'     => 'required|date|after_or_equal:awal',
+            'jenis'     => 'required',
+            'alasan'    => 'required',
+            'file'      => 'required|file|mimes:png,jpg,pdf'
+        ]);
+
+        // Validasi file 
+        $file_name = $request->file('file')->getClientOriginalName(); // Nama file beserta ekstensi
+        $file_ext = $request->file('file')->getClientOriginalExtension(); // Ekstensi file
+
+        // Validasi untuk tanggal
+        $now = 'awal';
+        $akhir = date('Y-m-d', strtotime('akhir' . ' +1 day')); // Tambahkan satu hari untuk mencakup tanggal akhir
+
+        // Membuat instance model dengan data yang akan disimpan
+        while ($now < $akhir) {
+            Izin::create([
+                'nik'       => $request->input('nip'),
+                'tanggal'   => $request->input($now),
+                    $now = date('Y-m-d', strtotime($now . ' +1 day')),
+                'alasan'    => $request->input('alasan'),
+                'jenis'     => $request->input('jenis'),
+                'nosurat'   => $request->input($file_name),
+                'deleted'   => '0',
+                'extensi'   => $request->input($file_ext),
+                'st'        => '0',
+                'anak'      => '0'
+            ]);
+        }
+
+        return redirect()
+                ->route('izin.index')
+                ->with('success', 'Permintaan Berhasil Terkirim');
     }
 
     /**

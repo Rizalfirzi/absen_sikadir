@@ -37,35 +37,43 @@ class LiburlokalController extends Controller
         $direktorats = DB::table('direktorat')->get();
 
         $liburLokal = DB::table('liburlokal')
-            ->select('liburlokal.*', 'satker.nama as nama_satker')
+            ->select('liburlokal.kdliburlokal as kdliburlokal', 'liburlokal.tanggal as tanggal',
+                     'liburlokal.keterangan as keterangan', 'liburlokal.kdunitkerja as kdunitkerja', 
+                     'satker.nama as nama_satker')
             ->leftJoin('satker', 'liburlokal.kdunitkerja', '=', DB::raw('CAST(satker.satker_id AS VARCHAR)'));
-
+            
         if ($direktoratId) {
             $liburLokal->where(function ($query) use ($direktoratId) {
                 $query->where('satker.direktorat_id', $direktoratId);
             });
         }
 
-        $satkerName = ''; // Initialize $satkerName
+        // $satkerName = ''; // Initialize $satkerName
 
-        if ($satkerId) {
-            if ($satkerId === 'all') {
-                $liburLokal->whereNotNull('liburlokal.kdunitkerja');
-                $satkerName = 'All Satker';
-            } else {
-                $liburLokal->where(function ($query) use ($satkerId) {
-                    $query->where('liburlokal.kdunitkerja', $satkerId);
-                });
-                $satkerName = DB::table('satker')
-                    ->where('satker_id', $satkerId)
-                    ->value('nama');
-            }
-        }
+        // if ($satkerId) {
+        //     if ($satkerId === 'all') {
+        //         $liburLokal->whereNotNull('liburlokal.kdunitkerja');
+        //         $satkerName = 'All Satker';
+                
+        //     } else {
+        //         $liburLokal->where(function ($query) use ($satkerId) {
+        //             $query->where('liburlokal.kdunitkerja', $satkerId);
+        //         });
+        //         $satkerName = DB::table('satker')
+        //             ->where('satker_id', $satkerId)
+        //             ->value('nama');
+        //     }
+        // }
 
-        $liburLokals = $liburLokal->orderBy('liburlokal.tanggal')->get();
+
+        $liburLokals = $liburLokal->orderBy('kdunitkerja')->get();
+
+        $libur = $liburLokal->groupBy('kdliburlokal', 'tanggal', 'keterangan', 'kdunitkerja', 'nama_satker')->get();
+
         // dd($liburLokals);
-        return view('admin.liburlokal.filtered', compact('liburLokals', 'satkerName', 'direktorats'));
+        return view('admin.liburlokal.filtered', compact('libur','liburLokals', 'direktorats', 'satkerId'));
     }
+    
     public function create()
     {
         //
