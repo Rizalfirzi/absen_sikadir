@@ -55,7 +55,6 @@ Route::middleware('auth.route')->group(function () {
     // route SkpController
     Route::resource('skp', SkpController::class);
     Route::get('/get-satker/{direktoratId}', [SkpController::class, 'getSatker']);
-    Route::put('/skp/update/{id}', [SkpController::class, 'update'])->name('skp.update');
     Route::post('/skp', [SkpController::class, 'filter'])->name('skp.filter');
 
     // route TukinController
@@ -72,7 +71,7 @@ Route::middleware('auth.route')->group(function () {
 
     //route izin
     Route::resource('izin', IzinController::class);
-    Route::post('/izinr', [IzinController::class, 'filter'])->name('izin.filter');
+    Route::post('/izin', [IzinController::class, 'filter'])->name('izin.filter');
     Route::post('/simpan-izin', [IzinController::class, 'store'])->name('izin.store');
 
     // route konfirmasi
@@ -81,5 +80,6 @@ Route::middleware('auth.route')->group(function () {
     Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
 
+     // route import pegawai
     Route::resource('import', ImportKehadiranController::class);
 });

@@ -89,12 +89,12 @@ class IzinController extends Controller
 
         return view('admin.izin.filtered', compact('filteredData', 'direktorats', 'satkerName'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {  
+    {
         $employees = DB::table('t_pegawai')
             ->select('nip', 'nama')
             ->where('aktif', '=', 'Aktif')
@@ -120,7 +120,7 @@ class IzinController extends Controller
             'file'      => 'required|file|mimes:png,jpg,pdf'
         ]);
 
-        // Validasi file 
+        // Validasi file
         $file_name = $request->file('file')->getClientOriginalName(); // Nama file beserta ekstensi
         $file_ext = $request->file('file')->getClientOriginalExtension(); // Ekstensi file
 

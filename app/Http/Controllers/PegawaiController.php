@@ -14,7 +14,7 @@ class PegawaiController extends Controller
     {
         $direktorats = Direktorat::all();
         $pegawai = DB::table('t_pegawai')
-            ->select('t_pegawai.*', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
+            ->select('t_pegawai.id', 't_pegawai.badgenumber', 't_pegawai.nama', 't_pegawai.nip', 't_pegawai.jabatan', 't_pegawai.gradejabatan', 't_pegawai.golongan_ruang', 't_pegawai.satker', 't_pegawai.unitkerjalama', 't_pegawai.provinsi', 't_pegawai.direktorat_id', 't_pegawai.satker_id', 't_pegawai.ppk_id', 't_pegawai.status', 't_pegawai.aktif', 't_pegawai.badgenumber_baru', 't_pegawai.badge_on', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
             ->leftJoin('direktorat', 't_pegawai.direktorat_id', '=', 'direktorat.direktorat_id')
             ->leftJoin('satker', function ($join) {
                 $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
@@ -47,28 +47,25 @@ class PegawaiController extends Controller
             ->select('t_pegawai.*', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
             ->leftJoin('direktorat', 't_pegawai.direktorat_id', '=', 'direktorat.direktorat_id')
             ->leftJoin('satker', function ($join) {
-                $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')
-                    ->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
+                $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
             })
             ->where('t_pegawai.status', 1);
 
-            if ($direktoratId) {
-                $pegawaiQuery->where(function ($query) use ($direktoratId) {
-                    $query->where('t_pegawai.direktorat_id', $direktoratId)
-                        ->orWhere('t_pegawai.ppk_id', '=', DB::raw($direktoratId));
-                });
-            }
+        if ($direktoratId) {
+            $pegawaiQuery->where(function ($query) use ($direktoratId) {
+                $query->where('t_pegawai.direktorat_id', $direktoratId)->orWhere('t_pegawai.ppk_id', '=', DB::raw($direktoratId));
+            });
+        }
 
-            if ($aktif) {
-                $pegawaiQuery->where('t_pegawai.aktif', $aktif);
-            }
+        if ($aktif) {
+            $pegawaiQuery->where('t_pegawai.aktif', $aktif);
+        }
 
-            if ($satkerId) {
-                $pegawaiQuery->where(function ($query) use ($satkerId) {
-                    $query->where('t_pegawai.satker_id', $satkerId)
-                        ->orWhere('t_pegawai.ppk_id', '=', DB::raw($satkerId));
-                });
-            }
+        if ($satkerId) {
+            $pegawaiQuery->where(function ($query) use ($satkerId) {
+                $query->where('t_pegawai.satker_id', $satkerId)->orWhere('t_pegawai.ppk_id', '=', DB::raw($satkerId));
+            });
+        }
 
         $pegawai = $pegawaiQuery
             ->orderBy('t_pegawai.satker_id')
@@ -76,70 +73,10 @@ class PegawaiController extends Controller
             ->orderBy('t_pegawai.nama', 'asc')
             ->get();
 
-// dd($pegawai);
-// dd($pegawaiQuery->toSql());
-        return view('admin.pegawai.filtered', compact('pegawai','direktorats'));
+        // dd($pegawai);
+        // dd($pegawaiQuery->toSql());
+        return view('admin.pegawai.filtered', compact('pegawai', 'direktorats'));
     }
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index(Request $request)
-    // {
-    //     $pegawai = DB::table('t_pegawai')
-    //         ->select('t_pegawai.*', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
-    //         ->leftJoin('direktorat', 't_pegawai.direktorat_id', '=', 'direktorat.direktorat_id')
-    //         ->leftJoin('satker', function ($join) {
-    //             $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
-    //         })
-    //         ->where('t_pegawai.status', 1)
-    //         ->where('t_pegawai.aktif', 'Aktif')
-    //         ->orderBy('t_pegawai.satker_id')
-    //         ->orderBy('t_pegawai.nama', 'asc')
-    //         ->get();
-
-    //     return view('admin.pegawai.index', compact('pegawai'));
-
-
-        // $direktorats = DB::table('direktorat')->get();
-        // $pegawai = [];
-        // $satkerOptions = [];
-
-        // if ($request->has('q1')) {
-        //     $direktoratId = $request->q1;
-
-        //     if ($direktoratId) {
-        //         $satkerOptions = DB::table('satker')
-        //             ->where('direktorat_id', $direktoratId)
-        //             ->get();
-        //     }
-
-        //     $pegawai = DB::table('t_pegawai')
-        //         ->select('t_pegawai.*', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
-        //         ->leftJoin('direktorat', 't_pegawai.direktorat_id', '=', 'direktorat.direktorat_id')
-        //         ->leftJoin('satker', function ($join) {
-        //             $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')
-        //                 ->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
-        //         })
-        //         ->where('t_pegawai.status', 1)
-        //         ->when($direktoratId, function ($query) use ($direktoratId) {
-        //             return $query->where('t_pegawai.direktorat_id', $direktoratId);
-        //         })
-        //         ->orderBy('t_pegawai.satker_id')
-        //         ->orderBy('t_pegawai.nama', 'asc')
-        //         ->get();
-        // }
-
-        // return view('admin.pegawai.index', compact('direktorats', 'pegawai', 'satkerOptions'));
-    // }
-
-    // public function getSatker($direktoratId)
-    // {
-    //     $satkerOptions = DB::table('satker')
-    //         ->where('direktorat_id', $direktoratId)
-    //         ->get();
-
-    //     return response()->json($satkerOptions);
-    // }
     /**
      * Show the form for creating a new resource.
      */
@@ -175,9 +112,46 @@ class PegawaiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, pegawai $pegawai)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi data yang dikirimkan dari frontend jika perlu
+        $request->validate([
+            'badgenumber' => 'required',
+            'badgenumber_baru' => 'required',
+            'nama' => 'required',
+            'nip' => 'required',
+            'golonganRuang' => 'required',
+            'jabatan' => 'required',
+            'gradeJabatan' => 'required',
+            'direktorat' => 'required',
+            'satker' => 'required',
+            'ppk' => 'required',
+            'status' => 'required',
+            'aktif' => 'required',
+        ]);
+
+        // Ambil data pegawai berdasarkan ID
+        $pegawai = Pegawai::find($id);
+
+        // Update data pegawai dengan data baru
+        $pegawai->badgenumber = $request->badgenumber;
+        $pegawai->badgenumber_baru = $request->badgenumber_baru;
+        $pegawai->nama = $request->nama;
+        $pegawai->nip = $request->nip;
+        $pegawai->golonganRuang = $request->golonganRuang;
+        $pegawai->jabatan = $request->jabatan;
+        $pegawai->gradeJabatan = $request->gradeJabatan;
+        $pegawai->direktorat = $request->direktorat;
+        $pegawai->satker = $request->satker;
+        $pegawai->ppk = $request->ppk;
+        $pegawai->status = $request->status;
+        $pegawai->aktif = $request->aktif;
+
+        // Simpan perubahan
+        $pegawai->save();
+
+        // Beri respons kepada frontend
+        return response()->json(['message' => 'Data pegawai berhasil diperbarui']);
     }
 
     /**

@@ -66,7 +66,7 @@
 
     <br>
     <div class="container">
-        <table id="example" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
+        <table id="" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
             <thead>
                 <tr>
                     <th rowspan='2'>#</th>
@@ -97,28 +97,29 @@
                 @foreach ($pegawai as $index => $data)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $data->badgenumber }}</td>
-                        <td>{{ $data->badgenumber_baru }}</td>
-                        <td>{{ $data->nama }}</td>
-                        <td>{{ $data->nip }}</td>
-                        <td>{{ $data->golongan_ruang }}</td>
-                        <td>{{ $data->jabatan }}</td>
-                        <td>
+                        <td id="badgenumber{{ $data->id }}">{{ $data->badgenumber }}</td>
+                        <td id="badgenumber_baru{{ $data->id }}">{{ $data->badgenumber_baru }}</td>
+                        <td id="nama{{ $data->id }}">{{ $data->nama }}</td>
+                        <td id="nip{{ $data->id }}">{{ $data->nip }}</td>
+                        <td id="golonganRuang{{ $data->id }}" data-golongan-sebelumnya="{{ $data->golongan_ruang }}">
+                            {{ $data->golongan_ruang }}</td>
+                        <td id="jabatan{{ $data->id }}">{{ $data->jabatan }}</td>
+                        <td id="gradeJabatan{{ $data->id }}">
                             @if ($data->gradejabatan === null || $data->gradejabatan == 0)
                                 -
                             @else
                                 {{ $data->gradejabatan }}
                             @endif
                         </td>
-                        <td>{{ $data->nama_direktorat }}</td>
-                        <td>
+                        <td id="direktorat{{ $data->id }}">{{ $data->nama_direktorat }}</td>
+                        <td id="satker{{ $data->id }}">
                             @if ($data->satker_id == '0' || $data->satker_id == '')
                                 -
                             @else
                                 {{ $data->nama_satker }}
                             @endif
                         </td>
-                        <td>
+                        <td id="ppk{{ $data->id }}">
                             @if ($data->ppk_id == '0' || $data->ppk_id == '')
                                 -
                             @else
@@ -126,28 +127,162 @@
                             @endif
                         </td>
 
-                        <td>
+                        <td id="status{{ $data->id }}">
                             @if ($data->status == 1)
                                 PNS
                             @endif
                         </td>
-                        <td>{{ $data->aktif }}</td>
+                        <td id="aktif{{ $data->id }}">{{ $data->aktif }}</td>
                         <td>
-                            <form action="" method="POST">
-                                <center>
-                                    <a href="" class="btn btn-sm btn-primary">
-                                        Edit
-                                    </a>
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Apakah Anda Yakin?')">Delete</button>
-                                </center>
-                            </form>
+                            <div class="button-container">
+                                <button id="editButton{{ $data->id }}" class="btn btn-sm btn-primary"
+                                    onclick="EditPEG({{ $data->id }})">Edit</button>
+                                <button id="simpanButton{{ $data->id }}" onclick="SimpanPEG({{ $data->id }})"
+                                    style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
+                                <button id="cancelButton{{ $data->id }}" onclick="CancelPEG({{ $data->id }})"
+                                    style="display: none;" class="btn btn-sm btn-danger">Batal</button>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+    <script>
+        function EditPEG(id) {
+            // Sembunyikan tombol Edit
+            document.getElementById(`editButton${id}`).style.display = "none";
+
+            // Tampilkan tombol Simpan dan Batal
+            document.getElementById(`simpanButton${id}`).style.display = "block";
+            document.getElementById(`cancelButton${id}`).style.display = "block";
+
+            // Dapatkan nilai-nilai saat ini dari elemen-elemen yang sesuai
+            var badgenumber = document.getElementById(`badgenumber${id}`).textContent;
+            var badgenumber_baru = document.getElementById(`badgenumber_baru${id}`).textContent;
+            var nama = document.getElementById(`nama${id}`).textContent;
+            var nip = document.getElementById(`nip${id}`).textContent;
+            var golonganRuang = document.getElementById(`golonganRuang${id}`).textContent;
+            var jabatan = document.getElementById(`jabatan${id}`).textContent;
+            var gradeJabatan = document.getElementById(`gradeJabatan${id}`).textContent;
+            var direktorat = document.getElementById(`direktorat${id}`).textContent;
+            var satker = document.getElementById(`satker${id}`).textContent;
+            var ppk = document.getElementById(`ppk${id}`).textContent;
+            var status = document.getElementById(`status${id}`).textContent;
+            var aktif = document.getElementById(`aktif${id}`).textContent;
+
+            // Gantikan nilai-nilai dengan input text
+            document.getElementById(`badgenumber${id}`).innerHTML =
+                `<input type="text" id="input_badgenumber${id}" value="${badgenumber}">`;
+            document.getElementById(`badgenumber_baru${id}`).innerHTML =
+                `<input type="text" id="input_badgenumber_baru${id}" value="${badgenumber_baru}">`;
+            document.getElementById(`nama${id}`).innerHTML = `<input type="text" id="input_nama${id}" value="${nama}">`;
+            document.getElementById(`nip${id}`).innerHTML = `<input type="text" id="input_nip${id}" value="${nip}">`;
+            document.getElementById(`golonganRuang${id}`).innerHTML =
+                `<input type="text" id="input_golonganRuang${id}" value="${golonganRuang}">`;
+            document.getElementById(`jabatan${id}`).innerHTML =
+                `<input type="text" id="input_jabatan${id}" value="${jabatan}">`;
+            document.getElementById(`gradeJabatan${id}`).innerHTML =
+                `<input type="text" id="input_gradeJabatan${id}" value="${gradeJabatan}">`;
+            document.getElementById(`direktorat${id}`).innerHTML =
+                `<input type="text" id="input_direktorat${id}" value="${direktorat}">`;
+            document.getElementById(`satker${id}`).innerHTML =
+                `<input type="text" id="input_satker${id}" value="${satker}">`;
+            document.getElementById(`ppk${id}`).innerHTML = `<input type="text" id="input_ppk${id}" value="${ppk}">`;
+            document.getElementById(`status${id}`).innerHTML =
+                `<select id="input_status${id}">
+                <option value='1' ${status === 'PNS' ? 'selected' : ''}>PNS</option>
+            </select>
+                `;
+            document.getElementById(`aktif${id}`).innerHTML = `<input type="text" id="input_aktif${id}" value="${aktif}">`;
+        }
+
+        function SimpanPEG(id) {
+            // Dapatkan nilai-nilai yang baru diinputkan
+            var badgenumber = document.getElementById(`input_badgenumber${id}`).value;
+            var badgenumber_baru = document.getElementById(`input_badgenumber_baru${id}`).value;
+            var nama = document.getElementById(`input_nama${id}`).value;
+            var nip = document.getElementById(`input_nip${id}`).value;
+            var golonganRuang = document.getElementById(`input_golonganRuang${id}`).value;
+            var jabatan = document.getElementById(`input_jabatan${id}`).value;
+            var gradeJabatan = document.getElementById(`input_gradeJabatan${id}`).value;
+            var direktorat = document.getElementById(`input_direktorat${id}`).value;
+            var satker = document.getElementById(`input_satker${id}`).value;
+            var ppk = document.getElementById(`input_ppk${id}`).value;
+            var status = document.getElementById(`input_status${id}`).value;
+            var aktif = document.getElementById(`input_aktif${id}`).value;
+
+            // Kirim permintaan Ajax untuk menyimpan data
+            $.ajax({
+                url: `/pegawai/${id}`,
+                type: 'PUT',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    badgenumber: badgenumber,
+                    badgenumber_baru: badgenumber_baru,
+                    nama: nama,
+                    nip: nip,
+                    golonganRuang: golonganRuang,
+                    jabatan: jabatan,
+                    gradeJabatan: gradeJabatan,
+                    direktorat: direktorat,
+                    satker: satker,
+                    ppk: ppk,
+                    status: status,
+                    aktif: aktif
+                },
+                success: function(response) {
+                    alert(response.message);
+
+                    // Tampilkan tombol Edit
+                    document.getElementById(`editButton${id}`).style.display = "block";
+
+                    // Sembunyikan tombol Simpan dan Batal
+                    document.getElementById(`simpanButton${id}`).style.display = "none";
+                    document.getElementById(`cancelButton${id}`).style.display = "none";
+
+                    // Gantikan input text dengan nilai yang baru disimpan
+                    document.getElementById(`badgenumber${id}`).textContent = badgenumber;
+                    document.getElementById(`badgenumber_baru${id}`).textContent = badgenumber_baru;
+                    document.getElementById(`nama${id}`).textContent = nama;
+                    document.getElementById(`nip${id}`).textContent = nip;
+                    document.getElementById(`golonganRuang${id}`).textContent = golonganRuang;
+                    document.getElementById(`jabatan${id}`).textContent = jabatan;
+                    document.getElementById(`gradeJabatan${id}`).textContent = gradeJabatan;
+                    document.getElementById(`direktorat${id}`).textContent = direktorat;
+                    document.getElementById(`satker${id}`).textContent = satker;
+                    document.getElementById(`ppk${id}`).textContent = ppk;
+                    document.getElementById(`status${id}`).textContent = status;
+                    document.getElementById(`aktif${id}`).textContent = aktif;
+                },
+                error: function(error) {
+                    alert('Gagal memperbarui data pegawai.');
+                }
+            });
+        }
+
+        function CancelPEG(id) {
+            // Tampilkan tombol Edit
+            document.getElementById(`editButton${id}`).style.display = "block";
+
+            // Sembunyikan tombol Simpan dan Batal
+            document.getElementById(`simpanButton${id}`).style.display = "none";
+            document.getElementById(`cancelButton${id}`).style.display = "none";
+
+            // Kembalikan elemen ke tampilan awal (tidak tersimpan)
+            document.getElementById(`badgenumber${id}`).textContent = document.getElementById(`input_badgenumber${id}`).value;
+            document.getElementById(`badgenumber_baru${id}`).textContent = document.getElementById(`input_badgenumber_baru${id}`).value;
+            document.getElementById(`nama${id}`).textContent = document.getElementById(`input_nama${id}`).value;
+            document.getElementById(`nip${id}`).textContent = document.getElementById(`input_nip${id}`).value;
+            document.getElementById(`golonganRuang${id}`).textContent = document.getElementById(`input_golonganRuang${id}`).value;
+            document.getElementById(`jabatan${id}`).textContent = document.getElementById(`input_jabatan${id}`).value;
+            document.getElementById(`gradeJabatan${id}`).textContent = document.getElementById(`input_gradeJabatan${id}`).value;
+            document.getElementById(`direktorat${id}`).textContent = document.getElementById(`input_direktorat${id}`).value;
+            document.getElementById(`satker${id}`).textContent = document.getElementById(`input_satker${id}`).value;
+            document.getElementById(`ppk${id}`).textContent = document.getElementById(`input_ppk${id}`).value;
+            document.getElementById(`status${id}`).textContent = document.getElementById(`input_status${id}`).value;
+            document.getElementById(`aktif${id}`).textContent = document.getElementById(`input_aktif${id}`).value;
+        }
+    </script>
 @endsection
