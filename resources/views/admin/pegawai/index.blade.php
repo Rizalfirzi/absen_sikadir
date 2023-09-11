@@ -66,7 +66,7 @@
 
     <br>
     <div class="container">
-        <table id="" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
+        <table id="example" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
             <thead>
                 <tr>
                     <th rowspan='2'>#</th>
@@ -172,6 +172,23 @@
             var status = document.getElementById(`status${id}`).textContent;
             var aktif = document.getElementById(`aktif${id}`).textContent;
 
+            // // Simpan nilai saat ini sebagai nilai sebelumnya
+            // document.getElementById(`badgenumber${id}`).setAttribute('data-badgenumber-sebelumnya', badgenumberSebelumnya);
+            // document.getElementById(`badgenumber_baru${id}`).setAttribute('data-badgenumber-baru-sebelumnya',
+            //     badgenumberBaruSebelumnya);
+            // document.getElementById(`nama${id}`).setAttribute('data-nama-sebelumnya', namaSebelumnya);
+            // document.getElementById(`nip${id}`).setAttribute('data-nip-sebelumnya', nipSebelumnya);
+            // document.getElementById(`golonganRuang${id}`).setAttribute('data-golonganRuang-sebelumnya',
+            //     golonganRuangSebelumnya);
+            // document.getElementById(`jabatan${id}`).setAttribute('data-jabatan-sebelumnya', jabatanSebelumnya);
+            // document.getElementById(`gradeJabatan${id}`).setAttribute('data-gradeJabatan-sebelumnya',
+            //     gradeJabatanSebelumnya);
+            // document.getElementById(`direktorat${id}`).setAttribute('data-direktorat-sebelumnya', direktoratSebelumnya);
+            // document.getElementById(`satker${id}`).setAttribute('data-satker-sebelumnya', satkerSebelumnya);
+            // document.getElementById(`ppk${id}`).setAttribute('data-ppk-sebelumnya', ppkSebelumnya);
+            // document.getElementById(`status${id}`).setAttribute('data-status-sebelumnya', statusSebelumnya);
+            // document.getElementById(`aktif${id}`).setAttribute('data-aktif-sebelumnya', aktifSebelumnya);
+
             // Gantikan nilai-nilai dengan input text
             document.getElementById(`badgenumber${id}`).innerHTML =
                 `<input type="text" id="input_badgenumber${id}" value="${badgenumber}">`;
@@ -192,10 +209,19 @@
             document.getElementById(`ppk${id}`).innerHTML = `<input type="text" id="input_ppk${id}" value="${ppk}">`;
             document.getElementById(`status${id}`).innerHTML =
                 `<select id="input_status${id}">
-                <option value='1' ${status === 'PNS' ? 'selected' : ''}>PNS</option>
+                <option value='PNS' ${status === 'PNS' ? 'selected' : ''}>PNS</option>
             </select>
                 `;
-            document.getElementById(`aktif${id}`).innerHTML = `<input type="text" id="input_aktif${id}" value="${aktif}">`;
+            document.getElementById(`aktif${id}`).innerHTML = `<select id="input_aktif${id}">
+                <option value='Aktif' ${aktif === 'Aktif' ? 'selected' : ''}>Aktif</option>
+                <option value='Meninggal' ${aktif === 'Meninggal' ? 'selected' : ''}>Meninggal</option>
+                <option value='Pemberhentian Dengan Hormat Atas Permintaan Sendiri' ${aktif === 'Pemberhentian Dengan Hormat Atas Permintaan Sendiri' ? 'selected' : ''}>Pemberhentian Dengan Hormat Atas Permintaan Sendiri</option>
+                <option value='Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri' ${aktif === 'Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri' ? 'selected' : ''}>Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri</option>
+                <option value='Pemberhentian Tidak Dengan Hormat' ${aktif === 'Pemberhentian Tidak Dengan Hormat' ? 'selected' : ''}>Pemberhentian Tidak Dengan Hormat</option>
+                <option value='Pensiun' ${aktif === 'Pensiun' ? 'selected' : ''}>Pensiun</option>
+                <option value='Mutasi lintas Unor' ${aktif === 'Mutasi lintas Unor' ? 'selected' : ''}>Mutasi lintas Unor</option>
+            </select>
+                `;
         }
 
         function SimpanPEG(id) {
@@ -262,6 +288,7 @@
             });
         }
 
+
         function CancelPEG(id) {
             // Tampilkan tombol Edit
             document.getElementById(`editButton${id}`).style.display = "block";
@@ -270,19 +297,59 @@
             document.getElementById(`simpanButton${id}`).style.display = "none";
             document.getElementById(`cancelButton${id}`).style.display = "none";
 
-            // Kembalikan elemen ke tampilan awal (tidak tersimpan)
-            document.getElementById(`badgenumber${id}`).textContent = document.getElementById(`input_badgenumber${id}`).value;
-            document.getElementById(`badgenumber_baru${id}`).textContent = document.getElementById(`input_badgenumber_baru${id}`).value;
-            document.getElementById(`nama${id}`).textContent = document.getElementById(`input_nama${id}`).value;
-            document.getElementById(`nip${id}`).textContent = document.getElementById(`input_nip${id}`).value;
-            document.getElementById(`golonganRuang${id}`).textContent = document.getElementById(`input_golonganRuang${id}`).value;
-            document.getElementById(`jabatan${id}`).textContent = document.getElementById(`input_jabatan${id}`).value;
-            document.getElementById(`gradeJabatan${id}`).textContent = document.getElementById(`input_gradeJabatan${id}`).value;
-            document.getElementById(`direktorat${id}`).textContent = document.getElementById(`input_direktorat${id}`).value;
-            document.getElementById(`satker${id}`).textContent = document.getElementById(`input_satker${id}`).value;
-            document.getElementById(`ppk${id}`).textContent = document.getElementById(`input_ppk${id}`).value;
-            document.getElementById(`status${id}`).textContent = document.getElementById(`input_status${id}`).value;
-            document.getElementById(`aktif${id}`).textContent = document.getElementById(`input_aktif${id}`).value;
+            // Kembalikan nilai input ke nilai sebelumnya (tidak tersimpan)
+            var badgenumberSebelumnya = document.getElementById(`badgenumber${id}`).getAttribute(
+                'data-badgenumber-sebelumnya');
+            var badgenumberBaruSebelumnya = document.getElementById(`badgenumber_baru${id}`).getAttribute(
+                'data-badgenumber-baru-sebelumnya');
+            var namaSebelumnya = document.getElementById(`nama${id}`).getAttribute('data-nama-sebelumnya');
+            var nipSebelumnya = document.getElementById(`nip${id}`).getAttribute('data-nip-sebelumnya');
+            var golonganRuangSebelumnya = document.getElementById(`golonganRuang${id}`).getAttribute(
+                'data-golonganRuang-sebelumnya');
+            var jabatanSebelumnya = document.getElementById(`jabatan${id}`).getAttribute('data-jabatan-sebelumnya');
+            var gradeJabatanSebelumnya = document.getElementById(`gradeJabatan${id}`).getAttribute(
+                'data-gradeJabatan-sebelumnya');
+            var direktoratSebelumnya = document.getElementById(`direktorat${id}`).getAttribute(
+                'data-direktorat-sebelumnya');
+            var satkerSebelumnya = document.getElementById(`satker${id}`).getAttribute('data-satker-sebelumnya');
+            var ppkSebelumnya = document.getElementById(`ppk${id}`).getAttribute('data-ppk-sebelumnya');
+            var statusSebelumnya = document.getElementById(`status${id}`).getAttribute('data-status-sebelumnya');
+            var aktifSebelumnya = document.getElementById(`aktif${id}`).getAttribute('data-aktif-sebelumnya');
+
+            document.getElementById(`badgenumber${id}`).textContent = badgenumberSebelumnya;
+            document.getElementById(`badgenumber_baru${id}`).textContent = badgenumberBaruSebelumnya;
+            document.getElementById(`nama${id}`).textContent = namaSebelumnya;
+            document.getElementById(`nip${id}`).textContent = nipSebelumnya;
+            document.getElementById(`golonganRuang${id}`).textContent = golonganRuangSebelumnya;
+            document.getElementById(`jabatan${id}`).textContent = jabatanSebelumnya;
+            document.getElementById(`gradeJabatan${id}`).textContent = gradeJabatanSebelumnya;
+            document.getElementById(`direktorat${id}`).textContent = direktoratSebelumnya;
+            document.getElementById(`satker${id}`).textContent = satkerSebelumnya;
+            document.getElementById(`ppk${id}`).textContent = ppkSebelumnya;
+            document.getElementById(`status${id}`).textContent = statusSebelumnya;
+            document.getElementById(`aktif${id}`).textContent = aktifSebelumnya;
+
+            // function CancelPEG(id) {
+            //     // Tampilkan tombol Edit
+            //     document.getElementById(`editButton${id}`).style.display = "block";
+
+            //     // Sembunyikan tombol Simpan dan Batal
+            //     document.getElementById(`simpanButton${id}`).style.display = "none";
+            //     document.getElementById(`cancelButton${id}`).style.display = "none";
+
+            //     // Kembalikan elemen ke tampilan awal (tidak tersimpan)
+            //     document.getElementById(`badgenumber${id}`).textContent = document.getElementById(`input_badgenumber${id}`).value;
+            //     document.getElementById(`badgenumber_baru${id}`).textContent = document.getElementById(`input_badgenumber_baru${id}`).value;
+            //     document.getElementById(`nama${id}`).textContent = document.getElementById(`input_nama${id}`).value;
+            //     document.getElementById(`nip${id}`).textContent = document.getElementById(`input_nip${id}`).value;
+            //     document.getElementById(`golonganRuang${id}`).textContent = document.getElementById(`input_golonganRuang${id}`).value;
+            //     document.getElementById(`jabatan${id}`).textContent = document.getElementById(`input_jabatan${id}`).value;
+            //     document.getElementById(`gradeJabatan${id}`).textContent = document.getElementById(`input_gradeJabatan${id}`).value;
+            //     document.getElementById(`direktorat${id}`).textContent = document.getElementById(`input_direktorat${id}`).value;
+            //     document.getElementById(`satker${id}`).textContent = document.getElementById(`input_satker${id}`).value;
+            //     document.getElementById(`ppk${id}`).textContent = document.getElementById(`input_ppk${id}`).value;
+            //     document.getElementById(`status${id}`).textContent = document.getElementById(`input_status${id}`).value;
+            //     document.getElementById(`aktif${id}`).textContent = document.getElementById(`input_aktif${id}`).value;
         }
     </script>
 @endsection
