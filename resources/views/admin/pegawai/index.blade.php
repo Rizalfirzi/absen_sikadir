@@ -192,7 +192,19 @@
             document.getElementById(`nama${id}`).innerHTML = `<input type="text" id="input_nama${id}" value="${nama}">`;
             document.getElementById(`nip${id}`).innerHTML = `<input type="text" id="input_nip${id}" value="${nip}">`;
             document.getElementById(`golonganRuang${id}`).innerHTML =
+<<<<<<< HEAD
                 `<input type="text" id="input_golonganRuang${id}" value="${golonganRuang}">`;
+=======
+                `<select id="input_golonganRuang${id}">
+                    <option value=""> ---------- </option>
+                        @foreach ($golongan as $gol)
+                            <option value='{{ $gol->golongan }}' ${golonganRuang === '${golonganRuang}' ? 'selected' : ''}>{{ $gol->golongan }}</option>
+                        @endforeach
+                </select>
+                `;
+                
+
+>>>>>>> d67a559 (bebasdaah)
             document.getElementById(`jabatan${id}`).innerHTML =
                 `<input type="text" id="input_jabatan${id}" value="${jabatan}">`;
             document.getElementById(`gradeJabatan${id}`).innerHTML =

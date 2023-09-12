@@ -24,8 +24,18 @@ class PegawaiController extends Controller
             ->orderBy('t_pegawai.satker_id')
             ->orderBy('t_pegawai.nama', 'asc')
             ->get();
+        
+        $hargajabatan = DB::table('harga_jabatan')
+            ->select('harga_jabatan.peringkat_jabatan as grade','harga_jabatan.harga_jabatan as harga')
+            ->orderBy('harga_jabatan.peringkat_jabatan')
+            ->get();
 
-        return view('admin.pegawai.index', compact('direktorats', 'pegawai'));
+        $golongan = DB::table('golongan')
+            ->select('golongan.golongan', 'golongan.tingkat', 'golongan.pangkat', 'golongan.bagian')
+            ->orderBy('golongan.id')
+            ->get();
+
+        return view('admin.pegawai.index', compact('direktorats', 'pegawai', 'hargajabatan', 'golongan'));
     }
 
     public function getSatkerByDirektorat($direktoratId)
