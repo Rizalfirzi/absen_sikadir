@@ -1,68 +1,63 @@
 @extends('layouts.master')
 @section('content')
-    <div class="container">
-        <div class="row">
-            <!-- Kolom lg-5 -->
-            <div class="col-lg-5 d-flex align-items-stretch">
-                <div class="col-lg-10">
-                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI<font color='#ff0000'></font>
-                    </h4>
-                </div>
+<div class="container">
+    <div class="row">
+        <!-- Kolom lg-5 -->
+        <div class="col-lg-5 d-flex align-items-stretch">
+            <div class="col-lg-10">
+                <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI<font color='#ff0000'></font></h4>
             </div>
-            <hr>
-            <!-- Kolom lg-12 -->
-
-            <div class="col-md-12">
-                <form id="filterForm" action="{{ route('pegawai.filter') }}" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h5>Direktorat</h5>
-                            <select name="direktorat" id="direktorat" class="form-control" required>
-                                <option value="">-- Pilih Direktorat --</option>
-                                @foreach ($direktorats as $direktorat)
-                                    <option value="{{ $direktorat->direktorat_id }}">{{ $direktorat->direktorat }}</option>
-                                @endforeach
+        </div>
+        <hr>
+        <!-- Kolom lg-7 -->
+    </div>
+    <div class="row">
+        <!-- Kolom lg-12 -->
+        <div class="col-md-12">
+            <form id="filterForm" action="{{ route('pegawai.filter') }}" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Direktorat</h5>
+                        <select name="direktorat" id="direktorat" class="form-control" required>
+                            <option value="">-- Pilih Direktorat --</option>
+                            @foreach ($direktorats as $direktorat)
+                                <option value="{{ $direktorat->direktorat_id }}">{{ $direktorat->direktorat }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Satker / Unit Kerja</h5>
+                        <div id="isisatker">
+                            <select name="satker" id="satker" class="form-control">
+                                <!-- Opsi satker akan diisi melalui JavaScript -->
                             </select>
-                        </div>
-                        <div class="col-md-3">
-                            <h5>Satker / Unit Kerja</h5>
-                            <div id="isisatker">
-                                <select name="satker" id="satker" class="form-control">
-                                    <!-- Opsi satker akan diisi melalui JavaScript -->
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <h5>Aktif</h5>
-                            <select class="form-control" id="aktif" name="aktif">
-                                <option value="Aktif" selected>Aktif</option>
-                                <option value="Meninggal">Meninggal</option>
-                                <option value="Pemberhentian Dengan Hormat Atas Permintaan Sendiri">Pemberhentian Dengan
-                                    Hormat Atas Permintaan Sendiri</option>
-                                <option value="Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri">Pemberhentian
-                                    Dengan Hormat Tidak Atas Permintaan Sendiri</option>
-                                <option value="Pemberhentian Tidak Dengan Hormat">Pemberhentian Tidak Dengan Hormat</option>
-                                <option value="Pensiun">Pensiun</option>
-                                <option value="Mutasi lintas Unor">Mutasi lintas Unor</option>
-                                <!-- Sisipkan opsi lainnya sesuai kebutuhan -->
-                            </select>
-                        </div>
-                        <div class="col-md-3" style="padding-top: 25px">
-                            <button class="btn btn-primary">Proses</button>
-                            <a href=""><button class="well1 btn btn-primary">Tambah Baru</button></a>
                         </div>
                     </div>
-                </form>
-                {{-- <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Proses</button>
-                        </div> --}}
-            </div>
-            {{-- <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Proses</button>
-                        </div> --}}
+                    <div class="col-md-2">
+                        <h5>Aktif</h5>
+                        <select class="form-control" id="aktif" name="aktif">
+                            <option value="Aktif" selected>Aktif</option>
+                            <option value="Meninggal">Meninggal</option>
+                            <option value="Pemberhentian Dengan Hormat Atas Permintaan Sendiri">Pemberhentian Dengan
+                                Hormat Atas Permintaan Sendiri</option>
+                            <option value="Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri">Pemberhentian
+                                Dengan Hormat Tidak Atas Permintaan Sendiri</option>
+                            <option value="Pemberhentian Tidak Dengan Hormat">Pemberhentian Tidak Dengan Hormat</option>
+                            <option value="Pensiun">Pensiun</option>
+                            <option value="Mutasi lintas Unor">Mutasi lintas Unor</option>
+                            <!-- Sisipkan opsi lainnya sesuai kebutuhan -->
+                        </select>
+                    </div>
+                    <div class="col-md-3" style="padding-top: 25px">
+                        <button class="btn btn-primary">Proses</button>
+                        <a href="{{ route('pegawai.create') }}" class="btn btn-success">Tambah Baru</a>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
     <br>
     <div class="container">
@@ -101,7 +96,7 @@
                         <td id="badgenumber_baru{{ $data->id }}">{{ $data->badgenumber_baru }}</td>
                         <td id="nama{{ $data->id }}">{{ $data->nama }}</td>
                         <td id="nip{{ $data->id }}">{{ $data->nip }}</td>
-                        <td id="golonganRuang{{ $data->id }}">
+                        <td id="golonganRuang{{ $data->id }}" data-golongan-sebelumnya="{{ $data->golongan_ruang }}">
                             {{ $data->golongan_ruang }}</td>
                         <td id="jabatan{{ $data->id }}">{{ $data->jabatan }}</td>
                         <td id="gradeJabatan{{ $data->id }}">
@@ -172,91 +167,58 @@
             var status = document.getElementById(`status${id}`).textContent;
             var aktif = document.getElementById(`aktif${id}`).textContent;
 
-            document.getElementById(`badgenumber${id}`).setAttribute('data-badgenumber-sebelumnya', badgenumber);
-            document.getElementById(`badgenumber_baru${id}`).setAttribute('data-badgenumber-baru-sebelumnya', badgenumber_baru);
-            document.getElementById(`nama${id}`).setAttribute('data-nama-sebelumnya', nama);
-            document.getElementById(`nip${id}`).setAttribute('data-nip-sebelumnya', nip);
-            document.getElementById(`golonganRuang${id}`).setAttribute('data-golonganRuang-sebelumnya', golonganRuang);
-            document.getElementById(`jabatan${id}`).setAttribute('data-jabatan-sebelumnya', jabatan);
-            document.getElementById(`gradeJabatan${id}`).setAttribute('data-gradeJabatan-sebelumnya', gradeJabatan);
-            document.getElementById(`direktorat${id}`).setAttribute('data-direktorat-sebelumnya', direktorat);
-            document.getElementById(`satker${id}`).setAttribute('data-satker-sebelumnya', satker);
-            document.getElementById(`ppk${id}`).setAttribute('data-ppk-sebelumnya', ppk);
-            document.getElementById(`status${id}`).setAttribute('data-status-sebelumnya', status);
-            document.getElementById(`aktif${id}`).setAttribute('data-aktif-sebelumnya', aktif);
+            // // Simpan nilai saat ini sebagai nilai sebelumnya
+            // document.getElementById(`badgenumber${id}`).setAttribute('data-badgenumber-sebelumnya', badgenumberSebelumnya);
+            // document.getElementById(`badgenumber_baru${id}`).setAttribute('data-badgenumber-baru-sebelumnya',
+            //     badgenumberBaruSebelumnya);
+            // document.getElementById(`nama${id}`).setAttribute('data-nama-sebelumnya', namaSebelumnya);
+            // document.getElementById(`nip${id}`).setAttribute('data-nip-sebelumnya', nipSebelumnya);
+            // document.getElementById(`golonganRuang${id}`).setAttribute('data-golonganRuang-sebelumnya',
+            //     golonganRuangSebelumnya);
+            // document.getElementById(`jabatan${id}`).setAttribute('data-jabatan-sebelumnya', jabatanSebelumnya);
+            // document.getElementById(`gradeJabatan${id}`).setAttribute('data-gradeJabatan-sebelumnya',
+            //     gradeJabatanSebelumnya);
+            // document.getElementById(`direktorat${id}`).setAttribute('data-direktorat-sebelumnya', direktoratSebelumnya);
+            // document.getElementById(`satker${id}`).setAttribute('data-satker-sebelumnya', satkerSebelumnya);
+            // document.getElementById(`ppk${id}`).setAttribute('data-ppk-sebelumnya', ppkSebelumnya);
+            // document.getElementById(`status${id}`).setAttribute('data-status-sebelumnya', statusSebelumnya);
+            // document.getElementById(`aktif${id}`).setAttribute('data-aktif-sebelumnya', aktifSebelumnya);
 
             // Gantikan nilai-nilai dengan input text
             document.getElementById(`badgenumber${id}`).innerHTML =
                 `<input type="text" id="input_badgenumber${id}" value="${badgenumber}">`;
-
             document.getElementById(`badgenumber_baru${id}`).innerHTML =
                 `<input type="text" id="input_badgenumber_baru${id}" value="${badgenumber_baru}">`;
-
             document.getElementById(`nama${id}`).innerHTML = `<input type="text" id="input_nama${id}" value="${nama}">`;
-
             document.getElementById(`nip${id}`).innerHTML = `<input type="text" id="input_nip${id}" value="${nip}">`;
-            
             document.getElementById(`golonganRuang${id}`).innerHTML =
-                `<select id="input_golonganRuang${id}">
-                    <option value=""> ---------- </option>
-                        @foreach ($golongan as $gol)
-                            <option value='{{ $gol->golongan }}' ${golonganRuang === '${golonganRuang}' ? 'selected' : ''}>{{ $gol->golongan }}</option>
-                        @endforeach
-                </select>
-                `;
-
+                `<input type="text" id="input_golonganRuang${id}" value="${golonganRuang}">`;
             document.getElementById(`jabatan${id}`).innerHTML =
                 `<input type="text" id="input_jabatan${id}" value="${jabatan}">`;
-
             document.getElementById(`gradeJabatan${id}`).innerHTML =
-                `<select id="input_gradeJabatan${id}">
-                    <option value=""> ---------- </option>
-                        @foreach ($hargajabatan as $grade)
-                            <option value='{{ $grade->grade }}' ${gradeJabatan === '${gradeJabatan}' ? 'selected' : ''}>{{ $grade->grade }} <<-->> {{ $grade->harga }}</option>
-                        @endforeach
-                </select>
-                `;
-
+                `<input type="text" id="input_gradeJabatan${id}" value="${gradeJabatan}">`;
             document.getElementById(`direktorat${id}`).innerHTML =
-                `<select name="input_direktorat${id}" id="input_direktorat${id}" class="form-control" required>
-                    <option value="">-- Pilih Direktorat --</option>
-                        @foreach ($direktorats as $direktorat)
-                            <option value='{{ $direktorat->direktorat_id }}' ${direktorat === '${direktorat}' ? 'selected' : ''}>{{ $direktorat->direktorat }}</option>
-                        @endforeach
-                </select>
-                `;
-
+                `<input type="text" id="input_direktorat${id}" value="${direktorat}">`;
             document.getElementById(`satker${id}`).innerHTML =
-                `<select name="input_satker${id}" id="input_satker${id}" class="form-control">
-                    
-                </select>
-                `;
-
-            document.getElementById(`ppk${id}`).innerHTML = 
-                `<select name="input_ppk${id}" id="input_ppk${id}" class="form-control">
-                    
-                </select>
-                `;
-
+                `<input type="text" id="input_satker${id}" value="${satker}">`;
+            document.getElementById(`ppk${id}`).innerHTML = `<input type="text" id="input_ppk${id}" value="${ppk}">`;
             document.getElementById(`status${id}`).innerHTML =
                 `<select id="input_status${id}">
-                    <option value='PNS' ${status === 'PNS' ? 'selected' : ''}>PNS</option>
-                </select>
+                <option value='PNS' ${status === 'PNS' ? 'selected' : ''}>PNS</option>
+            </select>
                 `;
+            document.getElementById(`aktif${id}`).innerHTML = `<select id="input_aktif${id}">
+                <option value='Aktif' ${aktif === 'Aktif' ? 'selected' : ''}>Aktif</option>
+                <option value='Meninggal' ${aktif === 'Meninggal' ? 'selected' : ''}>Meninggal</option>
+                <option value='Pemberhentian Dengan Hormat Atas Permintaan Sendiri' ${aktif === 'Pemberhentian Dengan Hormat Atas Permintaan Sendiri' ? 'selected' : ''}>Pemberhentian Dengan Hormat Atas Permintaan Sendiri</option>
+                <option value='Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri' ${aktif === 'Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri' ? 'selected' : ''}>Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri</option>
+                <option value='Pemberhentian Tidak Dengan Hormat' ${aktif === 'Pemberhentian Tidak Dengan Hormat' ? 'selected' : ''}>Pemberhentian Tidak Dengan Hormat</option>
+                <option value='Pensiun' ${aktif === 'Pensiun' ? 'selected' : ''}>Pensiun</option>
+                <option value='Mutasi lintas Unor' ${aktif === 'Mutasi lintas Unor' ? 'selected' : ''}>Mutasi lintas Unor</option>
+            </select>
+                `;
+        }
 
-            document.getElementById(`aktif${id}`).innerHTML = 
-                `<select id="input_aktif${id}">
-                    <option value='Aktif' ${aktif === 'Aktif' ? 'selected' : ''}>Aktif</option>
-                    <option value='Meninggal' ${aktif === 'Meninggal' ? 'selected' : ''}>Meninggal</option>
-                    <option value='Pemberhentian Dengan Hormat Atas Permintaan Sendiri' ${aktif === 'Pemberhentian Dengan Hormat Atas Permintaan Sendiri' ? 'selected' : ''}>Pemberhentian Dengan Hormat Atas Permintaan Sendiri</option>
-                    <option value='Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri' ${aktif === 'Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri' ? 'selected' : ''}>Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri</option>
-                    <option value='Pemberhentian Tidak Dengan Hormat' ${aktif === 'Pemberhentian Tidak Dengan Hormat' ? 'selected' : ''}>Pemberhentian Tidak Dengan Hormat</option>
-                    <option value='Pensiun' ${aktif === 'Pensiun' ? 'selected' : ''}>Pensiun</option>
-                    <option value='Mutasi lintas Unor' ${aktif === 'Mutasi lintas Unor' ? 'selected' : ''}>Mutasi lintas Unor</option>
-                </select>
-                `;
-            }
-            
         function SimpanPEG(id) {
             // Dapatkan nilai-nilai yang baru diinputkan
             var badgenumber = document.getElementById(`input_badgenumber${id}`).value;
@@ -361,57 +323,28 @@
             document.getElementById(`ppk${id}`).textContent = ppkSebelumnya;
             document.getElementById(`status${id}`).textContent = statusSebelumnya;
             document.getElementById(`aktif${id}`).textContent = aktifSebelumnya;
-        }
-    </script>
 
-    <script>
-        // JavaScript function to load "satker" and "ppk" options based on selected "direktorat"
-        document.getElementById(`input_direktorat${id}`).addEventListener('change', function() {
-            const selectedDirektoratId = this.value;
-            const satkerSelect = document.getElementById(`input_satker${id}`);
-            const ppkSelect = document.getElementById(`input_ppk${id}`);
-            
-            // Clear existing options in "satker" and "ppk" dropdowns
-            satkerSelect.innerHTML = '<option value="">-- Pilih Satker --</option>';
-            ppkSelect.innerHTML = '<option value="">-- Pilih Subdirektorat --</option>';
-            
-            // dataSatker = db.query("SELECT * FROM satker left join direktorat on satker.direktorat_id = direktorat.direktorat_id")
-            // satker  = [] //db.query("SELECT * FROM satker WHERE prop IS NOT NULL");
-            // ppk     = [] //db.query("SELECT * FROM satker WHERE prop IS NULL");
-            
-            // data.forEach(satker => {
-            //     if(dataSatker !== null)
-            //         satker.push(satker);
-            //     else 
-            //         ppk.push(satker);
-            // })
-            
-            // If no "direktorat" is selected, return without making an AJAX request
-            if (selectedDirektoratId) {
-                // Make an AJAX request to fetch "satker" and "ppk" options based on selected "direktorat"
-                // Replace 'your_api_url' with the actual URL of your server endpoint
-                fetch(`/get-satker/${selectedDirektoratId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Populate "satker" dropdown
-                        data.satkerOptions.forEach(satker => {
-                            const option = document.createElement('option');
-                                option.value = satker.satker_id;
-                                option.textContent = satker.nama;
-                                satkerSelect.appendChild(option);
-                
-                            // satkerSelect.innerHTML += 
-                            // `<option value="${satker.id}">${satker.name}</option>`;
-                        });
-                
-                        // Add an "All Satker" option
-                        const allOption = document.createElement('option');
-                        allOption.value = 'all';
-                        allOption.textContent = 'All Satker';
-                        satkerSelect.appendChild(allOption);
-                        
-                    })
-            }
-        }); 
+            // function CancelPEG(id) {
+            //     // Tampilkan tombol Edit
+            //     document.getElementById(`editButton${id}`).style.display = "block";
+
+            //     // Sembunyikan tombol Simpan dan Batal
+            //     document.getElementById(`simpanButton${id}`).style.display = "none";
+            //     document.getElementById(`cancelButton${id}`).style.display = "none";
+
+            //     // Kembalikan elemen ke tampilan awal (tidak tersimpan)
+            //     document.getElementById(`badgenumber${id}`).textContent = document.getElementById(`input_badgenumber${id}`).value;
+            //     document.getElementById(`badgenumber_baru${id}`).textContent = document.getElementById(`input_badgenumber_baru${id}`).value;
+            //     document.getElementById(`nama${id}`).textContent = document.getElementById(`input_nama${id}`).value;
+            //     document.getElementById(`nip${id}`).textContent = document.getElementById(`input_nip${id}`).value;
+            //     document.getElementById(`golonganRuang${id}`).textContent = document.getElementById(`input_golonganRuang${id}`).value;
+            //     document.getElementById(`jabatan${id}`).textContent = document.getElementById(`input_jabatan${id}`).value;
+            //     document.getElementById(`gradeJabatan${id}`).textContent = document.getElementById(`input_gradeJabatan${id}`).value;
+            //     document.getElementById(`direktorat${id}`).textContent = document.getElementById(`input_direktorat${id}`).value;
+            //     document.getElementById(`satker${id}`).textContent = document.getElementById(`input_satker${id}`).value;
+            //     document.getElementById(`ppk${id}`).textContent = document.getElementById(`input_ppk${id}`).value;
+            //     document.getElementById(`status${id}`).textContent = document.getElementById(`input_status${id}`).value;
+            //     document.getElementById(`aktif${id}`).textContent = document.getElementById(`input_aktif${id}`).value;
+        }
     </script>
 @endsection
