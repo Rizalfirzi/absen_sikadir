@@ -108,7 +108,7 @@ class TukinController extends Controller
             $tukinMatangs->where(function ($query) use ($satkerId) {
                 $query->where('t_pegawai.satker_id', $satkerId)->orWhere('t_pegawai.ppk_id', '=', DB::raw($satkerId));
             });
-            $satkerName = DB::table('satker')->where('satker_id', $satkerId)->value('nama');
+            // $satkerName = DB::table('satker')->where('satker_id', $satkerId)->value('nama');
         }
         if ($selectedTahun) {
             $tukinMatangs->where('tahun', $selectedTahun);
@@ -123,7 +123,7 @@ class TukinController extends Controller
             ->orderBy('t_pegawai.nama', 'asc')
             ->get();
 
-        return view('admin.rekaptukin.filtered', compact('direktorats', 'years', 'tukinMatangs','satkerName'));
+        return view('admin.rekaptukin.filtered', compact('direktorats', 'years', 'tukinMatangs'));
     }
     /**
      * Show the form for creating a new resource.

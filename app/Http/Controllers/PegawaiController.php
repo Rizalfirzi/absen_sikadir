@@ -28,11 +28,23 @@ class PegawaiController extends Controller
         return view('admin.pegawai.index', compact('direktorats', 'pegawai'));
     }
 
-    public function getSatker($direktoratId)
+    public function getSatkerByDirektorat($direktoratId)
     {
-        $satkers = Satker::where('direktorat_id', $direktoratId)->get();
+        $satkers = Satker::where('direktorat_id', $direktoratId)
+        ->whereNotNull('prop')
+        ->orderBy('nama', 'asc')
+        ->get();
 
         return response()->json($satkers);
+    }
+
+    public function getPpkByDirektorat($direktoratId)
+    {
+        $ppk = Satker::where('direktorat_id', $direktoratId)
+            ->whereNull('prop')
+            ->get();
+
+        return response()->json($ppk);
     }
 
     public function filter(Request $request)
@@ -82,7 +94,11 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        //
+        $direktorats = DB::table('direktorat')->get();
+        $golongans = DB::table('golongan')->get();
+        $hargaJabatans = DB::table('harga_jabatan')->get();
+
+        return view('admin.pegawai.create', compact('direktorats','golongans', 'hargaJabatans'));
     }
 
     /**

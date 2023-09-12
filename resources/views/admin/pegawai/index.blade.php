@@ -1,68 +1,66 @@
 @extends('layouts.master')
 @section('content')
-    <div class="container">
-        <div class="row">
-            <!-- Kolom lg-5 -->
-            <div class="col-lg-5 d-flex align-items-stretch">
-                <div class="col-lg-10">
-                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI<font color='#ff0000'></font>
-                    </h4>
-                </div>
+<div class="container">
+    <div class="row">
+        <!-- Kolom lg-5 -->
+        <div class="col-lg-5 d-flex align-items-stretch">
+            <div class="col-lg-10">
+                <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI<font color='#ff0000'></font></h4>
             </div>
-            <hr>
-            <!-- Kolom lg-12 -->
+        </div>
+        <hr>
+        <!-- Kolom lg-7 -->
 
-            <div class="col-md-12">
-                <form id="filterForm" action="{{ route('pegawai.filter') }}" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col-md-3">
-                            <h5>Direktorat</h5>
-                            <select name="direktorat" id="direktorat" class="form-control" required>
-                                <option value="">-- Pilih Direktorat --</option>
-                                @foreach ($direktorats as $direktorat)
-                                    <option value="{{ $direktorat->direktorat_id }}">{{ $direktorat->direktorat }}</option>
-                                @endforeach
+    </div>
+
+    <div class="row">
+
+        <!-- Kolom lg-12 -->
+        <div class="col-md-12">
+            <form id="filterForm" action="{{ route('pegawai.filter') }}" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5>Direktorat</h5>
+                        <select name="direktorat" id="direktorat" class="form-control" required>
+                            <option value="">-- Pilih Direktorat --</option>
+                            @foreach ($direktorats as $direktorat)
+                                <option value="{{ $direktorat->direktorat_id }}">{{ $direktorat->direktorat }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Satker / Unit Kerja</h5>
+                        <div id="isisatker">
+                            <select name="satker" id="satker" class="form-control">
+                                <!-- Opsi satker akan diisi melalui JavaScript -->
                             </select>
-                        </div>
-                        <div class="col-md-3">
-                            <h5>Satker / Unit Kerja</h5>
-                            <div id="isisatker">
-                                <select name="satker" id="satker" class="form-control">
-                                    <!-- Opsi satker akan diisi melalui JavaScript -->
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <h5>Aktif</h5>
-                            <select class="form-control" id="aktif" name="aktif">
-                                <option value="Aktif" selected>Aktif</option>
-                                <option value="Meninggal">Meninggal</option>
-                                <option value="Pemberhentian Dengan Hormat Atas Permintaan Sendiri">Pemberhentian Dengan
-                                    Hormat Atas Permintaan Sendiri</option>
-                                <option value="Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri">Pemberhentian
-                                    Dengan Hormat Tidak Atas Permintaan Sendiri</option>
-                                <option value="Pemberhentian Tidak Dengan Hormat">Pemberhentian Tidak Dengan Hormat</option>
-                                <option value="Pensiun">Pensiun</option>
-                                <option value="Mutasi lintas Unor">Mutasi lintas Unor</option>
-                                <!-- Sisipkan opsi lainnya sesuai kebutuhan -->
-                            </select>
-                        </div>
-                        <div class="col-md-3" style="padding-top: 25px">
-                            <button class="btn btn-primary">Proses</button>
-                            <a href=""><button class="well1 btn btn-primary">Tambah Baru</button></a>
                         </div>
                     </div>
-                </form>
-                {{-- <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Proses</button>
-                        </div> --}}
-            </div>
-            {{-- <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary" style="margin-top: 32px;">Proses</button>
-                        </div> --}}
+                    <div class="col-md-2">
+                        <h5>Aktif</h5>
+                        <select class="form-control" id="aktif" name="aktif">
+                            <option value="Aktif" selected>Aktif</option>
+                            <option value="Meninggal">Meninggal</option>
+                            <option value="Pemberhentian Dengan Hormat Atas Permintaan Sendiri">Pemberhentian Dengan
+                                Hormat Atas Permintaan Sendiri</option>
+                            <option value="Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri">Pemberhentian
+                                Dengan Hormat Tidak Atas Permintaan Sendiri</option>
+                            <option value="Pemberhentian Tidak Dengan Hormat">Pemberhentian Tidak Dengan Hormat</option>
+                            <option value="Pensiun">Pensiun</option>
+                            <option value="Mutasi lintas Unor">Mutasi lintas Unor</option>
+                            <!-- Sisipkan opsi lainnya sesuai kebutuhan -->
+                        </select>
+                    </div>
+                    <div class="col-md-3" style="padding-top: 25px">
+                        <button class="btn btn-primary">Proses</button>
+                        <a href="{{ route('pegawai.create') }}" class="btn btn-success">Tambah Baru</a>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
     <br>
     <div class="container">
