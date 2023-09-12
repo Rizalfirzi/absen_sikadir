@@ -29,6 +29,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css">
 
 <style>
+    .clearfix {
+        width: 100%;
+        height: 100%;
+    }
+
     .img-with-stroke {
         display: inline-block;
         position: relative;

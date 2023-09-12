@@ -24,16 +24,28 @@
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables JS -->
-  <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script>
+  {{-- <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script> --}}
+  <script src="{{asset('javascript/datatables/jqueryV11.dataTables.min.js')}}"></script>
   <!-- DataTables Bootstrap 4 JS -->
-  <script src="https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap4.min.js"></script>
+  {{-- <script src="https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap4.min.js"></script> --}}
+  <script src="{{ asset('javascript/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
   <!-- Tambahkan script JavaScript untuk Bootstrap dan Bootstrap Datepicker -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 
   <!-- Tambahkan script JavaScript untuk eksport PDF, EXCEL, SVG -->
-  <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <script src="{{asset('javascript/datatables/jquery-3.7.0.js')}}"></script>
+  <script src="{{asset('javascript/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('javascript/datatables/dataTables.buttons.min.js')}}"></script>
+  <script src="{{asset('javascript/datatables/jszip.min.js')}}"></script>
+  <script src="{{asset('javascript/datatables/pdfmake.min.js')}}"></script>
+  <script src="{{asset('javascript/datatables/vfs_fonts.js')}}"></script>
+  <script src="{{asset('javascript/datatables/buttons.html5.min.js')}}"></script>
+  <script src="{{asset('javascript/datatables/buttons.print.min.js')}}"></script>
+
+  <script src="{{asset('javascript/datatables/jquery.min.js')}}"></script>
+  {{-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
@@ -42,7 +54,7 @@
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
   <!-- Include Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>

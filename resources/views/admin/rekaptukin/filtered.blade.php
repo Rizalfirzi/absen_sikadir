@@ -49,18 +49,18 @@
                         <div class="col-md-2">
                             <h5>Bulan</h5>
                             <select name="bulan" id="bulan" class="well1 col-md-12 form-control">
-                                    <option value="1">Januari</option>
-                                    <option value="2">Februari</option>
-                                    <option value="3">Maret</option>
-                                    <option value="4">April</option>
-                                    <option value="5">Mei</option>
-                                    <option value="6">Juni</option>
-                                    <option value="7">Juli</option>
-                                    <option value="8">Agustus</option>
-                                    <option value="9">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
+                                <option value="1">Januari</option>
+                                <option value="2">Februari</option>
+                                <option value="3">Maret</option>
+                                <option value="4">April</option>
+                                <option value="5">Mei</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">Agustus</option>
+                                <option value="9">September</option>
+                                <option value="10">Oktober</option>
+                                <option value="11">November</option>
+                                <option value="12">Desember</option>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -131,16 +131,27 @@
                         <th class="text_header_tabel">Rp. POT</th>
                     </tr>
                     <tr>
+                        @php
+                            $currentSatker = null;
+                        @endphp
+
+                        @foreach ($tukinMatangs as $dtmatang)
+                            @if ($currentSatker !== $dtmatang->nama_satker)
+                                @php
+                                    $currentSatker = $dtmatang->nama_satker;
+                                @endphp
+
+                    <tr>
                         <th colspan='26' class="highlight-cell bg-warning">
                             <i class='fa fa-list fa-fw'></i>
-                            @if ($satkerName)
-                                {{ $satkerName }}
-                            @endif
+                            {{ $currentSatker }}
                         </th>
+                    </tr>
+                    @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($tukinMatangs as $dtmatang)
+                    {{-- @foreach ($tukinMatangs as $dtmatang) --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $dtmatang->nip }}</td>
@@ -150,7 +161,8 @@
                                 <td>{{ number_format($dtmatang->harga_jabatan, 0, ',', '.') }}</td>
                                 <td>{{ $dtmatang->skp_persentase }}</td>
                                 <td>{{ number_format($dtmatang->tukin_dasar, 0, ',', '.') }}</td>
-                                <td style=" background-color: rgb(10, 10, 90); color:white">Rp.{{ number_format($dtmatang->tukin_terima, 0, ',', '.') }}</td>
+                                <td style=" background-color: rgb(10, 10, 90); color:white">
+                                    Rp.{{ number_format($dtmatang->tukin_terima, 0, ',', '.') }}</td>
                                 <td>{{ $dtmatang->cuti_besar }}</td>
                                 <td>{{ number_format($dtmatang->cuti_besar_pot, 0, ',', '.') }}</td>
                                 <td>{{ $dtmatang->cuti_penting }}</td>

@@ -13,6 +13,7 @@ use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\HargajabatanController;
 use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
+use App\Http\Controllers\ImportKehadiranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,8 +43,9 @@ Route::middleware('auth.route')->group(function () {
 
     // route PegawaiController
     Route::resource('pegawai', PegawaiController::class);
-    Route::get('/get-satker/{direktoratId}', [PegawaiController::class, 'getSatker']);
-    Route::post('/pegawai', [PegawaiController::class, 'filter'])->name('pegawai.filter');
+    Route::get('/get-satker_p/{direktoratId}', [PegawaiController::class, 'getSatkerByDirektorat']);
+    Route::get('/get-ppk/{direktoratId}', [PegawaiController::class, 'getPpkByDirektorat']);
+    Route::post('/pegawai ', [PegawaiController::class, 'filter'])->name('pegawai.filter');
 
     // route HarikerjapuasaController
     Route::resource('harikerjapuasa', HarikerjapuasaController::class);
@@ -54,7 +56,6 @@ Route::middleware('auth.route')->group(function () {
     // route SkpController
     Route::resource('skp', SkpController::class);
     Route::get('/get-satker/{direktoratId}', [SkpController::class, 'getSatker']);
-    Route::put('/skp/update/{id}', [SkpController::class, 'update'])->name('skp.update');
     Route::post('/skp', [SkpController::class, 'filter'])->name('skp.filter');
 
     // route TukinController
@@ -71,7 +72,7 @@ Route::middleware('auth.route')->group(function () {
 
     //route izin
     Route::resource('izin', IzinController::class);
-    Route::post('/izinr', [IzinController::class, 'filter'])->name('izin.filter');
+    Route::post('/izin', [IzinController::class, 'filter'])->name('izin.filter');
     Route::post('/simpan-izin', [IzinController::class, 'store'])->name('izin.store');
 
     // route konfirmasi
@@ -79,4 +80,7 @@ Route::middleware('auth.route')->group(function () {
     Route::post('/konfirmasi', [PermintaanController::class, 'filter'])->name('konfirmasi.filter');
     Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
+
+     // route import pegawai
+    Route::resource('import', ImportKehadiranController::class);
 });

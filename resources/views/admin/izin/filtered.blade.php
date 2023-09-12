@@ -64,7 +64,7 @@
 
     <br>
     <div class="container">
-        <table id="" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
+        <table id="example2" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
             <thead>
                 <tr>
                     <th class="text_header_tabel">#</th>

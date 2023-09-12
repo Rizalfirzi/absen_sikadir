@@ -125,14 +125,14 @@
 
                 // Gantikan nilai dengan elemen select
                 document.getElementById(`nilai${id}`).innerHTML = `
-        <select id="nilaiSelect${id}">
-            <option value='Sangat Baik' ${nilai === 'Sangat Baik' ? 'selected' : ''}>Sangat Baik</option>
-            <option value='Baik' ${nilai === 'Baik' ? 'selected' : ''}>Baik</option>
-            <option value='Butuh Perbaikan' ${nilai === 'Butuh Perbaikan' ? 'selected' : ''}>Butuh Perbaikan</option>
-            <option value='Kurang' ${nilai === 'Kurang' ? 'selected' : ''}>Kurang</option>
-            <option value='Sangat Kurang' ${nilai === 'Sangat Kurang' ? 'selected' : ''}>Sangat Kurang</option>
-        </select>
-    `;
+                    <select id="nilaiSelect${id}">
+                        <option value='Sangat Baik' ${nilai === 'Sangat Baik' ? 'selected' : ''}>Sangat Baik</option>
+                        <option value='Baik' ${nilai === 'Baik' ? 'selected' : ''}>Baik</option>
+                        <option value='Butuh Perbaikan' ${nilai === 'Butuh Perbaikan' ? 'selected' : ''}>Butuh Perbaikan</option>
+                        <option value='Kurang' ${nilai === 'Kurang' ? 'selected' : ''}>Kurang</option>
+                        <option value='Sangat Kurang' ${nilai === 'Sangat Kurang' ? 'selected' : ''}>Sangat Kurang</option>
+                    </select>
+                `;
             }
 
             function SimpanSKP(id) {
