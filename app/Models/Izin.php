@@ -12,14 +12,14 @@ class Izin extends Model
     protected $table = 'izin';
     public $timestamps = false;
     protected $fillable = [
-        'nik',      
-        'tanggal',   
-        'alasan',   
-        'jenis',    
-        'nosurat',   
-        'deleted',    
-        'extensi', 
-        'st',         
-        'anak'       
+        'nik',
+        'tanggal',
+        'alasan',
+        'jenis',
+        'nosurat',
+        'deleted',
+        'extensi',
+        'st',
+        'anak'
     ];
 }
