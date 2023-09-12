@@ -105,8 +105,18 @@ class PegawaiController extends Controller
     public function create()
     {
         $direktorats = DB::table('direktorat')->get();
-        $golongans = DB::table('golongan')->get();
-        $hargaJabatans = DB::table('harga_jabatan')->get();
+        // $golongans = DB::table('golongan')->get();
+        // $hargaJabatans = DB::table('harga_jabatan')->get();
+
+        $hargaJabatans = DB::table('harga_jabatan')
+            ->select('harga_jabatan.peringkat_jabatan as grade','harga_jabatan.harga_jabatan as harga')
+            ->orderBy('harga_jabatan.peringkat_jabatan')
+            ->get();
+
+        $golongans = DB::table('golongan')
+            ->select('golongan.golongan', 'golongan.tingkat', 'golongan.pangkat', 'golongan.bagian')
+            ->orderBy('golongan.id')
+            ->get();
 
         return view('admin.pegawai.create', compact('direktorats','golongans', 'hargaJabatans'));
     }

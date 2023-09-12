@@ -68,12 +68,22 @@
                         <div class='col-md-12'><br></div>
                         <div class='col-md-12'>
                             <h5>GOLONGAN</h5>
-
+                            <select id="golongan" class="form-control">
+                                <option value=""> -- Pilih Golongan -- </option>
+                                    @foreach ($golongans as $gol)
+                                        <option value='{{ $gol->golongan }}'>{{ $gol->golongan }} - {{ $gol->pangkat }}</option>
+                                    @endforeach
+                            </select>
                         </div>
                         <div class='col-md-12'><br></div>
                         <div class='col-md-12'>
                             <h5>Peringkat Jabatan</h5>
-
+                            <select id="harga_jabatan" class="form-control">
+                                <option value=""> -- Pilih Peringkat -- </option>
+                                    @foreach ($hargaJabatans as $grade)
+                                        <option value='{{ $grade->grade }}'>{{ $grade->grade }} <<-->> {{ $grade->harga }}</option>
+                                    @endforeach
+                            </select>
                         </div>
                         <div class='col-md-12'><br></div>
                         <div class='col-md-12'>
