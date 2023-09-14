@@ -45,7 +45,7 @@ Route::middleware('auth.route')->group(function () {
     Route::resource('pegawai', PegawaiController::class);
     Route::get('/get-satker_p/{direktoratId}', [PegawaiController::class, 'getSatkerByDirektorat']);
     Route::get('/get-ppk/{direktoratId}', [PegawaiController::class, 'getPpkByDirektorat']);
-    Route::post('/pegawai ', [PegawaiController::class, 'filter'])->name('pegawai.filter');
+    Route::post('/Pegawai', [PegawaiController::class, 'filter'])->name('pegawai.filter');
 
     // route HarikerjapuasaController
     Route::resource('harikerjapuasa', HarikerjapuasaController::class);

@@ -14,7 +14,7 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-12 alert">
-                    <a href='{{ route('libur.create') }}'><input type='button' class='well1 btn btn-success' id='tambah' value='Tambah Baru' style='float:right;right:5%;'></a>
+                    <a href=''><input type='button' class='well1 btn btn-success' id='tambah' value='Tambah Baru' style='float:right;right:5%;'></a>
                 </div>
             </div>
         </div>
