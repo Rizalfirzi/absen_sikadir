@@ -36,7 +36,6 @@
                                 value="{{ date('Y-m-d') }}">
                             <input type="hidden" name='akhir' id="akhir" class="form-control"
                                 value="{{ date('Y-m-d') }}">
-                            <input type="hidden" name='add' id="add" class="form-control">
                         </div>
                         <div class='col-md-12'>&nbsp;</div>
                         <div class='col-md-5'>
@@ -70,6 +69,9 @@
                             <h5>UPLOAD FILE (jpg,png,pdf)</h5>
                             <input type="file" name="file" id="file" class="col-md-12 well2 form-control">
                         </div>
+                        <input type="hidden" name="delete" class="col-md-12 well2 form-control" value="0">
+                        <input type="hidden" name="st" class="col-md-12 well2 form-control" value="0">
+                        <input type="hidden" name="anak" class="col-md-12 well2 form-control" value="0">
                         <div class='col-md-12'>&nbsp;</div>
                         <div class="col-md-12">
                             {{-- <input type="hidden" name="id" id="id" value="{{ $id }}"> --}}
@@ -78,8 +80,7 @@
                         <div class="form-group row">
                             <div class="col-md-5">
                                 <br>
-                                <input type="submit" name="submitAdd" id="submitAdd"
-                                    class="col-md-12 well1 btn btn-primary" value="Simpan">
+                                <button type="submit" class="col-md-12 well1 btn btn-primary">simpan</button>
                             </div>
                         </div>
                     </div>

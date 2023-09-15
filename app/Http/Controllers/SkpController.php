@@ -56,56 +56,6 @@ class SkpController extends Controller
         return response()->json($edits);
     }
 
-    public function filter(Request $request)
-    {
-        $currentYear = date('Y');
-        $startYear = 2015;
-        $endYear = $currentYear - 1;
-        $years = [];
-
-        for ($year = $startYear; $year <= $endYear; $year++) {
-            $years[] = $year;
-        }
-        $direktoratId = $request->input('direktorat');
-        $satkerId = $request->input('satker');
-        $tahun = $request->input('tahun');
-
-        $direktorats = DB::table('direktorat')->get(); // Menggunakan \Illuminate\Support\Facades\DB
-        $satkerOptions = [];
-
-        $query = DB::table('skp')
-            ->join('t_pegawai', 'skp.nip', '=', 't_pegawai.nip')
-            ->join('satker', function ($join) {
-                $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')->orOn('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id')); // Menggunakan DB::raw()
-            })
-            ->where('t_pegawai.status', 1);
-
-        if ($tahun) {
-            $query->where('skp.tahun', $tahun);
-        }
-
-        if ($direktoratId) {
-            $satkerOptions = DB::table('satker')
-                ->where('direktorat_id', $direktoratId)
-                ->get();
-            $query->where('t_pegawai.direktorat_id', $direktoratId);
-        }
-
-        if ($satkerId) {
-            $query->where('t_pegawai.satker_id', $satkerId);
-        }
-
-        $query
-            ->orderBy('skp.tahun', 'asc')
-            ->orderBy('t_pegawai.nama', 'asc');
-
-        $results = $query
-            ->select('skp.id', 'skp.nip', 'skp.nilai', 'skp.persentase', 'skp.tahun', 't_pegawai.nama as nama_pegawai', 'satker.nama as nama_satker')
-            ->distinct('t_pegawai.nama','skp.tahun', 'skp.nip')
-            ->get();
-
-        return view('admin.skp.filtered', compact('results', 'direktorats', 'satkerOptions', 'years'));
-    }
     /**
      * Show the form for creating a new resource.
      */

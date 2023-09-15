@@ -26,69 +26,6 @@ class IzinController extends Controller
 
         return response()->json($satkers);
     }
-    public function filter(Request $request)
-    {
-        $satkerId = $request->input('satker');
-        $direktoratId = $request->input('direktorat');
-        $tipePegawai = $request->input('tipe_pegawai');
-        $awal = $request->input('awal');
-        $akhir = $request->input('akhir');
-
-        $direktorats = Direktorat::all();
-
-        $filteredData = DB::table('t_pegawai')
-            ->join('izin', 't_pegawai.nip', '=', 'izin.nik')
-            ->where(function ($query) use ($satkerId, $tipePegawai, $awal, $akhir) {
-                $query
-                    ->where('t_pegawai.satker_id', $satkerId)
-                    ->where('t_pegawai.status', $tipePegawai)
-                    ->whereBetween('izin.tanggal', [$awal, $akhir])
-                    ->where('izin.st', '1')
-                    ->where('izin.deleted', '0');
-            })
-            ->orWhere(function ($query) use ($satkerId, $tipePegawai, $awal, $akhir) {
-                $query
-                    ->where('t_pegawai.ppk_id', $satkerId)
-                    ->where('t_pegawai.status', $tipePegawai)
-                    ->whereBetween('izin.tanggal', [$awal, $akhir])
-                    ->where('izin.st', '1')
-                    ->where('izin.deleted', '0');
-            });
-
-        $satkerName = '';
-
-        if ($satkerId) {
-            if ($satkerId === 'all') {
-                $filteredData->whereNotNull('t_pegawai.satker_id');
-                $satkerName = 'All Satker';
-            } else {
-                $filteredData->where(function ($query) use ($satkerId) {
-                    $query->where('t_pegawai.satker_id', $satkerId);
-                });
-                $satker = DB::table('satker')
-                    ->where('satker_id', $satkerId)
-                    ->first();
-
-                if ($satker) {
-                    $satkerName = $satker->nama;
-                } else {
-                    // Handle jika satker tidak ditemukan
-                    $satkerName = 'Unknown Satker';
-                }
-            }
-        } else {
-            // Tidak ada satker yang dipilih, jadi atur untuk menampilkan semua satker
-            $filteredData->whereNotNull('t_pegawai.satker_id');
-            $satkerName = 'All Satker';
-        }
-
-        $filteredData = $filteredData
-            ->orderBy('t_pegawai.nama', 'asc')
-            ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 't_pegawai.nama')
-            ->get();
-
-        return view('admin.izin.filtered', compact('filteredData', 'direktorats', 'satkerName'));
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -117,6 +54,9 @@ class IzinController extends Controller
             'akhir'     => 'required|date|after_or_equal:awal',
             'jenis'     => 'required',
             'alasan'    => 'required',
+            'delete'    => 'required',
+            'st'    => 'required',
+            'anak'    => 'required',
             'file'      => 'required|file|mimes:png,jpg,pdf'
         ]);
 
@@ -138,10 +78,10 @@ class IzinController extends Controller
                 'alasan'    => $request->input('alasan'),
                 'jenis'     => $request->input('jenis'),
                 'nosurat'   => $file_name, // Gunakan nama file saja, tanpa input
-                'deleted'   => '0',
+                'deleted'   => $request->input('delete'),
                 'extensi'   => $file_ext,
-                'st'        => '0',
-                'anak'      => '0'
+                'st'        => $request->input('st'),
+                'anak'      => $request->input('anak')
             ]);
 
             $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));

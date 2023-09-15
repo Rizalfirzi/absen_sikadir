@@ -26,7 +26,7 @@ class PegawaiController extends Controller
             ->get();
 
         $hargajabatan = DB::table('harga_jabatan')
-            ->select('harga_jabatan.peringkat_jabatan as grade','harga_jabatan.harga_jabatan as harga')
+            ->select('harga_jabatan.peringkat_jabatan as grade', 'harga_jabatan.harga_jabatan as harga')
             ->orderBy('harga_jabatan.peringkat_jabatan')
             ->get();
 
@@ -41,9 +41,9 @@ class PegawaiController extends Controller
     public function getSatkerByDirektorat($direktoratId)
     {
         $satkers = Satker::where('direktorat_id', $direktoratId)
-        ->whereNotNull('prop')
-        ->orderBy('nama', 'asc')
-        ->get();
+            ->whereNotNull('prop')
+            ->orderBy('nama', 'asc')
+            ->get();
 
         return response()->json($satkers);
     }
@@ -57,48 +57,6 @@ class PegawaiController extends Controller
         return response()->json($ppk);
     }
 
-    public function filter(Request $request)
-    {
-        $satkerId = $request->input('satker');
-        $aktif = $request->input('aktif');
-        $direktoratId = $request->input('direktorat');
-
-        $direktorats = DB::table('direktorat')->get();
-
-        $pegawaiQuery = DB::table('t_pegawai')
-            ->select('t_pegawai.*', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
-            ->leftJoin('direktorat', 't_pegawai.direktorat_id', '=', 'direktorat.direktorat_id')
-            ->leftJoin('satker', function ($join) {
-                $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
-            })
-            ->where('t_pegawai.status', 1);
-
-        if ($direktoratId) {
-            $pegawaiQuery->where(function ($query) use ($direktoratId) {
-                $query->where('t_pegawai.direktorat_id', $direktoratId)->orWhere('t_pegawai.ppk_id', '=', DB::raw($direktoratId));
-            });
-        }
-
-        if ($aktif) {
-            $pegawaiQuery->where('t_pegawai.aktif', $aktif);
-        }
-
-        if ($satkerId) {
-            $pegawaiQuery->where(function ($query) use ($satkerId) {
-                $query->where('t_pegawai.satker_id', $satkerId)->orWhere('t_pegawai.ppk_id', '=', DB::raw($satkerId));
-            });
-        }
-
-        $pegawai = $pegawaiQuery
-            ->orderBy('t_pegawai.satker_id')
-            ->orderBy('t_pegawai.nip')
-            ->orderBy('t_pegawai.nama', 'asc')
-            ->get();
-
-        // dd($pegawai);
-        // dd($pegawaiQuery->toSql());
-        return view('admin.pegawai.filtered', compact('pegawai', 'direktorats'));
-    }
     /**
      * Show the form for creating a new resource.
      */
@@ -109,7 +67,7 @@ class PegawaiController extends Controller
         // $hargaJabatans = DB::table('harga_jabatan')->get();
 
         $hargaJabatans = DB::table('harga_jabatan')
-            ->select('harga_jabatan.peringkat_jabatan as grade','harga_jabatan.harga_jabatan as harga')
+            ->select('harga_jabatan.peringkat_jabatan as grade', 'harga_jabatan.harga_jabatan as harga')
             ->orderBy('harga_jabatan.peringkat_jabatan')
             ->get();
 
@@ -118,7 +76,7 @@ class PegawaiController extends Controller
             ->orderBy('golongan.id')
             ->get();
 
-        return view('admin.pegawai.create', compact('direktorats','golongans', 'hargaJabatans'));
+        return view('admin.pegawai.create', compact('direktorats', 'golongans', 'hargaJabatans'));
     }
 
     /**

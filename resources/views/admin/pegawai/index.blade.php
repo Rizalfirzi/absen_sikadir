@@ -130,8 +130,13 @@
                                 <div class="button-container">
                                     <button id="editButton{{ $data->id }}" class="btn btn-sm btn-primary"
                                         onclick="EditPEG({{ $data->id }})">Edit</button>
-                                    <button id="deleteButton{{ $data->id }}" class="btn btn-sm btn-danger"
-                                        onclick="DeletePEG({{ $data->id }})">Delete</button>
+                                    <form action="{{ route('pegawai.destroy', $data->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button id="deleteButton{{ $data->id }}" type="submit"
+                                            class="btn btn-sm btn-danger"
+                                            onclick="DeletePEG({{ $data->id }})"Delete>Delete</button>
+                                    </form>
                                     <button id="simpanButton{{ $data->id }}" onclick="SimpanPEG({{ $data->id }})"
                                         style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
                                     <button id="cancelButton{{ $data->id }}" onclick="CancelPEG({{ $data->id }})"
@@ -197,7 +202,7 @@
                     `<select id="input_golonganRuang${id}" class="form-control well1">
                     <option value=""> ---------- </option>
                         @foreach ($golongan as $gol)
-                            <option value='{{ $gol->golongan }}' ${golonganRuang === '${golonganRuang}' ? 'selected' : ''}>{{ $gol->golongan }}</option>
+                            <option value='{{ $gol->golongan }}' ${golonganRuang === 'golonganRuang${id}' ? 'selected' : ''}>{{ $gol->golongan }}</option>
                         @endforeach
                 </select>
                 `;
@@ -207,9 +212,9 @@
 
                 document.getElementById(`gradeJabatan${id}`).innerHTML =
                     `<select id="input_gradeJabatan${id}">
-                    <option value=""> ---------- </option>
+                    // <option value=""> ---------- </option>
                         @foreach ($hargajabatan as $grade)
-                            <option value='{{ $grade->grade }}' ${gradeJabatan === '${gradeJabatan}' ? 'selected' : ''}>{{ $grade->grade }} <<-->> {{ $grade->harga }}</option>
+                            <option value='{{ $grade->grade }}' ${gradeJabatan === 'gradeJabatan${id}' ? 'selected' : ''}>{{ $grade->grade }} <<-->> {{ $grade->harga }}</option>
                         @endforeach
                 </select>
                 `;

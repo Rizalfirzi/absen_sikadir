@@ -28,65 +28,6 @@ class PermintaanController extends Controller
 
         return response()->json($satkers);
     }
-    public function filter(Request $request)
-    {
-        $satkerId = $request->input('satker');
-        $direktoratId = $request->input('direktorat');
-        $tipePegawai = $request->input('tipe_pegawai');
-
-        $direktorats = Direktorat::all();
-
-        $filteredData = DB::table('t_pegawai')
-            ->join('izin', 't_pegawai.nip', '=', 'izin.nik')
-            ->where(function ($query) use ($satkerId, $tipePegawai) {
-                $query
-                    ->where('t_pegawai.satker_id', $satkerId)
-                    ->where('t_pegawai.status', $tipePegawai)
-                    ->where('izin.st', '0')
-                    ->where('izin.deleted', '0');
-            })
-            ->orWhere(function ($query) use ($satkerId, $tipePegawai) {
-                $query
-                    ->where('t_pegawai.ppk_id', $satkerId)
-                    ->where('t_pegawai.status', $tipePegawai)
-                    ->where('izin.st', '0')
-                    ->where('izin.deleted', '0');
-            });
-
-        $satkerName = '';
-
-        if ($satkerId) {
-            if ($satkerId === 'all') {
-                $filteredData->whereNotNull('t_pegawai.satker_id');
-                $satkerName = 'All Satker';
-            } else {
-                $filteredData->where(function ($query) use ($satkerId) {
-                    $query->where('t_pegawai.satker_id', $satkerId);
-                });
-                $satker = DB::table('satker')
-                    ->where('satker_id', $satkerId)
-                    ->first();
-
-                if ($satker) {
-                    $satkerName = $satker->nama;
-                } else {
-                    // Handle jika satker tidak ditemukan
-                    $satkerName = 'Unknown Satker';
-                }
-            }
-        } else {
-            // Tidak ada satker yang dipilih, jadi atur untuk menampilkan semua satker
-            $filteredData->whereNotNull('t_pegawai.satker_id');
-            $satkerName = 'All Satker';
-        }
-
-        $filtered = $filteredData
-            ->orderBy('t_pegawai.nama', 'asc')
-            ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 't_pegawai.nama')
-            ->get();
-
-        return view('admin.konfirmasi_izin.filtered', compact('filtered', 'direktorats', 'satkerName'));
-    }
 
     public function getKonfirmasiNotification(Request $request)
     {
