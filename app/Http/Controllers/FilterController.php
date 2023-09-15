@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tukin;
 use App\Models\Direktorat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
