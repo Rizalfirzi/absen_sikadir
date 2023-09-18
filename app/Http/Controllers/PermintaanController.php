@@ -55,9 +55,35 @@ class PermintaanController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+{
+    try {
+        // Validasi data yang dikirimkan melalui formulir
+        $validatedData = $request->validate([
+            'nik' => 'required',
+            'nama' => 'required',
+            'tanggal' => 'required',
+            'jenis' => 'required',
+            'nosurat' => 'required',
+            'alasan' => 'required',
+        ]);
+
+        // Simpan data izin baru ke dalam tabel 'izin'
+        Izin::create($validatedData);
+
+        // Redirect ke halaman yang sesuai setelah penyimpanan sukses
+        return redirect()->route('konfirmasi.index')->with('status', [
+            'type' => 'success',
+            'message' => 'Data izin baru berhasil disimpan!'
+        ]);
+    } catch (\Exception $e) {
+        // Tangani kesalahan jika ada, misalnya validasi gagal atau kesalahan database
+        return redirect()->back()->with('status', [
+            'type' => 'error',
+            'message' => 'Terjadi kesalahan saat menyimpan data izin: ' . $e->getMessage()
+        ]);
     }
+}
+
 
     /**
      * Display the specified resource.
