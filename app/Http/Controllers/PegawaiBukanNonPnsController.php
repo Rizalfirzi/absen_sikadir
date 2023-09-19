@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pegawai;
 use App\Models\Direktorat;
 use App\Models\Satker;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PegawaiController extends Controller
+class PegawaiBukanNonPnsController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
+        //
         $direktorats = Direktorat::all();
         $pegawai = DB::table('t_pegawai')
             ->select('t_pegawai.id', 't_pegawai.badgenumber', 't_pegawai.nama', 't_pegawai.nip', 't_pegawai.jabatan', 't_pegawai.gradejabatan', 't_pegawai.golongan_ruang', 't_pegawai.satker', 't_pegawai.unitkerjalama', 't_pegawai.provinsi', 't_pegawai.direktorat_id', 't_pegawai.satker_id', 't_pegawai.ppk_id', 't_pegawai.status', 't_pegawai.aktif', 't_pegawai.badgenumber_baru', 't_pegawai.badge_on', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
@@ -19,7 +22,7 @@ class PegawaiController extends Controller
             ->leftJoin('satker', function ($join) {
                 $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
             })
-            ->where('t_pegawai.status', 1)
+            ->where('t_pegawai.status', 4)
             ->where('t_pegawai.aktif', 'Aktif')
             ->orderBy('t_pegawai.satker_id')
             ->orderBy('t_pegawai.nama', 'asc')
@@ -34,8 +37,8 @@ class PegawaiController extends Controller
             ->select('golongan.golongan', 'golongan.tingkat', 'golongan.pangkat', 'golongan.bagian')
             ->orderBy('golongan.id')
             ->get();
-
-        return view('admin.pegawai.index', compact('direktorats', 'pegawai', 'hargajabatan', 'golongan'));
+        // dd($pegawai);
+        return view('admin.pegawai_ki.index', compact('direktorats', 'pegawai', 'hargajabatan', 'golongan'));
     }
 
     public function getSatker($direktoratId)
@@ -44,7 +47,7 @@ class PegawaiController extends Controller
 
         return response()->json($satkers);
     }
-    
+
     public function getSatkerByDirektorat($direktoratId)
     {
         $satkers = Satker::where('direktorat_id', $direktoratId)
@@ -63,27 +66,14 @@ class PegawaiController extends Controller
 
         return response()->json($ppk);
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+        //
         $direktorats = DB::table('direktorat')->get();
-        // $golongans = DB::table('golongan')->get();
-        // $hargaJabatans = DB::table('harga_jabatan')->get();
-
-        $hargaJabatans = DB::table('harga_jabatan')
-            ->select('harga_jabatan.peringkat_jabatan as grade', 'harga_jabatan.harga_jabatan as harga')
-            ->orderBy('harga_jabatan.peringkat_jabatan')
-            ->get();
-
-        $golongans = DB::table('golongan')
-            ->select('golongan.golongan', 'golongan.tingkat', 'golongan.pangkat', 'golongan.bagian')
-            ->orderBy('golongan.id')
-            ->get();
-
-        return view('admin.pegawai.create', compact('direktorats', 'golongans', 'hargaJabatans'));
+        return view('admin.pegawai_ki.create', compact('direktorats'));
     }
 
     /**
@@ -97,7 +87,7 @@ class PegawaiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pegawai $pegawai)
+    public function show(string $id)
     {
         //
     }
@@ -105,7 +95,7 @@ class PegawaiController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(pegawai $pegawai)
+    public function edit(string $id)
     {
         //
     }
@@ -113,52 +103,15 @@ class PegawaiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        // Validasi data yang dikirimkan dari frontend jika perlu
-        $request->validate([
-            'badgenumber' => 'required',
-            'badgenumber_baru' => 'required',
-            'nama' => 'required',
-            'nip' => 'required',
-            'golonganRuang' => 'required',
-            'jabatan' => 'required',
-            'gradeJabatan' => 'required',
-            'direktorat' => 'required',
-            'satker' => 'required',
-            'ppk' => 'required',
-            'status' => 'required',
-            'aktif' => 'required',
-        ]);
-
-        // Ambil data pegawai berdasarkan ID
-        $pegawai = Pegawai::find($id);
-
-        // Update data pegawai dengan data baru
-        $pegawai->badgenumber = $request->badgenumber;
-        $pegawai->badgenumber_baru = $request->badgenumber_baru;
-        $pegawai->nama = $request->nama;
-        $pegawai->nip = $request->nip;
-        $pegawai->golonganRuang = $request->golonganRuang;
-        $pegawai->jabatan = $request->jabatan;
-        $pegawai->gradeJabatan = $request->gradeJabatan;
-        $pegawai->direktorat = $request->direktorat;
-        $pegawai->satker = $request->satker;
-        $pegawai->ppk = $request->ppk;
-        $pegawai->status = $request->status;
-        $pegawai->aktif = $request->aktif;
-
-        // Simpan perubahan
-        $pegawai->save();
-
-        // Beri respons kepada frontend
-        return response()->json(['message' => 'Data pegawai berhasil diperbarui']);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pegawai $pegawai)
+    public function destroy(string $id)
     {
         //
     }

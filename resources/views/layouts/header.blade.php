@@ -28,6 +28,15 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chosen-js@1.8.7/chosen.min.css">
 
+<link href='https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css' rel='stylesheet' type='text/css'>
+<link href='https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css' rel='stylesheet' type='text/css'>
+
+<style type="text/css">
+.dt-buttons{
+   width: 100%;
+}
+</style>
+
 <style>
     .clearfix {
         width: 100%;
@@ -102,13 +111,6 @@
     .well1.btn {
         margin-left: 10px;
     }
-
-    /* input {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 8px;
-        background-color: #f0f0f0;
-    } */
 
     textarea {
         border: 1px solid #ccc;

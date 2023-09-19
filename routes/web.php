@@ -91,6 +91,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PegawaiNonPns;
 use App\Http\Controllers\SkpController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\TukinController;
@@ -104,6 +105,7 @@ use App\Http\Controllers\HargajabatanController;
 use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
 use App\Http\Controllers\ImportKehadiranController;
+use App\Http\Controllers\PegawaiBukanNonPnsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,13 +126,24 @@ Auth::routes();
 
 // Route yang memerlukan autentikasi di sini
 Route::middleware(['auth', 'web'])->group(function () {
+
     // // route satker
     // Route::get('/get-satker_skp/{direktoratId}', [SatkerController::class, 'getSatker']);
     // Route::get('/get-satker_p/{direktoratId}', [SatkerController::class, 'getSatkerByDirektorat']);
     // Route::get('/get-ppk/{direktoratId}', [SatkerController::class, 'getPpkByDirektorat']);
 
+    // route pegawai bukan non pns/ki
+    Route::resource('karyawan_bukan_non_pns', PegawaiBukanNonPnsController::class);
+    Route::get('/get-satker/{direktoratId}', [PegawaiBukanNonPnsController::class, 'getSatker']);
+
+    // route pegawai non pns
+    Route::resource('karyawan_non_pns', PegawaiNonPns::class);
+    Route::get('/get-satker/{direktoratId}', [PegawaiNonPns::class, 'getSatker']);
+
     // route filter
     Route::post('/pegawai_filter', [FilterController::class, 'filterPegawai'])->name('pegawai.filter');
+    Route::post('/karyawan_bukan_non_pns_filter', [FilterController::class, 'filterPegawaiBukanNonPns'])->name('karyawan_bukan_non_pns.filter');
+    Route::post('/karyawan_non_pns_filter', [FilterController::class, 'filterPegawaiNonPns'])->name('karyawan_non_pns.filter');
     Route::post('/izin_filter', [FilterController::class, 'filterIzin'])->name('izin.filter');
     Route::post('/liburlokal_filter', [FilterController::class, 'filterLiburlokal'])->name('liburlokal.filter');
     Route::post('/konfirmasi_filter', [FilterController::class, 'filterPermintaan'])->name('konfirmasi.filter');

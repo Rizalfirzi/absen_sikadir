@@ -67,7 +67,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('karyawan_non_pns.index') }}" aria-expanded="false">
                         <span>
                             <i class="fa fa-users fa-fw"></i>
                         </span>
@@ -75,13 +75,42 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                    <a class="sidebar-link" href="{{ route('karyawan_bukan_non_pns.index') }}" aria-expanded="false">
                         <span>
                             <i class="fa fa-users fa-fw"></i>
                         </span>
                         <b><span class="hide-menu">DATA KARYAWAN BUKAN <br> NON PNS</span></b>
                     </a>
                 </li>
+                {{-- <li class="sidebar-item">
+                    <a class="sidebar-link" href="javascript:void(0);" data-toggle="collapse" aria-expanded="false">
+                        <span>
+                            <i class="fa fa-users fa-fw"></i>
+                        </span>
+                        <b><span class="hide-menu">DATA KARYAWAN BUKAN <br> NON PNS</span></b>
+                    </a>
+                    <div class="collapse">
+                        <ul class="sub-menu" style="padding-left: 15px">
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="{{ route('karyawan_bukan_non_pns.index') }}" aria-expanded="false">
+                                    <span>
+                                        <i class="fa fa-users fa-fw"></i>
+                                    </span>
+                                    <b><span class="hide-menu">DATA KARYAWAN BUKAN <br> NON PNS AKTIF</span></b>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a class="sidebar-link" href="" aria-expanded="false">
+                                    <span>
+                                        <i class="fa fa-users fa-fw"></i>
+                                    </span>
+                                    <b><span class="hide-menu">DATA KARYAWAN BUKAN <br> NON PNS TIDAK AKTIF</span></b>
+                                </a>
+                            </li>
+                            <!-- Anda dapat menambahkan submenu lainnya di sini -->
+                        </ul>
+                    </div>
+                </li> --}}
                 @if (Auth::user()->roles[0]->name == 'SUPER ADMIN')
                     <hr>
                     <li class="sidebar-item">

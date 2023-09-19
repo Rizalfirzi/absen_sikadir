@@ -38,7 +38,7 @@
     </div>
     </div>
     </div>
-    
+
     <script src="{{ asset('js/chart/code/highcharts.js') }}"></script>
     <script src="{{ asset('js/chart/code/modules/exporting.js') }}"></script>
     <script src="{{ asset('js/chart/code/highchartv11-1-0.js') }}"></script>
@@ -80,6 +80,7 @@
                                 ['Non PNS Pendukung', data.pendukung],
                                 ['Non PNS Substansi', data.substansi],
                                 ['Bukan Non PNS', data.ki],
+                                ['PPPK', data.pppk],
                             ]
                         }]
                     });
