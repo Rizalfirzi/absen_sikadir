@@ -13,12 +13,14 @@ class DashboardController extends Controller
         $pendukungCount = Dashboard::where('status', 2)->count();
         $substansiCount = Dashboard::where('status', 3)->count();
         $kiCount = Dashboard::where('status', 4)->count();
+        $pppkCount = Dashboard::where('status', 66)->count();
 
         $data = [
             'pns' => $pnsCount,
             'pendukung' => $pendukungCount,
             'substansi' => $substansiCount,
             'ki' => $kiCount,
+            'pppk' => $pppkCount,
         ];
 
         return response()->json($data);

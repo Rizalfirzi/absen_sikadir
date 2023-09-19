@@ -13,7 +13,7 @@
             <hr>
             <!-- Kolom lg-12 -->
             <div class="col-md-12">
-                <form action="{{ route('pegawai.store') }}" method="POST">
+                <form action="{{ route('karyawan_bukan_non_pns.store') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-12">
@@ -28,7 +28,7 @@
                         <div class='col-md-12'><br></div>
                         <div class="col-md-12">
                             <h5>NIP</h5>
-                            <input type="text" name="badgenumber_baru" class="form-control">
+                            <input type="text" name="nip" class="form-control">
                         </div>
                         <div class='col-md-12'><br></div>
                         <div class="col-md-12">
@@ -67,27 +67,6 @@
                         </div>
                         <div class='col-md-12'><br></div>
                         <div class='col-md-12'>
-                            <h5>GOLONGAN</h5>
-                            <select id="golongan" class="form-control">
-                                <option value=""> -- Pilih Golongan -- </option>
-                                @foreach ($golongans as $gol)
-                                    <option value='{{ $gol->golongan }}'>{{ $gol->golongan }} - {{ $gol->pangkat }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class='col-md-12'><br></div>
-                        <div class='col-md-12'>
-                            <h5>Peringkat Jabatan</h5>
-                            <select id="harga_jabatan" class="form-control">
-                                <option value=""> -- Pilih Peringkat -- </option>
-                                @foreach ($hargaJabatans as $grade)
-                                    <option value='{{ $grade->grade }}'>{{ $grade->grade }} <<-->> {{ $grade->harga }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class='col-md-12'><br></div>
-                        <div class='col-md-12'>
                             <h5>URAIAN JABATAN</h5>
                             <input type="text" name="jabatan" class="form-control">
                         </div>
@@ -103,14 +82,7 @@
                             <h5>Aktif</h5>
                             <select class="form-control" id="aktif" name="aktif">
                                 <option value="Aktif" selected>Aktif</option>
-                                <option value="Meninggal">Meninggal</option>
-                                <option value="Pemberhentian Dengan Hormat Atas Permintaan Sendiri">Pemberhentian Dengan
-                                    Hormat Atas Permintaan Sendiri</option>
-                                <option value="Pemberhentian Dengan Hormat Tidak Atas Permintaan Sendiri">Pemberhentian
-                                    Dengan Hormat Tidak Atas Permintaan Sendiri</option>
-                                <option value="Pemberhentian Tidak Dengan Hormat">Pemberhentian Tidak Dengan Hormat</option>
-                                <option value="Pensiun">Pensiun</option>
-                                <option value="Mutasi lintas Unor">Mutasi lintas Unor</option>
+                                <option value="Tidak Aktif" selected>Tidak Aktif</option>
                                 <!-- Sisipkan opsi lainnya sesuai kebutuhan -->
                             </select>
                         </div>

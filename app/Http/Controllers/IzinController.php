@@ -48,17 +48,17 @@ class IzinController extends Controller
     public function store(Request $request)
     {
         // Membuat validasi data
-        $request->validate([
-            'nip'       => 'required',
-            'awal'      => 'required|date',
-            'akhir'     => 'required|date|after_or_equal:awal',
-            'jenis'     => 'required',
-            'alasan'    => 'required',
-            'delete'    => 'required',
-            'st'    => 'required',
-            'anak'    => 'required',
-            'file'      => 'required|file|mimes:png,jpg,pdf'
-        ]);
+        // $request->validate([
+        //     'nip'       => 'required',
+        //     'awal'      => 'required|date',
+        //     'akhir'     => 'required|date|after_or_equal:awal',
+        //     'jenis'     => 'required',
+        //     'alasan'    => 'required',
+        //     'delete'    => 'required',
+        //     'st'    => 'required',
+        //     'anak'    => 'required',
+        //     'file'      => 'required|file|mimes:png,jpg,pdf'
+        // ]);
 
         // Validasi file
         $file_name = $request->file('file')->getClientOriginalName(); // Nama file beserta ekstensi

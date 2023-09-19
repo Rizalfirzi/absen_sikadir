@@ -25,26 +25,26 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables JS -->
   {{-- <script src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.min.js"></script> --}}
-  <script src="{{asset('javascript/datatables/jqueryV11.dataTables.min.js')}}"></script>
+  <script src="{{ asset('javascript/datatables/jqueryV11.dataTables.min.js') }}"></script>
   <!-- DataTables Bootstrap 4 JS -->
   {{-- <script src="https://cdn.datatables.net/1.11.2/js/dataTables.bootstrap4.min.js"></script> --}}
-  <script src="{{ asset('javascript/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="{{ asset('javascript/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
   <!-- Tambahkan script JavaScript untuk Bootstrap dan Bootstrap Datepicker -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
 
   <!-- Tambahkan script JavaScript untuk eksport PDF, EXCEL, SVG -->
-  <script src="{{asset('javascript/datatables/jquery-3.7.0.js')}}"></script>
-  <script src="{{asset('javascript/datatables/jquery.dataTables.min.js')}}"></script>
-  <script src="{{asset('javascript/datatables/dataTables.buttons.min.js')}}"></script>
-  <script src="{{asset('javascript/datatables/jszip.min.js')}}"></script>
-  <script src="{{asset('javascript/datatables/pdfmake.min.js')}}"></script>
-  <script src="{{asset('javascript/datatables/vfs_fonts.js')}}"></script>
-  <script src="{{asset('javascript/datatables/buttons.html5.min.js')}}"></script>
-  <script src="{{asset('javascript/datatables/buttons.print.min.js')}}"></script>
+  <script src="{{ asset('javascript/datatables/jquery-3.7.0.js') }}"></script>
+  <script src="{{ asset('javascript/datatables/jquery.dataTables.min.js') }}"></script>
+  <script src="{{ asset('javascript/datatables/dataTables.buttons.min.js') }}"></script>
+  <script src="{{ asset('javascript/datatables/jszip.min.js') }}"></script>
+  <script src="{{ asset('javascript/datatables/pdfmake.min.js') }}"></script>
+  <script src="{{ asset('javascript/datatables/vfs_fonts.js') }}"></script>
+  <script src="{{ asset('javascript/datatables/buttons.html5.min.js') }}"></script>
+  <script src="{{ asset('javascript/datatables/buttons.print.min.js') }}"></script>
 
-  <script src="{{asset('javascript/datatables/jquery.min.js')}}"></script>
+  <script src="{{ asset('javascript/datatables/jquery.min.js') }}"></script>
   {{-- <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
@@ -64,7 +64,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker@3.1.0/daterangepicker.min.js"></script>
 
-<script src="{{asset('assets/select_search/select.jquery.js')}}"></script>
+  <script src="{{ asset('assets/select_search/select.jquery.js') }}"></script>
   <script>
       $(document).ready(function() {
           // Initialize chosen
@@ -144,7 +144,47 @@
       $('.daterangepicker .form-control').css('font-size', ''); // Sesuaikan ukuran font sesuai keinginan
   </script>
 
+  <!-- Datatable JS -->
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+      $(document).ready(function() {
+          // Aktifkan dropdown pada tautan yang memiliki class "sidebar-link" dan atribut "data-toggle" dengan nilai "collapse"
+          $(".sidebar-link[data-toggle='collapse']").on("click", function() {
+              // Toggle collapse pada elemen yang memiliki class "collapse" di bawah tautan yang diklik
+              $(this).next(".collapse").toggleClass("show");
+          });
+      });
+  </script>
+
   <script>
+      $(document).ready(function() {
+          var empDataTable = $('#empTable').DataTable({
+              "scrollX": true,
+              dom: 'Blfrtip',
+              buttons: [{
+                      extend: 'pdf',
+                      exportOptions: {
+                          columns: [0, 1] // Column index which needs to export
+                      }
+                  },
+                  {
+                      extend: 'csv',
+                  },
+                  {
+                      extend: 'excel',
+                  }
+              ]
+
+          });
+      });
       $(document).ready(function() {
           new DataTable('#example', {
               "scrollX": true,

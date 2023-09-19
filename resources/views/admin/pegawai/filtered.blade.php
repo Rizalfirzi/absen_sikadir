@@ -48,6 +48,13 @@
                                 <!-- Sisipkan opsi lainnya sesuai kebutuhan -->
                             </select>
                         </div>
+                        <div class="col-md-2">
+                            <h5>Status</h5>
+                            <select class="form-control well1" id="status" name="status">
+                                <option value="1">PNS</option>
+                                <option value="66">PPPK</option>
+                            </select>
+                        </div>
                         <div class="col-md-3" style="padding-top: 25px">
                             <button class="btn btn-primary">Proses</button>
                             <a href="{{ route('pegawai.create') }}" class="btn btn-success">Tambah Baru</a>
