@@ -13,7 +13,7 @@
             <!-- Kolom lg-12 -->
 
             <div class="col-md-12">
-                <form id="filterForm" action="{{ route('izin.store') }}" method="POST">
+                <form id="filterForm" action="{{ route('izin.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="col-md-5">
