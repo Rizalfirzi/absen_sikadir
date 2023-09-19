@@ -78,7 +78,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($filtered as $key => $item)
+                @foreach ($filteredData as $key => $item)
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $item->nik }}</td>

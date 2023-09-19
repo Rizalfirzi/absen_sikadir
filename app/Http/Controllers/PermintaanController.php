@@ -98,16 +98,45 @@ class PermintaanController extends Controller
      */
     public function edit(Permintaan $permintaan)
     {
-        //
+        // Pastikan izin memiliki st = 0
+        if ($permintaan->st == 0) {
+            return view('admin.konfirmasi_izin.edit', compact('izin'));
+        } else {
+            // Izin sudah dikonfirmasi
+            return redirect()->route('konfirmasi.index')->with('status', [
+                'type' => 'warning',
+                'message' => 'Izin sudah dikonfirmasi sebelumnya.'
+            ]);
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Permintaan $permintaan)
     {
-        //
+        // Validasi form jika diperlukan
+
+        // Pastikan izin memiliki st = 0
+        if ($izin->st == 0) {
+            // Ubah st menjadi 1
+            $izin->update(['st' => 1]);
+
+            // Redirect ke halaman index atau halaman lain yang sesuai
+            return redirect()->route('konfirmasi.index')->with('status', [
+                'type' => 'success',
+                'message' => 'Izin berhasil dikonfirmasi.'
+            ]);
+        } else {
+            // Izin sudah dikonfirmasi
+            return redirect()->route('konfirmasi.index')->with('status', [
+                'type' => 'warning',
+                'message' => 'Izin sudah dikonfirmasi sebelumnya.'
+            ]);
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.

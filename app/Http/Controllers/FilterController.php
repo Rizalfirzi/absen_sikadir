@@ -147,130 +147,64 @@ class FilterController extends Controller
         $liburLokals = $liburLokal->orderBy('kdunitkerja')->get();
 
         // dd($liburLokals);
-        return view('admin.liburlokal.filtered', compact('libur','liburLokals', 'direktorats', 'satkerId'));
+        return view('admin.liburlokal.filtered', compact('liburLokals', 'direktorats', 'satkerId'));
     }
-
-    // public function filterPermintaan(Request $request)
-    // {
-    //     $satkerId = $request->input('satker');
-    //     $direktoratId = $request->input('direktorat');
-    //     $tipePegawai = $request->input('tipe_pegawai');
-
-    //     $direktorats = Direktorat::all();
-
-    //     $filteredData = DB::table('t_pegawai')
-    //         ->join('izin', 't_pegawai.nip', '=', 'izin.nik')
-    //         ->where(function ($query) use ($satkerId, $tipePegawai) {
-    //             $query
-    //                 ->where('t_pegawai.satker_id', $satkerId)
-    //                 ->where('t_pegawai.status', $tipePegawai)
-    //                 ->where('izin.st', '0')
-    //                 ->where('izin.deleted', '0');
-    //         })
-    //         ->orWhere(function ($query) use ($satkerId, $tipePegawai) {
-    //             $query
-    //                 ->where('t_pegawai.ppk_id', $satkerId)
-    //                 ->where('t_pegawai.status', $tipePegawai)
-    //                 ->where('izin.st', '0')
-    //                 ->where('izin.deleted', '0');
-    //         });
-
-    //     $satkerName = '';
-
-    //     if ($satkerId) {
-    //         if ($satkerId === 'all') {
-    //             $filteredData->whereNotNull('t_pegawai.satker_id');
-    //             $satkerName = 'All Satker';
-    //         } else {
-    //             $filteredData->where(function ($query) use ($satkerId) {
-    //                 $query->where('t_pegawai.satker_id', $satkerId);
-    //             });
-    //             $satker = DB::table('satker')
-    //                 ->where('satker_id', $satkerId)
-    //                 ->first();
-
-    //             if ($satker) {
-    //                 $satkerName = $satker->nama;
-    //             } else {
-    //                 // Handle jika satker tidak ditemukan
-    //                 $satkerName = 'Unknown Satker';
-    //             }
-    //         }
-    //     } else {
-    //         // Tidak ada satker yang dipilih, jadi atur untuk menampilkan semua satker
-    //         $filteredData->whereNotNull('t_pegawai.satker_id');
-    //         $satkerName = 'All Satker';
-    //     }
-
-    //     $filtered = $filteredData
-    //         ->orderBy('t_pegawai.nama', 'asc')
-    //         ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 't_pegawai.nama')
-    //         ->get();
-
-    //     return view('admin.konfirmasi_izin.filtered', compact('filtered', 'direktorats', 'satkerName'));
-    // }
 
     public function filterPermintaan(Request $request)
     {
-        $direktoratId = $request->input('direktorat');
         $satkerId = $request->input('satker');
+        $direktoratId = $request->input('direktorat');
         $tipePegawai = $request->input('tipe_pegawai');
 
         $direktorats = Direktorat::all();
 
         $filteredData = DB::table('t_pegawai')
             ->join('izin', 't_pegawai.nip', '=', 'izin.nik')
-            ->where('izin.st', '0')
-            ->where('izin.deleted', '0');
-
-        $satkerName = 'All Satker';
-
-        if ($direktoratId && $satkerId && $tipePegawai) {
-            // Jika ada direktorat, satker, dan tipe_pegawai yang dipilih
-            $filteredData->where(function ($query) use ($direktoratId, $satkerId, $tipePegawai) {
+            ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 't_pegawai.nama')
+            ->where(function ($query) use ($satkerId, $tipePegawai) {
                 $query
-                    ->where('t_pegawai.direktorat_id', $direktoratId)
                     ->where('t_pegawai.satker_id', $satkerId)
-                    ->where('t_pegawai.status', $tipePegawai);
-            });
+                    ->orWhere('t_pegawai.ppk_id', $satkerId)
+                    ->where('t_pegawai.status', $tipePegawai)
+                    ->where('izin.st', '0')
+                    ->where('izin.deleted', '0');
+            })
+            ->orderBy('t_pegawai.nama', 'asc')
+            ->get();
 
-            // Dapatkan nama satker
-            $satker = DB::table('satker')
+        if ($direktoratId) {
+            $satkerOptions = DB::table('satker')
                 ->where('direktorat_id', $direktoratId)
-                ->where('id', $satkerId)
-                ->first();
-
-            if ($satker) {
-                $satkerName = $satker->nama;
-            } else {
-                // Handle jika satker tidak ditemukan
-                $satkerName = 'Unknown Satker';
-            }
-        } elseif ($direktoratId && $satkerId) {
-            // Jika ada direktorat dan satker yang dipilih, tetapi tidak ada tipe_pegawai
-            $filteredData->where(function ($query) use ($direktoratId, $satkerId) {
-                $query
-                    ->where('t_pegawai.direktorat_id', $direktoratId)
-                    ->where('t_pegawai.satker_id', $satkerId);
-            });
-        } elseif ($direktoratId && $tipePegawai) {
-            // Jika ada direktorat dan tipe_pegawai yang dipilih, tetapi tidak ada satker
-            $filteredData->where(function ($query) use ($direktoratId, $tipePegawai) {
-                $query
-                    ->where('t_pegawai.direktorat_id', $direktoratId)
-                    ->where('t_pegawai.status', $tipePegawai);
-            });
-        } elseif ($direktoratId) {
-            // Jika hanya direktorat yang dipilih
+                ->get();
             $filteredData->where('t_pegawai.direktorat_id', $direktoratId);
         }
 
-        $filtered = $filteredData
-            ->orderBy('t_pegawai.nama', 'asc')
-            ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 't_pegawai.nama')
-            ->get();
+        $satkerName = '';
 
-        return view('admin.konfirmasi_izin.filtered', compact('filtered', 'direktorats', 'satkerName'));
+        if ($satkerId) {
+            if ($satkerId === 'all') {
+                $filteredData->whereNotNull('t_pegawai.satker_id');
+                $satkerName = 'All Satker';
+            } else {
+                $filteredData->where('t_pegawai.satker_id', $satkerId);
+                $satker = DB::table('satker')
+                    ->where('satker_id', $satkerId)
+                    ->first();
+
+                if ($satker) {
+                    $satkerName = $satker->nama;
+                } else {
+                    // Handle jika satker tidak ditemukan
+                    $satkerName = 'Unknown Satker';
+                }
+            }
+        } else {
+            // Tidak ada satker yang dipilih, jadi atur untuk menampilkan semua satker
+            $filteredData->whereNotNull('t_pegawai.satker_id');
+            $satkerName = 'All Satker';
+        }
+
+        return view('admin.konfirmasi_izin.filtered', compact('filteredData', 'direktorats', 'satkerName'));
     }
 
     public function filterSkp(Request $request)
