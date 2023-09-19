@@ -145,4 +145,19 @@ class PermintaanController extends Controller
     {
         //
     }
+
+
+    public function delete(Request $request, $nik, $nosurat)
+    {
+        // Hapus data dari tabel 'izin' berdasarkan 'nik' dan 'nosurat'
+        $deleted = DB::table('izin')->where('nik', $nik)->where('nosurat', $nosurat)->delete();
+        return redirect()->route('konfirmasi.index')->with('success', 'Data berhasil dihapus.');
+        // if ($deleted) {
+        //     return "success";
+        // } else {
+        //     return "gagal";
+        //      return redirect()->back()->with('error', 'Gagal menghapus data.');
+        // }
+    }
+
 }

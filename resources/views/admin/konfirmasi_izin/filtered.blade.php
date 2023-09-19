@@ -87,10 +87,28 @@
                         <td>{{ $item->jenis }}</td>
                         <td>{{ $item->nosurat }}</td>
                         <td>{{ $item->alasan }}</td>
-                        <td width='20%' style='text-align:center;'>|
-                            <a href="">konfirmasi</a> |
-                            <a href="">Hapus</a> |
-                            <a href="" target='_blank'>Dokumen</a> |
+                        <td width='20%' style='text-align:center;'>
+                            {{-- <form action="{{ route('konfir.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}" method="post">
+                                @csrf
+                                @method('delete') --}}
+                                <a href="{{ route('konfirmasi.edit', $item->nik) }}"
+                                    class="btn btn-sm btn-outline-success">
+                                    Edit
+                                </a> |
+                                <a href="{{ route('konfirmasi.show', $item->nik) }}"
+                                    class="btn btn-sm btn-outline-warning">
+                                    Show
+                                </a> |
+                                {{-- <a href="{{ route('konfir.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Apakah Anda Yakin?')">Delete</a>                                  --}}
+                            {{-- </form> --}}
+                            <form action="{{ route('konfir.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                            </form>
+
                         </td>
                     </tr>
                 @endforeach
