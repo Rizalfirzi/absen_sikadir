@@ -150,7 +150,6 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::post('/skp_filter', [FilterController::class, 'filterSkp'])->name('skp.filter');
     Route::post('/tukin_filter', [FilterController::class, 'filterTukin'])->name('tukin.filter');
 
-
     // route DashboardController
     Route::get('/home', [DashboardController::class, 'index']);
     Route::get('/chart-data', [DashboardController::class, 'chartData']);

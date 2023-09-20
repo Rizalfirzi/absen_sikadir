@@ -62,7 +62,7 @@ class FilterController extends Controller
             ->get();
         // dd($pegawai);
         // dd($pegawaiQuery->toSql());
-        return view('admin.pegawai.filtered', compact('pegawai', 'direktorats','hargajabatan','golongan'));
+        return view('admin.pegawai.fil tered', compact('pegawai', 'direktorats','hargajabatan','golongan'));
     }
 
     public function filterPegawaiBukanNonPns(Request $request)
