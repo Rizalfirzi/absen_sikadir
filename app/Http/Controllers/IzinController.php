@@ -55,17 +55,16 @@ class IzinController extends Controller
         //     'jenis'     => 'required',
         //     'alasan'    => 'required',
         //     'delete'    => 'required',
-        //     'st'    => 'required',
-        //     'anak'    => 'required',
+        //     'st'        => 'required',
+        //     'anak'      => 'required',
         //     'file'      => 'required|file|mimes:png,jpg,pdf'
         // ]);
 
         // Validasi file
-        $file_name = $request->file('file')->getClientOriginalName(); // Nama file beserta ekstensi
         $file_ext = $request->file('file')->getClientOriginalExtension(); // Ekstensi file
-        $pathInfo = pathinfo($file_name);
-        $haddad_ganteng = $pathInfo['filename'];
-
+        $t = time(); // Nosurat (spesial namafile)
+        $nmFile = $t . '.' . $file_ext;
+        $request->file('file')->storeAs('public/uploaded', $nmFile);
 
         // Validasi untuk tanggal
         $startDate = $request->input('awal');
@@ -80,7 +79,7 @@ class IzinController extends Controller
                 'tanggal'   => $currentDate,
                 'alasan'    => $request->input('alasan'),
                 'jenis'     => $request->input('jenis'),
-                'nosurat'   => $haddad_ganteng, // Gunakan nama file saja, tanpa input
+                'nosurat'   => $t, // Gunakan nama file saja, tanpa input
                 'deleted'   => $request->input('delete'),
                 'extensi'   => $file_ext,
                 'st'        => $request->input('st'),
