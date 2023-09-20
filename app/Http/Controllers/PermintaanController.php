@@ -151,7 +151,7 @@ class PermintaanController extends Controller
     {
         // Hapus data dari tabel 'izin' berdasarkan 'nik' dan 'nosurat'
         $deleted = DB::table('izin')->where('nik', $nik)->where('nosurat', $nosurat)->delete();
-        return redirect()->route('konfirmasi.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('konfirmasi.filter')->with('success', 'Data berhasil dihapus.');
         // if ($deleted) {
         //     return "success";
         // } else {

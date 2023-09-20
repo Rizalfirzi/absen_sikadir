@@ -68,17 +68,27 @@
                     <th>ALASAN</th>
                     <th>ACTION</th>
                 </tr>
+                @php
+                $currentSatker = null;
+            @endphp
+
+            @foreach ($filtered as $key => $item)
+            @if ($currentSatker !== $item->nama_satker)
+
+            @php
+                $currentSatker = $item->nama_satker;
+            @endphp
+
                 <tr>
                     <th colspan='26' class="highlight-cell bg-warning">
                         <i class='fa fa-list fa-fw'></i>
-                        @if ($satkerName)
-                            {{ $satkerName }}
-                        @endif
+                        {{ $currentSatker }}
                     </th>
                 </tr>
+            @endif
             </thead>
             <tbody>
-                @foreach ($filteredData as $key => $item)
+                {{-- @foreach ($filteredData as $key => $item) --}}
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $item->nik }}</td>
