@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Import_kehadiran;
 use Illuminate\Http\Request;
 
@@ -29,7 +28,10 @@ class ImportKehadiranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request->file('file');
+        $fileName = time().rand(1,100).'.'.$file->extension();
+        $file->move(resource_path('views/admin/import_pegawai/files'));
+        return response()->json(['succes'=>$fileName]);
     }
 
     /**

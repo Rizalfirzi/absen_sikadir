@@ -192,4 +192,5 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     // route import pegawai
     Route::resource('import', ImportKehadiranController::class);
+    Route::post('/store', [ImportKehadiranController::class,'store'])->name('import.store');
 });
