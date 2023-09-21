@@ -114,28 +114,20 @@ class PermintaanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Permintaan $permintaan)
+    public function konfirmasi(Request $request, $nik, $nosurat)
     {
-        // Validasi form jika diperlukan
+        // Tambahkan logika validasi dan konfirmasi di sini...
 
-        // Pastikan izin memiliki st = 0
-        if ($izin->st == 0) {
-            // Ubah st menjadi 1
-            $izin->update(['st' => 1]);
+        // Perbarui status (st) izin dengan nosurat yang sama
+        Izin::where('nosurat', $nosurat)->update(['st' => 1]);
 
-            // Redirect ke halaman index atau halaman lain yang sesuai
-            return redirect()->route('konfirmasi.index')->with('status', [
-                'type' => 'success',
-                'message' => 'Izin berhasil dikonfirmasi.'
-            ]);
-        } else {
-            // Izin sudah dikonfirmasi
-            return redirect()->route('konfirmasi.index')->with('status', [
-                'type' => 'warning',
-                'message' => 'Izin sudah dikonfirmasi sebelumnya.'
-            ]);
-        }
+        // Redirect kembali atau ke halaman yang diinginkan
+        return redirect()->route('konfirmasi.index')->with('status', [
+            'type' => 'success',
+            'message' => 'Izin berhasil dikonfirmasi!'
+        ]);
     }
+
 
 
     /**
@@ -146,12 +138,11 @@ class PermintaanController extends Controller
         //
     }
 
-
     public function delete(Request $request, $nik, $nosurat)
     {
         // Hapus data dari tabel 'izin' berdasarkan 'nik' dan 'nosurat'
         $deleted = DB::table('izin')->where('nik', $nik)->where('nosurat', $nosurat)->delete();
-        return redirect()->route('konfirmasi.filter')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('konfirmasi.index')->with('success', 'Data berhasil dihapus.');
         // if ($deleted) {
         //     return "success";
         // } else {

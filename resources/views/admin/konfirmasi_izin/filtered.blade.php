@@ -98,28 +98,31 @@
                         <td>{{ $item->nosurat }}</td>
                         <td>{{ $item->alasan }}</td>
                         <td width='20%' style='text-align:center;'>
-                            {{-- <form action="{{ route('konfir.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}" method="post">
-                                @csrf
-                                @method('delete') --}}
-                                <a href="{{ route('konfirmasi.edit', $item->nik) }}"
-                                    class="btn btn-sm btn-outline-success">
-                                    Edit
-                                </a> |
-                                <a href="{{ route('konfirmasi.show', $item->nik) }}"
-                                    class="btn btn-sm btn-outline-warning">
-                                    Show
-                                </a> |
-                                {{-- <a href="{{ route('konfir.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}"
-                                    class="btn btn-sm btn-outline-danger"
-                                    onclick="return confirm('Apakah Anda Yakin?')">Delete</a>                                  --}}
-                            {{-- </form> --}}
-                            <form action="{{ route('konfir.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}" method="POST">
-                                @csrf
-                                @method('POST')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
-                            </form>
+                            <div class="btn-group" role="group" style="margin-right: 10px;">
+                                <form action="{{ route('konfir.confirm', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Apakah Anda yakin ingin mengkonfirmasi izin ini?')">Konfirmasi</button>
+                                </form>
+                            </div>
 
+                            <div class="btn-group" role="group" style="margin-right: 10px;">
+                                <a href="{{ route('konfirmasi.edit', $item->nik) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                            </div>
+
+                            <div class="btn-group" role="group">
+                                <a href="{{ route('konfirmasi.show', $item->nik) }}" class="btn btn-sm btn-outline-warning">Dokumen</a>
+                            </div>
+
+                            <div class="btn-group" role="group">
+                                <form action="{{ route('konfir.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                </form>
+                            </div>
                         </td>
+
+
                     </tr>
                 @endforeach
             </tbody>
