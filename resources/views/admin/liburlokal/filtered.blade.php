@@ -48,7 +48,7 @@
     <br>
     <hr>
     <div class="container">
-        <table id="" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
+        <table id="example2" class="table table-striped table-bordered" style="width:100%" cellspacing="0">
             <thead>
                 <tr>
                     <th>#</th>
@@ -63,20 +63,20 @@
 
             @foreach ($liburLokals as $lokal)
             @if ($currentSatker !== $lokal->nama_satker)
-            
+
             @php
                 $currentSatker = $lokal->nama_satker;
             @endphp
-            
+
                 <tr>
                     <th colspan='26' class="highlight-cell bg-warning">
-                        <i class='fa fa-list fa-fw'></i>  
+                        <i class='fa fa-list fa-fw'></i>
                         {{ $currentSatker }}
                     </th>
                 </tr>
             @endif
             </thead>
-                       
+
             <tbody>
                 {{-- @foreach ($liburLokals as $libur) --}}
                     <tr>
