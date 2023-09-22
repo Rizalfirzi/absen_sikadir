@@ -182,6 +182,8 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     //route izin
     Route::resource('izin', IzinController::class);
+    Route::get('/izin/{nosurat}', [IzinController::class, 'show'])->name('izin.show');
+    Route::post('/izin/delete/{nik}/{nosurat}', [IzinController::class, 'delete'])->name('izin.delete');
 
     // route konfirmasi
     Route::resource('konfirmasi', PermintaanController::class);

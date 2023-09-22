@@ -209,7 +209,7 @@ class FilterController extends Controller
 
         $filteredData = $filteredData
             ->orderBy('t_pegawai.nama', 'asc')
-            ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 't_pegawai.nama')
+            ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 'izin.extensi','t_pegawai.nama')
             ->get();
 
         return view('admin.izin.filtered', compact('filteredData', 'direktorats', 'satkerName'));

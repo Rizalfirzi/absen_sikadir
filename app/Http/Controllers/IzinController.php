@@ -96,9 +96,12 @@ class IzinController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Izin $izin)
+    public function show($nosurat)
     {
-        //
+        // Menampilkan Document yang di pilih
+        $documentPath = storage_path("app/public/uploaded/$nosurat");
+            return response()->file($documentPath);
+            // dd($documentPath);
     }
 
     /**
@@ -123,5 +126,18 @@ class IzinController extends Controller
     public function destroy(Izin $izin)
     {
         //
+    }
+
+    public function delete(Request $request, $nik, $nosurat)
+    {
+        // Hapus data dari tabel 'izin' berdasarkan 'nik' dan 'nosurat'
+        $deleted = DB::table('izin')->where('nik', $nik)->where('nosurat', $nosurat)->delete();
+        return redirect()->route('izin.index')->with('success', 'Data berhasil dihapus.');
+        // if ($deleted) {
+        //     return "success";
+        // } else {
+        //     return "gagal";
+        //      return redirect()->back()->with('error', 'Gagal menghapus data.');
+        // }
     }
 }
