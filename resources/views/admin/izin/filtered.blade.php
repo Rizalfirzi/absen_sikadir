@@ -23,7 +23,7 @@
                             <input type="text" id="config-demo-izin" class="form-control">
                             <input type="hidden" name="awal" id="awal"
                                 class="fontkecil"value="{{ date('Y-m-d') }}">
-                            <input type="hidden" name="akhir" id="aphpphp artisan servepppkhir"
+                            <input type="hidden" name="akhir" id="akhir"
                                 class="fontkecil"value="{{ date('Y-m-d') }}">
                         </div>
                         <div class="col-md-3">

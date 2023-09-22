@@ -189,6 +189,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
     Route::post('/konfirmasi/delete/{nik}/{nosurat}', [PermintaanController::class, 'delete'])->name('konfir.delete');
     Route::post('/konfirmasi/{nik}/{nosurat}/confirm', [PermintaanController::class, 'konfirmasi'])->name('konfir.confirm');
+    Route::get('/konfirmasi/{nosurat}', [PermintaanController::class, 'show'])->name('konfir.show');
 
 
     // route import pegawai
