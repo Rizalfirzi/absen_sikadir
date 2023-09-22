@@ -56,10 +56,10 @@
                     <hr>
                 </div>
                 <div class="col-lg-12" style='text-align:center;'>
-                    <h5>E-Mail </h5>
-                    <input type='email' name='email' id='email'
-                    class="form-control well1 nostyle @error('email') is-invalid @enderror"value="{{ old('email') }}" required autocomplete="email" autofocus>
-                    @error('email')
+                    <h5>Username</h5>
+                    <input type='text' name='username' id='username'
+                    class="form-control well1 nostyle @error('username') is-invalid @enderror"value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    @error('username')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

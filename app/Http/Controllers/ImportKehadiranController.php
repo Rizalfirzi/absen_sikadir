@@ -3,16 +3,31 @@
 namespace App\Http\Controllers;
 use App\Models\Import_kehadiran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
+
 
 class ImportKehadiranController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        return view('admin.import_pegawai.index');
+        $destinationFolder = scandir(resource_path('views/admin/import_pegawai/files'));
+        $file = $request->file('file');
+
+        $data = [];
+        foreach ($destinationFolder as $row) {
+            if ($row != '.' && $row != '..') {
+                $data[] = [
+                    'name' => explode('.', $row)[0],
+                    'url' => asset('views/admin/import_pegawai/files/' .$row)
+                ];
+            }
+        }
+        return view('admin.import_pegawai.index', compact('data'));
+
     }
 
     /**
