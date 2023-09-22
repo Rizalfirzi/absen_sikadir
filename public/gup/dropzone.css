@@ -13,7 +13,7 @@
   background: rgba(0,0,0,0.02);
   padding: 4rem;
 }
-  .dropzone.dz-cl.ickable { 
+  .dropzone.dz-cl.ickable {
   cursor: pointer;
 }
 .dropzone.dz-clickable .dz-message,
