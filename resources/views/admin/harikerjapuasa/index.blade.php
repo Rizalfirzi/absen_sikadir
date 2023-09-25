@@ -56,14 +56,9 @@
                             Edit
                         </a>
                         <form action="{{ route('harikerjapuasa.destroy', $hkp->id) }}" method="POST" class="d-inline">
-
-                            <center>
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('Apakah Anda Yakin?')">Delete
-                            </button>
-                        </center>
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda Yakin?')">Delete</button>
                         </form>
                     </td>
                 </tr>

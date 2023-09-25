@@ -187,6 +187,8 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     // route konfirmasi
     Route::resource('konfirmasi', PermintaanController::class);
+    Route::get('Konfirmasi_izin/{id}/edit',[PermintaanController::class,'edit_izin'])->name('konfir.edit');
+    Route::post('Konfirmasi_izin/{id}/edit_proses',[PermintaanController::class,'edit_izin_proses'])->name('konfir.edit_proses');
     Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
     Route::post('/konfirmasi/delete/{nik}/{nosurat}', [PermintaanController::class, 'delete'])->name('konfir.delete');

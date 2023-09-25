@@ -295,7 +295,7 @@ class FilterController extends Controller
 
         $filtered = $filteredData
             ->orderBy('t_pegawai.satker_id', 'asc')
-            ->select('izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 'izin.extensi', 't_pegawai.nama', 'satker.nama as nama_satker')
+            ->select('izin.id','izin.nik', 'izin.tanggal', 'izin.jenis', 'izin.nosurat', 'izin.alasan', 'izin.extensi', 't_pegawai.nama', 'satker.nama as nama_satker')
             ->get();
 
         return view('admin.konfirmasi_izin.filtered', compact('filtered', 'direktorats', 'satkerName'));
