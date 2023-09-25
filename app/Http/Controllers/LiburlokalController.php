@@ -54,7 +54,7 @@ class LiburlokalController extends Controller
             ->route('liburlokal.index')
             ->with('status', ['type' => 'success', 'message' => 'Data berhasil ditambahkan!']);
     }
-
+  
     /**
      * Display the specified resource.
      */
