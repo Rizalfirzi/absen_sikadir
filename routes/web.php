@@ -99,6 +99,7 @@ use App\Http\Controllers\FilterController;
 use App\Http\Controllers\SatkerController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ArsipTukinController;
 use App\Http\Controllers\LiburlokalController;
 use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\HargajabatanController;
@@ -194,4 +195,8 @@ Route::middleware(['auth', 'web'])->group(function () {
     // route import pegawai
     Route::resource('import', ImportKehadiranController::class);
     Route::post('/store', [ImportKehadiranController::class, 'store'])->name('import.store');
+
+    // route arsip tukin
+    Route::resource('arsiptukin', ArsipTukinController::class);
+    Route::get('/get-satker/{direktoratId}', [ArsipTukinController::class, 'getSatker']);
 });
