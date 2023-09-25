@@ -88,9 +88,12 @@ class PermintaanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Permintaan $permintaan)
+    public function show($nosurat)
     {
-        //
+        // Menampilkan Document yang di pilih
+        $documentPath = storage_path("app/public/uploaded/$nosurat");
+            return response()->file($documentPath);
+            // dd($documentPath);
     }
 
     /**

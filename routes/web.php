@@ -183,6 +183,8 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     //route izin
     Route::resource('izin', IzinController::class);
+    Route::get('/izin/{nosurat}', [IzinController::class, 'show'])->name('izin.show');
+    Route::post('/izin/delete/{nik}/{nosurat}', [IzinController::class, 'delete'])->name('izin.delete');
 
     // route konfirmasi
     Route::resource('konfirmasi', PermintaanController::class);
@@ -190,6 +192,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
     Route::post('/konfirmasi/delete/{nik}/{nosurat}', [PermintaanController::class, 'delete'])->name('konfir.delete');
     Route::post('/konfirmasi/{nik}/{nosurat}/confirm', [PermintaanController::class, 'konfirmasi'])->name('konfir.confirm');
+    Route::get('/konfirmasi/{nosurat}', [PermintaanController::class, 'show'])->name('konfir.show');
 
 
     // route import pegawai
