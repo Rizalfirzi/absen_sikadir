@@ -18,7 +18,7 @@
                         <form action="{{ route('arsiptukin.filter') }}" method="post" enctype="multipart/form-data">
                             @csrf
                                 <h5>Direktorat</h5>
-                            <select data-placeholder="INPUT DIREKTORAT" name="direktorat" id="direktorat" class="chosen-select well2 col-md-12 form-control" tabindex="2" style="width: 100%">
+                            <select data-placeholder="INPUT DIREKTORAT" name="direktoratArsipTukin" id="direktoratArsipTukin" class="chosen-select well2 col-md-12 form-control" tabindex="2" style="width: 100%">
                                 <option value="">-- Pilih Direktorat --</option>
 
                                 @foreach ($direktorats as $direktorat)

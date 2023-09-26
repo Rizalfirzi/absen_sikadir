@@ -92,6 +92,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PegawaiNonPns;
+use App\Http\Controllers\PegawaiNonPnsTidakAktif;
 use App\Http\Controllers\SkpController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\TukinController;
@@ -140,6 +141,9 @@ Route::middleware(['auth', 'web'])->group(function () {
     // route pegawai non pns
     Route::resource('karyawan_non_pns', PegawaiNonPns::class);
     Route::get('/get-satker/{direktoratId}', [PegawaiNonPns::class, 'getSatker']);
+    // route pegawai non pns tidak aktif
+    Route::resource('karyawan_non_pns_tidak_aktif', PegawaiNonPnsTidakAktif::class);
+    Route::get('/get-satker/{direktoratId}', [PegawaiNonPnsTidakAktif::class, 'getSatker']);
 
     // route filter
     Route::post('/pegawai_filter', [FilterController::class, 'filterPegawai'])->name('pegawai.filter');

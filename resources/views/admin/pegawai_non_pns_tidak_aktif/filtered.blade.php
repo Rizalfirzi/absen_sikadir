@@ -5,7 +5,7 @@
             <!-- Kolom lg-5 -->
             <div class="col-lg-5 d-flex align-items-stretch">
                 <div class="col-lg-10">
-                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI NON PNS (Aktif)<font color='#ff0000'></font>
+                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI NON PNS<font color='#ff0000'></font>
                     </h4>
                 </div>
             </div>
