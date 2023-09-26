@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tukin;
 use App\Models\Direktorat;
+use App\Models\ArsipTukin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -394,5 +395,48 @@ class FilterController extends Controller
             ->get();
 
         return view('admin.rekaptukin.filtered', compact('direktorats', 'years', 'tukinMatangs'));
+    }
+
+    public function filterArsipTukin(Request $request)
+    {
+        $direktoratId = $request->input('direktorat');
+        $selectedTahun = $request->input('tahun');
+
+        $currentYear = date('Y');
+        $startYear = 2020;
+        $years = range($startYear, $currentYear);
+
+        $direktorats = DB::table('direktorat')->get();
+        $arsips = DB::table('arsip')->get();
+
+        $arsipTukinMatangs = DB::table('arsip')
+            ->select('arsip.id', 'arsip.direktorat_id', 'arsip.bulan', 'arsip.tahun', 'arsip.file_dok', 'arsip.jenis', 'direktorat.direktorat as nama_direktorat')
+            ->leftJoin('direktorat', 'arsip.direktorat_id', '=', 'direktorat.direktorat_id');
+
+        if ($direktoratId) {
+            $arsipTukinMatangs->where(function ($query) use ($direktoratId) {
+            $query->where('arsip.direktorat_id', $direktoratId);
+            });
+        }
+
+        if ($selectedTahun) {
+            $arsipTukinMatangs->where('tahun', $selectedTahun);
+        }
+
+
+
+        $arsipTukinMatangs = $arsipTukinMatangs
+        ->orderBy('arsip.direktorat_id')
+        ->orderBy('arsip.id', 'asc')
+        ->get();
+
+        foreach ($arsipTukinMatangs as $arsip) {
+            $bulanAngka = $arsip->bulan;
+            $namaBulan = date('F', mktime(0, 0, 0, $bulanAngka, 1));
+            $arsip->nama_bulan = $namaBulan;
+        }
+        
+        return view('admin.arsiptukin.filtered', compact('direktorats', 'years', 'arsipTukinMatangs'));
+
     }
 }

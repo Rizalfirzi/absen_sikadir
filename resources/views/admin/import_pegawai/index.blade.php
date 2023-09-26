@@ -14,7 +14,7 @@
     </form>
 </div>
 
-<div class="output">
+{{-- <div class="output">
     <div class="container">
         <div class="row">
             @foreach ($data as $index => $row)
@@ -34,7 +34,7 @@
             @endforeach
         </div>
     </div>
-</div>
+</div> --}}
 
 
 

@@ -1,4 +1,4 @@
-<header class="app-header" style="padding-bottom: 4.5%">
+<header class="app-header">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(10, 10, 90);margin-left: -25px;margin-right: -25px">
 
         <ul class="navbar-nav">

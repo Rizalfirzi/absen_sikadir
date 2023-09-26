@@ -106,6 +106,7 @@ use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
 use App\Http\Controllers\ImportKehadiranController;
 use App\Http\Controllers\PegawaiBukanNonPnsController;
+use App\Http\Controllers\ArsipTukinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +150,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::post('/konfirmasi_filter', [FilterController::class, 'filterPermintaan'])->name('konfirmasi.filter');
     Route::post('/skp_filter', [FilterController::class, 'filterSkp'])->name('skp.filter');
     Route::post('/tukin_filter', [FilterController::class, 'filterTukin'])->name('tukin.filter');
+    Route::post('/arsiptukin_filter', [FilterController::class, 'filterArsipTukin'])->name('arsiptukin.filter');
 
     // route DashboardController
     Route::get('/home', [DashboardController::class, 'index']);
@@ -175,6 +177,10 @@ Route::middleware(['auth', 'web'])->group(function () {
     // route TukinController
     Route::resource('tukin', TukinController::class);
     Route::get('/get-satker/{direktoratId}', [TukinController::class, 'getSatker']);
+
+    // route ArsipTukinController
+    Route::resource('arsiptukin', ArsipTukinController::class);
+    Route::get('/get-satker/{direktoratId}', [ArsipTukinController::class, 'getSatker']);
 
     //route hariliburlokal
     Route::resource('liburlokal', LiburlokalController::class);
