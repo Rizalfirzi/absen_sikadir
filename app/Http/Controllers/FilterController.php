@@ -196,7 +196,7 @@ class FilterController extends Controller
             ->get();
         // dd($pegawai);
         // dd($pegawaiQuery->toSql());
-        return view('admin.pegawai_non_pns.filtered', compact('pegawai', 'direktorats'));
+        return view('admin.pegawai_non_pns_tidak_aktif.filtered', compact('pegawai', 'direktorats'));
     }
 
     public function filterIzin(Request $request)
