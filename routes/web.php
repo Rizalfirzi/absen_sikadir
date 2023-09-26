@@ -107,7 +107,6 @@ use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
 use App\Http\Controllers\ImportKehadiranController;
 use App\Http\Controllers\PegawaiBukanNonPnsController;
-use App\Http\Controllers\ArsipTukinController;
 
 /*
 |--------------------------------------------------------------------------
