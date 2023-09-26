@@ -13,7 +13,7 @@
             <!-- Kolom lg-12 -->
 
             <div class="col-md-12">
-                <form id="filterForm" action="{{ route('karyawan_non_pns.filter') }}" method="POST">
+                <form id="filterForm" action="{{ route('karyawan_non_pns_tidak_aktif.filter') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-4">

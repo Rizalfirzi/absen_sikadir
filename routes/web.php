@@ -149,6 +149,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::post('/pegawai_filter', [FilterController::class, 'filterPegawai'])->name('pegawai.filter');
     Route::post('/karyawan_bukan_non_pns_filter', [FilterController::class, 'filterPegawaiBukanNonPns'])->name('karyawan_bukan_non_pns.filter');
     Route::post('/karyawan_non_pns_filter', [FilterController::class, 'filterPegawaiNonPns'])->name('karyawan_non_pns.filter');
+    Route::post('/karyawan_non_pns_tidak_aktif_filter', [FilterController::class, 'filterPegawaiNonPnsTidakAktif'])->name('karyawan_non_pns_tidak_aktif.filter');
     Route::post('/izin_filter', [FilterController::class, 'filterIzin'])->name('izin.filter');
     Route::post('/liburlokal_filter', [FilterController::class, 'filterLiburlokal'])->name('liburlokal.filter');
     Route::post('/konfirmasi_filter', [FilterController::class, 'filterPermintaan'])->name('konfirmasi.filter');
