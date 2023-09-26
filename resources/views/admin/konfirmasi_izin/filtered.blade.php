@@ -69,26 +69,26 @@
                     <th>ACTION</th>
                 </tr>
                 @php
-                $currentSatker = null;
-            @endphp
+                    $currentSatker = null;
+                @endphp
 
-            @foreach ($filtered as $key => $item)
-            @if ($currentSatker !== $item->nama_satker)
+                @foreach ($filtered as $key => $item)
+                @if ($currentSatker !== $item->nama_satker)
 
-            @php
-                $currentSatker = $item->nama_satker;
-            @endphp
+                @php
+                    $currentSatker = $item->nama_satker;
+                @endphp
 
-                <tr>
-                    <th colspan='26' class="highlight-cell bg-warning">
-                        <i class='fa fa-list fa-fw'></i>
-                        {{ $currentSatker }}
-                    </th>
-                </tr>
-            @endif
+                    <tr>
+                        <th colspan='26' class="highlight-cell bg-warning">
+                            <i class='fa fa-list fa-fw'></i>
+                            {{ $currentSatker }}
+                        </th>
+                    </tr>
+                @endif
             </thead>
             <tbody>
-                {{-- @foreach ($filteredData as $key => $item) --}}
+                {{-- @foreach ($filtered as $key => $item) --}}
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $item->nik }}</td>
@@ -106,11 +106,12 @@
                             </div>
 
                             <div class="btn-group" role="group" style="margin-right: 10px;">
-                                <a href="{{ route('konfirmasi.edit', $item->nik) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                                <a href="{{ route('konfir.edit', $item->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
                             </div>
 
                             <div class="btn-group" role="group">
-                                <a href="{{ route('konfirmasi.show', $item->nik) }}" class="btn btn-sm btn-outline-warning">Dokumen</a>
+                                {{-- <a href="{{ route('konfirmasi.show', $item->nik) }}" class="btn btn-sm btn-outline-warning">Dokumen</a> --}}
+                                <a href="{{ route('konfir.show', $item->nosurat.'.'.$item->extensi) }}" class="btn btn-sm btn-outline-warning" target="_blank">Dokumen</a>
                             </div>
 
                             <div class="btn-group" role="group">
@@ -124,6 +125,7 @@
 
 
                     </tr>
+                    {{-- @endif --}}
                 @endforeach
             </tbody>
         </table>

@@ -88,27 +88,65 @@ class PermintaanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Permintaan $permintaan)
+    public function show($nosurat)
     {
-        //
+        // Menampilkan Document yang di pilih
+        $documentPath = storage_path("app/public/uploaded/$nosurat");
+            return response()->file($documentPath);
+            // dd($documentPath);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Permintaan $permintaan)
+    public function edit_izin($id)
     {
-        // Pastikan izin memiliki st = 0
-        if ($permintaan->st == 0) {
-            return view('admin.konfirmasi_izin.edit', compact('izin'));
-        } else {
-            // Izin sudah dikonfirmasi
-            return redirect()->route('konfirmasi.index')->with('status', [
-                'type' => 'warning',
-                'message' => 'Izin sudah dikonfirmasi sebelumnya.'
-            ]);
-        }
+
+        // $izins = DB::table('izin')->where('nik',$nik)->first();
+        // dd($izins);
+        $izins = Izin::findOrFail($id);
+
+        return view('admin.konfirmasi_izin.edit', compact('izins'));
     }
+    public function edit_izin_proses(Request $request, $id)
+    {
+
+        $file_ext = $request->file('file')->getClientOriginalExtension(); // Ekstensi file
+        $t = time(); // Nosurat (spesial namafile)
+        $nmFile = $t . '.' . $file_ext;
+        $request->file('file')->storeAs('public/uploaded', $nmFile);
+
+        // Validasi untuk tanggal
+        $startDate = $request->input('awal');
+        $endDate = $request->input('akhir');
+
+        $currentDate = $startDate;
+
+        $izins = new Izin();
+        $izins->nik = $request->nip;
+        $izins->tanggal = $currentDate;
+        $izins->alasan = $request->alasan;
+        $izins->jenis = $request->jenis;
+        $izins->nosurat = $t;
+        $izins->extensi = $request->file_ext;
+        $izins->st = $request->st;
+        $izins->save();
+        return redirect()->route('konfirmasi.index')->with('success');
+
+
+        // $izins = DB::table('izin')->where('nik',$nik)->update([
+        //     'nik'       => $request->input('nip'),
+        //     'tanggal'   => $currentDate,
+        //     'alasan'    => $request->input('alasan'),
+        //     'jenis'     => $request->input('jenis'),
+        //     'nosurat'   => $t, // Gunakan nama file saja, tanpa input
+        //     'deleted'   => $request->input('delete'),
+        //     'extensi'   => $file_ext,
+        //     'st'        => $request->input('st'),
+        //     'anak'      => $request->input('anak')
+        // ]);
+    }
+
 
 
     /**

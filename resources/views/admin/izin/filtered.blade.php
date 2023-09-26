@@ -23,7 +23,7 @@
                             <input type="text" id="config-demo-izin" class="form-control">
                             <input type="hidden" name="awal" id="awal"
                                 class="fontkecil"value="{{ date('Y-m-d') }}">
-                            <input type="hidden" name="akhir" id="aphpphp artisan servepppkhir"
+                            <input type="hidden" name="akhir" id="akhir"
                                 class="fontkecil"value="{{ date('Y-m-d') }}">
                         </div>
                         <div class="col-md-3">
@@ -95,9 +95,18 @@
                         <td>{{ $item->jenis }}</td>
                         <td>{{ $item->nosurat }}</td>
                         <td>{{ $item->alasan }}</td>
-                        <td width='20%' style='text-align:center;'>|
-                            <a href="">Hapus</a> |
-                            <a href="" target='_blank'>Dokumen</a> |
+                        <td width='20%' style='text-align:center;'>
+                            <div class="btn-group" role="group">
+                                <form action="{{ route('izin.delete', ['nik' => $item->nik, 'nosurat' => $item->nosurat]) }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                </form>
+                            </div>
+                            <div class="btn-group" role="group">
+                                {{-- <a href="{{ route('konfirmasi.show', $item->nik) }}" class="btn btn-sm btn-outline-warning">Dokumen</a> --}}
+                                <a href="{{ route('izin.show', $item->nosurat.'.'.$item->extensi) }}" class="btn btn-sm btn-outline-warning" target="_blank">Dokumen</a>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

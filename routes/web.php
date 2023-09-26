@@ -99,6 +99,7 @@ use App\Http\Controllers\FilterController;
 use App\Http\Controllers\SatkerController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ArsipTukinController;
 use App\Http\Controllers\LiburlokalController;
 use App\Http\Controllers\PermintaanController;
 use App\Http\Controllers\HargajabatanController;
@@ -188,16 +189,25 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     //route izin
     Route::resource('izin', IzinController::class);
+    Route::get('/izin/{nosurat}', [IzinController::class, 'show'])->name('izin.show');
+    Route::post('/izin/delete/{nik}/{nosurat}', [IzinController::class, 'delete'])->name('izin.delete');
 
     // route konfirmasi
     Route::resource('konfirmasi', PermintaanController::class);
+    Route::get('Konfirmasi_izin/{id}/edit',[PermintaanController::class,'edit_izin'])->name('konfir.edit');
+    Route::post('Konfirmasi_izin/{id}/edit_proses',[PermintaanController::class,'edit_izin_proses'])->name('konfir.edit_proses');
     Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
     Route::post('/konfirmasi/delete/{nik}/{nosurat}', [PermintaanController::class, 'delete'])->name('konfir.delete');
     Route::post('/konfirmasi/{nik}/{nosurat}/confirm', [PermintaanController::class, 'konfirmasi'])->name('konfir.confirm');
+    Route::get('/konfirmasi/{nosurat}', [PermintaanController::class, 'show'])->name('konfir.show');
 
 
     // route import pegawai
     Route::resource('import', ImportKehadiranController::class);
     Route::post('/store', [ImportKehadiranController::class, 'store'])->name('import.store');
+
+    // route arsip tukin
+    Route::resource('arsiptukin', ArsipTukinController::class);
+    Route::get('/get-satker/{direktoratId}', [ArsipTukinController::class, 'getSatker']);
 });

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\ArsipTukin;
-use App\Models\Arsip;
 use App\Models\Direktorat;
 use App\Models\Satker;
 use Illuminate\Http\Request;
@@ -114,10 +113,10 @@ class ArsipTukinController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Arsip $Arsip,$id, Request $request)
+    public function destroy(ArsipTukin $arsipTukin ,$id)
     {
-        $data = DB::table('arsip')->where('id', $id)->delete();
+        $data= DB::table('arsip')->where('id',$id);
+        $data->delete();
         return redirect('arsiptukin');
-
     }
 }
