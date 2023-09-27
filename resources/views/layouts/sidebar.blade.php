@@ -100,7 +100,7 @@
                         </span>
                         <b><span class="hide-menu">NON PNS AKTIF</span></b>
                     </a>
-                    <a class="sidedrop" href="{{ route('karyawan_non_pns.index') }}" aria-expanded="false" id="dropdown2">
+                    <a class="sidedrop" href="{{ route('karyawan_non_pns_tidak_aktif.index') }}" aria-expanded="false" id="dropdown2">
                         <span>
                             <i class="fa fa-users fa-fw"></i>
                         </span>

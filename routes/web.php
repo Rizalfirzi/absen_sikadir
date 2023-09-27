@@ -147,6 +147,10 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::resource('karyawan_non_pns', PegawaiNonPns::class);
     Route::get('/get-satker/{direktoratId}', [PegawaiNonPns::class, 'getSatker']);
 
+    // route pegawai non pns tidak aktif
+    Route::resource('karyawan_non_pns_tidak_aktif', PegawaiNonPnsTidakAktif::class);
+    Route::get('/get-satker/{direktoratId}', [PegawaiNonPnsTidakAktif::class, 'getSatker']);
+
     // route filter
     Route::post('/pegawai_filter', [FilterController::class, 'filterPegawai'])->name('pegawai.filter');
     Route::post('/karyawan_bukan_non_pns_filter', [FilterController::class, 'filterPegawaiBukanNonPns'])->name('karyawan_bukan_non_pns.filter');
