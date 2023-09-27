@@ -107,6 +107,7 @@ use App\Http\Controllers\HariliburnasController;
 use App\Http\Controllers\HarikerjapuasaController;
 use App\Http\Controllers\ImportKehadiranController;
 use App\Http\Controllers\PegawaiBukanNonPnsController;
+use App\Http\Controllers\PegawaiBukanNonPnsTidakAktifController;
 
 /*
 |--------------------------------------------------------------------------
@@ -137,19 +138,28 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::resource('karyawan_bukan_non_pns', PegawaiBukanNonPnsController::class);
     Route::get('/get-satker/{direktoratId}', [PegawaiBukanNonPnsController::class, 'getSatker']);
 
+    // route pegawai bukan non pns/ki tidak aktif
+    Route::resource('karyawan_bukan_non_pns_off', PegawaiBukanNonPnsTidakAktifController::class);
+    Route::get('/get-satker/{direktoratId}', [PegawaiBukanNonPnsTidakAktifController::class, 'getSatker']);
+
     // route pegawai non pns
     Route::resource('karyawan_non_pns', PegawaiNonPns::class);
     Route::get('/get-satker/{direktoratId}', [PegawaiNonPns::class, 'getSatker']);
 
+
+
     // route filter
     Route::post('/pegawai_filter', [FilterController::class, 'filterPegawai'])->name('pegawai.filter');
     Route::post('/karyawan_bukan_non_pns_filter', [FilterController::class, 'filterPegawaiBukanNonPns'])->name('karyawan_bukan_non_pns.filter');
+    Route::post('/karyawan_bukan_non_pns_tidak_aktif_filter', [FilterController::class, 'filterPegawaiBukanNonPnsTidakAktif'])->name('karyawan_bukan_non_pns_tidak_aktif.filter');
     Route::post('/karyawan_non_pns_filter', [FilterController::class, 'filterPegawaiNonPns'])->name('karyawan_non_pns.filter');
     Route::post('/izin_filter', [FilterController::class, 'filterIzin'])->name('izin.filter');
     Route::post('/liburlokal_filter', [FilterController::class, 'filterLiburlokal'])->name('liburlokal.filter');
     Route::post('/konfirmasi_filter', [FilterController::class, 'filterPermintaan'])->name('konfirmasi.filter');
     Route::post('/skp_filter', [FilterController::class, 'filterSkp'])->name('skp.filter');
     Route::post('/tukin_filter', [FilterController::class, 'filterTukin'])->name('tukin.filter');
+    Route::post('/arsiptukin_filter', [FilterController::class, 'filterArsipTukin'])->name('arsiptukin.filter');
+
 
     // route DashboardController
     Route::get('/home', [DashboardController::class, 'index']);
@@ -168,7 +178,7 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     // route HargajabatanController
     Route::resource('hargajabatan', HargajabatanController::class);
-
+    
     // route SkpController
     Route::resource('skp', SkpController::class);
     Route::get('/get-satker/{direktoratId}', [SkpController::class, 'getSatker']);
