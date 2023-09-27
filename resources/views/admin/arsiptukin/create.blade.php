@@ -63,7 +63,7 @@
             <input type="file" name="file" id="file" class="form-control">
         </div>
         <div class="col-md-12 mt-4">
-            <input  type="text" name="direktorat_id" value="{{ old('direktorat_id') }}" >
+            <input type="text" name="direktorat_id" value="{{ old('direktorat_id') }}" required>
             <input type="text" name="satker" value="0">
             <button type="submit" name="simpanArsip" id="simpanArsip" class="btn btn-primary mt-4" style="width:100%;">Proses</button>
         </div>

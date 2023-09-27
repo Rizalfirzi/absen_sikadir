@@ -4,8 +4,8 @@
         <div class="row">
             <!-- Kolom lg-5 -->
             <div class="col-lg-5 d-flex align-items-stretch">
-                <div class="col-lg-10">
-                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI NON PNS (Aktif)<font color='#ff0000'></font>
+                <div class="col-lg-12">
+                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI NON PNS (Tidak Aktif)<font color='#ff0000'></font>
                     </h4>
                 </div>
             </div>
@@ -13,7 +13,7 @@
             <!-- Kolom lg-12 -->
 
             <div class="col-md-12">
-                <form id="filterForm" action="{{ route('karyawan_non_pns.filter') }}" method="POST">
+                <form id="filterForm" action="{{ route('karyawan_non_pns_tidak_aktif.filter') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-4">

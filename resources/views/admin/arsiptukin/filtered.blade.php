@@ -16,7 +16,6 @@
                 <div class="row">
                     <div class="col-md-5">
                         <form action="{{ route('arsiptukin.filter') }}">
-                            @csrf
                                 <h5>Direktorat</h5>
                             <select name="direktorat" id="direktorat" class="form-control" style="width: 100%">
                                 <option value="">-- Pilih Direktorat --</option>

@@ -82,6 +82,23 @@
               });
           });
       });
+
+      $(document).ready(function() {
+          // Initialize chosen
+          $('#direktoratArsipTukin').chosen();
+
+          // Trigger the chosen search feature when typing
+          $('#direktoratArsipTukin_chosen .chosen-search input[type="text"]').on('keyup', function() {
+              var searchText = $(this).val();
+              $('#direktoratArsipTukin option').each(function() {
+                  if ($(this).text().toLowerCase().indexOf(searchText.toLowerCase()) === -1) {
+                      $(this).hide();
+                  } else {
+                      $(this).show();
+                  }
+              });
+          });
+      });
   </script>
 
   <script>

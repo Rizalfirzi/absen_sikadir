@@ -106,7 +106,7 @@
                             </div>
 
                             <div class="btn-group" role="group" style="margin-right: 10px;">
-                                <a href="{{ route('konfirmasi.edit', $item->nik) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                                <a href="{{ route('konfir.edit', $item->id) }}" class="btn btn-sm btn-outline-success">Edit</a>
                             </div>
 
                             <div class="btn-group" role="group">

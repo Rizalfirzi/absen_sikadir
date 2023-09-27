@@ -40,7 +40,7 @@
                 </form>
                     <div class="col-md-3">
                         <a href="{{ route('arsiptukin.create') }}">
-                            <button class="btn btn-success btn-md" style="margin-top: 11.5%;">Tambah Baru</button>
+                            <button class="btn btn-success btn-md" style="margin-top: 11.5%; margin-left: 54%">Tambah Baru</button>
                         </a>
                     </div>
                 </div>
@@ -67,11 +67,11 @@
                                 <td class="text-center">{{ $arsip->tahun }}</td>
                                 <td class="text-center"><a href="{{ asset('arsip/' . $arsip->file_dok) }}" target="_blank">Dokumen</a></td>
                                 <td class="text-center">{{ $arsip->jenis }}</td>
-                                <td class="text-center">
-                                    <form method="POST" action="{{ url('/arsiptukin' . '/' . $arsip->id) }}" accept-charset="UTF-8" style="display:inline">
-                                        {{ method_field('DELETE') }}
-                                        {{ csrf_field() }}
-                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete" onclick="return confirm(&quot;Confirm delete?&quot;)">Hapus</button>
+                                <td>
+                                    <form onsubmit="return deleteData('{{ $arsip->id }}')" action="{{ url('arsiptukin/'.$arsip->id) }}" style="display: inline" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

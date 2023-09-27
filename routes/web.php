@@ -92,6 +92,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PegawaiNonPns;
+use App\Http\Controllers\PegawaiNonPnsTidakAktif;
 use App\Http\Controllers\SkpController;
 use App\Http\Controllers\IzinController;
 use App\Http\Controllers\TukinController;
@@ -146,13 +147,12 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::resource('karyawan_non_pns', PegawaiNonPns::class);
     Route::get('/get-satker/{direktoratId}', [PegawaiNonPns::class, 'getSatker']);
 
-
-
     // route filter
     Route::post('/pegawai_filter', [FilterController::class, 'filterPegawai'])->name('pegawai.filter');
     Route::post('/karyawan_bukan_non_pns_filter', [FilterController::class, 'filterPegawaiBukanNonPns'])->name('karyawan_bukan_non_pns.filter');
     Route::post('/karyawan_bukan_non_pns_tidak_aktif_filter', [FilterController::class, 'filterPegawaiBukanNonPnsTidakAktif'])->name('karyawan_bukan_non_pns_tidak_aktif.filter');
     Route::post('/karyawan_non_pns_filter', [FilterController::class, 'filterPegawaiNonPns'])->name('karyawan_non_pns.filter');
+    Route::post('/karyawan_non_pns_tidak_aktif_filter', [FilterController::class, 'filterPegawaiNonPnsTidakAktif'])->name('karyawan_non_pns_tidak_aktif.filter');
     Route::post('/izin_filter', [FilterController::class, 'filterIzin'])->name('izin.filter');
     Route::post('/liburlokal_filter', [FilterController::class, 'filterLiburlokal'])->name('liburlokal.filter');
     Route::post('/konfirmasi_filter', [FilterController::class, 'filterPermintaan'])->name('konfirmasi.filter');
@@ -178,7 +178,7 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     // route HargajabatanController
     Route::resource('hargajabatan', HargajabatanController::class);
-    
+
     // route SkpController
     Route::resource('skp', SkpController::class);
     Route::get('/get-satker/{direktoratId}', [SkpController::class, 'getSatker']);
@@ -186,6 +186,10 @@ Route::middleware(['auth', 'web'])->group(function () {
     // route TukinController
     Route::resource('tukin', TukinController::class);
     Route::get('/get-satker/{direktoratId}', [TukinController::class, 'getSatker']);
+
+    // route ArsipTukinController
+    Route::resource('arsiptukin', ArsipTukinController::class);
+    Route::get('/get-satker/{direktoratId}', [ArsipTukinController::class, 'getSatker']);
 
     //route hariliburlokal
     Route::resource('liburlokal', LiburlokalController::class);
@@ -198,6 +202,8 @@ Route::middleware(['auth', 'web'])->group(function () {
 
     // route konfirmasi
     Route::resource('konfirmasi', PermintaanController::class);
+    Route::get('Konfirmasi_izin/{id}/edit',[PermintaanController::class,'edit_izin'])->name('konfir.edit');
+    Route::post('Konfirmasi_izin/{id}/edit_proses',[PermintaanController::class,'edit_izin_proses'])->name('konfir.edit_proses');
     Route::get('/get-satker/{direktoratId}', [PermintaanController::class, 'getSatker']);
     Route::get('/get-notifications', [PermintaanController::class, 'getKonfirmasiNotification'])->name('get.notifications');
     Route::post('/konfirmasi/delete/{nik}/{nosurat}', [PermintaanController::class, 'delete'])->name('konfir.delete');
