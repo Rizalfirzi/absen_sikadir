@@ -14,6 +14,27 @@
         border: 2px solid white;
         /* Atur ketebalan dan warna stroke di pinggir gambar */
     }
+    .sidedrop {
+        color: white;
+        background-color: rgb(10, 10, 90);
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        font-size: 14px;
+        white-space: wrap;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        line-height: 25px;
+        position: relative;
+        margin: 0px 0px 2px;
+        padding: 10px;
+        border-radius: 7px;
+        gap: 15px;
+        font-weight: 400;
+        display: none;
+    }
+
 </style>
 <aside class="left-sidebar">
     <!-- Sidebar scroll-->
@@ -66,20 +87,44 @@
                         <b><span class="hide-menu">DATA KARYAWAN PNS</span></b>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('karyawan_non_pns.index') }}" aria-expanded="false">
+                <li class="sidebar-item" id="non-pns">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
                             <i class="fa fa-users fa-fw"></i>
                         </span>
                         <b><span class="hide-menu">DATA KARYAWAN NON <br> PNS</span></b>
                     </a>
+                    <a class="sidedrop" href="{{ route('karyawan_non_pns.index') }}" aria-expanded="false" id="dropdown">
+                        <span>
+                            <i class="fa fa-users fa-fw"></i>
+                        </span>
+                        <b><span class="hide-menu">NON PNS AKTIF</span></b>
+                    </a>
+                    <a class="sidedrop" href="{{ route('karyawan_non_pns.index') }}" aria-expanded="false" id="dropdown2">
+                        <span>
+                            <i class="fa fa-users fa-fw"></i>
+                        </span>
+                        <b><span class="hide-menu" >NON PNS TIDAK AKTIF</span></b>
+                    </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="{{ route('karyawan_bukan_non_pns.index') }}" aria-expanded="false">
+                <li class="sidebar-item" id="bukan-non-pns">
+                    <a class="sidebar-link" href="#" aria-expanded="false">
                         <span>
                             <i class="fa fa-users fa-fw"></i>
                         </span>
                         <b><span class="hide-menu">DATA KARYAWAN BUKAN <br> NON PNS</span></b>
+                    </a>
+                    <a class="sidedrop" href="{{ route('karyawan_bukan_non_pns.index') }}" aria-expanded="false" id="dropdown3">
+                        <span>
+                            <i class="fa fa-users fa-fw"></i>
+                        </span>
+                        <b><span class="hide-menu">BUKAN NON PNS AKTIF</span></b>
+                    </a>
+                    <a class="sidedrop" href="{{ route('karyawan_bukan_non_pns.index') }}" aria-expanded="false" id="dropdown4">
+                        <span>
+                            <i class="fa fa-users fa-fw"></i>
+                        </span>
+                        <b><span class="hide-menu" >BUKAN NON PNS TIDAK AKTIF</span></b>
                     </a>
                 </li>
                 {{-- <li class="sidebar-item">
@@ -415,5 +460,53 @@
                     document.getElementById("notification-badge").textContent = data.notif;
                 }
             });
+    });
+
+    // Mendapatkan referensi ke elemen-elemen yang diperlukan
+    const nonPns = document.getElementById("non-pns");
+    const dropdown = document.getElementById("dropdown");
+    const dropdown2 = document.getElementById("dropdown2");
+
+    // Menambahkan event handler onmouseover pada button
+    nonPns.onclick = function() {
+        // Cek apakah dropdown sedang ditampilkan atau tidak
+        if (dropdown.style.display === "block") {
+            // Jika ditampilkan, sembunyikan dropdown
+            dropdown.style.display = "none";
+            dropdown2.style.display = "none";
+        } else {
+            // Jika tidak ditampilkan, tampilkan dropdown
+            dropdown.style.display = "block";
+            dropdown2.style.display = "block";
+        }
+    };
+
+    // Mendapatkan referensi ke elemen-elemen yang diperlukan
+    const bknNonPns = document.getElementById("bukan-non-pns");
+    const dropdown3 = document.getElementById("dropdown3");
+    const dropdown4 = document.getElementById("dropdown4");
+
+    // Menambahkan event handler onmouseover pada button
+    bknNonPns.onclick = function() {
+        // Cek apakah dropdown sedang ditampilkan atau tidak
+        if (dropdown3.style.display === "block") {
+            // Jika ditampilkan, sembunyikan dropdown
+            dropdown3.style.display = "none";
+            dropdown4.style.display = "none";
+
+            bknNonPns.classList.remove("active");
+        } else {
+            // Jika tidak ditampilkan, tampilkan dropdown
+            dropdown3.style.display = "block";
+            dropdown4.style.display = "block";
+
+            bknNonPns.classList.add("active");
+        }
+    };
+
+    // Menambahkan event handler saat dropdown dipilih
+    dropdown.addEventListener("click", function() {
+        // Tambahkan kelas "active" ke elemen nonPns saat dropdown dipilih
+        nonPns.classList.add("active");
     });
 </script>

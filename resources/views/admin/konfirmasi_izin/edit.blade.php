@@ -13,17 +13,18 @@
             <!-- Kolom lg-12 -->
 
             <div class="col-md-12">
-                <form id="filterForm" action="{{ route('konfir.edit_proses', $izins->id) }}" method="POST" enctype="multipart/form-data">
+                <form id="filterForm" action="{{ route('konfir.update', ['nik' => $permintaan->nik, 'nosurat' => $permintaan->nosurat]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PUT')
                     <div class="row">
                         <div class="col-md-5">
                             <h5>NIK</h5>
-                            <input type="text" class="chosen-select well2 col-md-12 form-control" name="nip" value="{{$izins->nik}}" placeholder="Input Nik" readonly>
+                            <input type="text" class="chosen-select well2 col-md-12 form-control" name="nik" id="nik" value="{{ $permintaan->nik }}" placeholder="{{ $permintaan->nik }}" readonly>
                         </div>
                         <div class='col-md-12'></div>
                         <div class="col-md-5">
                             <h5>Tanggal</h5>
-                            <input type="text" id="config-demo" class="form-control" value="{{$izins->tanggal}}">
+                            <input type="text" id="config-demo-izin" class="col-md-12 well1 form-control" readonly>
                             <input type="hidden" name="awal" id="awal" class="form-control" value="{{ date('Y-m-d') }}">
                             <input type="hidden" name="akhir" id="akhir" class="form-control" value="{{ date('Y-m-d') }}">
                         </div>
@@ -52,7 +53,7 @@
                         <div class='col-md-12'>&nbsp;</div>
                         <div class='col-md-5'>
                             <h5>ALASAN</h5>
-                            <textarea name='alasan' id='alasan' class="col-md-12 well2 form-control" rows='5'>{{$izins->alasan}}</textarea>
+                            <textarea name='alasan' id='alasan' class="col-md-12 well2 form-control" rows='5'>{{$permintaan->alasan}}</textarea>
                         </div>
                         <div class='col-md-12'>&nbsp;</div>
                         <div class="col-md-5">

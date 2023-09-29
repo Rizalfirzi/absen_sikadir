@@ -8,6 +8,7 @@ use App\Models\Direktorat;
 use App\Models\Permintaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PermintaanController extends Controller
 {
@@ -99,59 +100,92 @@ class PermintaanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit_izin($id)
+    public function edit($nik, $nosurat)
     {
+        $permintaan = DB::table('izin')->where('nik', $nik)->where('nosurat', $nosurat)->first();
 
-        // $izins = DB::table('izin')->where('nik',$nik)->first();
-        // dd($izins);
-        $izins = Izin::findOrFail($id);
+        return view('admin.konfirmasi_izin.edit', compact('permintaan'));
 
-        return view('admin.konfirmasi_izin.edit', compact('izins'));
+        // // Pastikan izin memiliki st = 0
+        // if ($permintaan->st == 0) {
+        //     return view('admin.konfirmasi_izin.edit', compact('employees'));
+        // } else {
+        //     // Izin sudah dikonfirmasi
+        //     return redirect()->route('konfirmasi.index')->with('status', [
+        //         'type' => 'warning',
+        //         'message' => 'Izin sudah dikonfirmasi sebelumnya.'
+        //     ]);
+        // }
     }
-    public function edit_izin_proses(Request $request, $id)
-    {
-
-        $file_ext = $request->file('file')->getClientOriginalExtension(); // Ekstensi file
-        $t = time(); // Nosurat (spesial namafile)
-        $nmFile = $t . '.' . $file_ext;
-        $request->file('file')->storeAs('public/uploaded', $nmFile);
-
-        // Validasi untuk tanggal
-        $startDate = $request->input('awal');
-        $endDate = $request->input('akhir');
-
-        $currentDate = $startDate;
-
-        $izins = new Izin();
-        $izins->nik = $request->nip;
-        $izins->tanggal = $currentDate;
-        $izins->alasan = $request->alasan;
-        $izins->jenis = $request->jenis;
-        $izins->nosurat = $t;
-        $izins->extensi = $request->file_ext;
-        $izins->st = $request->st;
-        $izins->save();
-        return redirect()->route('konfirmasi.index')->with('success');
-
-
-        // $izins = DB::table('izin')->where('nik',$nik)->update([
-        //     'nik'       => $request->input('nip'),
-        //     'tanggal'   => $currentDate,
-        //     'alasan'    => $request->input('alasan'),
-        //     'jenis'     => $request->input('jenis'),
-        //     'nosurat'   => $t, // Gunakan nama file saja, tanpa input
-        //     'deleted'   => $request->input('delete'),
-        //     'extensi'   => $file_ext,
-        //     'st'        => $request->input('st'),
-        //     'anak'      => $request->input('anak')
-        // ]);
-    }
-
-
 
     /**
      * Update the specified resource in storage.
      */
+    public function update(Request $request, $nik, $nosurat)
+    {
+        $deleteData = DB::table('izin')->where('nik', $nik)->where('nosurat', $nosurat);
+        if($deleteData->delete()){
+            // Validasi file
+            $file_ext = $request->file('file')->getClientOriginalExtension(); // Ekstensi file
+            $t = time(); // Nosurat (spesial namafile)
+            $nmFile = $t . '.' . $file_ext;
+            $request->file('file')->storeAs('public/uploaded', $nmFile);
+
+            // Validasi untuk tanggal
+            $startDate = $request->input('awal');
+            $endDate = $request->input('akhir');
+
+            $currentDate = $startDate;
+
+            // Membuat instance model dengan data yang akan disimpan
+            while ($currentDate <= $endDate) {
+                Izin::where('nosurat', $nosurat)->create([
+                    'nik'       => $request->input('nik'),
+                    'tanggal'   => $currentDate,
+                    'alasan'    => $request->input('alasan'),
+                    'jenis'     => $request->input('jenis'),
+                    'nosurat'   => $t, // Gunakan nama file saja, tanpa input
+                    'deleted'   => $request->input('delete'),
+                    'extensi'   => $file_ext,
+                    'st'        => $request->input('st'),
+                    'anak'      => $request->input('anak')
+                ]);
+
+                    // $izin = Izin::where('nosurat', $permintaan)->first();
+                    // $izin->nik       = $request->input('nik');
+                    // $izin->tanggal   = $currentDate;
+                    // $izin->alasan    = $request->input('alasan');
+                    // $izin->jenis     = $request->input('jenis');
+                    // $izin->nosurat   = $t; // Gunakan nama file saja, tanpa input
+                    // $izin->deleted   = $request->input('delete');
+                    // $izin->extensi   = $file_ext;
+                    // $izin->st        = $request->input('st');
+                    // $izin->anak      = $request->input('anak');
+                    // $izin->save();
+                $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+            }
+
+            // Storage::delete("public/uploaded/$nosurat");
+
+            return redirect()->route('konfirmasi.index');
+        } else {
+            return "Gagal menghapus data.";
+        }
+
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($permintaan)
+    {
+        // $izin = Izin::where('nosurat', $permintaan)->first();
+        // $izin->delete();
+
+        // return redirect()->router('permintaan.update');
+    }
+
     public function konfirmasi(Request $request, $nik, $nosurat)
     {
         // Tambahkan logika validasi dan konfirmasi di sini...
@@ -164,16 +198,6 @@ class PermintaanController extends Controller
             'type' => 'success',
             'message' => 'Izin berhasil dikonfirmasi!'
         ]);
-    }
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Permintaan $permintaan)
-    {
-        //
     }
 
     public function delete(Request $request, $nik, $nosurat)
