@@ -94,18 +94,6 @@
                         </span>
                         <b><span class="hide-menu">DATA KARYAWAN NON <br> PNS</span></b>
                     </a>
-                    <a class="sidedrop" href="{{ route('karyawan_non_pns.index') }}" aria-expanded="false" id="dropdown">
-                        <span>
-                            <i class="fa fa-users fa-fw"></i>
-                        </span>
-                        <b><span class="hide-menu">NON PNS AKTIF</span></b>
-                    </a>
-                    <a class="sidedrop" href="{{ route('karyawan_non_pns.index') }}" aria-expanded="false" id="dropdown2">
-                        <span>
-                            <i class="fa fa-users fa-fw"></i>
-                        </span>
-                        <b><span class="hide-menu" >NON PNS TIDAK AKTIF</span></b>
-                    </a>
                 </li>
                 <li class="sidebar-item" id="bukan-non-pns">
                     <a class="sidebar-link" href="#" aria-expanded="false">
@@ -113,18 +101,6 @@
                             <i class="fa fa-users fa-fw"></i>
                         </span>
                         <b><span class="hide-menu">DATA KARYAWAN BUKAN <br> NON PNS</span></b>
-                    </a>
-                    <a class="sidedrop" href="{{ route('karyawan_bukan_non_pns.index') }}" aria-expanded="false" id="dropdown3">
-                        <span>
-                            <i class="fa fa-users fa-fw"></i>
-                        </span>
-                        <b><span class="hide-menu">BUKAN NON PNS AKTIF</span></b>
-                    </a>
-                    <a class="sidedrop" href="{{ route('karyawan_bukan_non_pns.index') }}" aria-expanded="false" id="dropdown4">
-                        <span>
-                            <i class="fa fa-users fa-fw"></i>
-                        </span>
-                        <b><span class="hide-menu" >BUKAN NON PNS TIDAK AKTIF</span></b>
                     </a>
                 </li>
                 {{-- <li class="sidebar-item">
@@ -426,7 +402,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a class="sidebar-link" href="./icon-tabler.html" aria-expanded="false">
+                        <a class="sidebar-link" href="{{ route('arsiptukin.index') }}" aria-expanded="false">
                             <span>
                                 <i class="fa fa-folder-open-o fa-fw"></i>
                             </span>

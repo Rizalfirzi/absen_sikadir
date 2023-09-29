@@ -104,6 +104,48 @@ class FilterController extends Controller
         return view('admin.pegawai_ki.filtered', compact('pegawai', 'direktorats'));
     }
 
+    public function filterPegawaiBukanNonPnsTidakAktif(Request $request)
+    {
+        $satkerId = $request->input('satker');
+        $status = $request->input('status');
+        $direktoratId = $request->input('direktorat');
+
+        $direktorats = DB::table('direktorat')->get();
+
+        $pegawaiQuery = DB::table('t_pegawai')
+            ->select('t_pegawai.*', 'direktorat.direktorat as nama_direktorat', 'satker.nama as nama_satker')
+            ->leftJoin('direktorat', 't_pegawai.direktorat_id', '=', 'direktorat.direktorat_id')
+            ->leftJoin('satker', function ($join) {
+                $join->on('t_pegawai.satker_id', '=', 'satker.satker_id')->orWhere('t_pegawai.ppk_id', '=', DB::raw('satker.satker_id'));
+            })
+            ->where('t_pegawai.aktif', 'Tidak Aktif');
+
+        if ($direktoratId) {
+            $pegawaiQuery->where(function ($query) use ($direktoratId) {
+                $query->where('t_pegawai.direktorat_id', $direktoratId)->orWhere('t_pegawai.ppk_id', '=', DB::raw($direktoratId));
+            });
+        }
+
+        if ($status) {
+            $pegawaiQuery->where('t_pegawai.status', $status);
+        }
+
+        if ($satkerId) {
+            $pegawaiQuery->where(function ($query) use ($satkerId) {
+                $query->where('t_pegawai.satker_id', $satkerId)->orWhere('t_pegawai.ppk_id', '=', DB::raw($satkerId));
+            });
+        }
+
+        $pegawai = $pegawaiQuery
+            ->orderBy('t_pegawai.satker_id')
+            ->orderBy('t_pegawai.nip')
+            ->orderBy('t_pegawai.nama', 'asc')
+            ->get();
+        // dd($pegawai);
+        // dd($pegawaiQuery->toSql());
+        return view('admin.pegawai_ki_tidak_aktif.filtered', compact('pegawai', 'direktorats'));
+    }
+
     public function filterPegawaiNonPns(Request $request)
     {
         $satkerId = $request->input('satker');

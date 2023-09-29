@@ -15,30 +15,29 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-5">
-                        <form action="{{ route('arsiptukin.filter') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('arsiptukin.filter') }}" method="POST">
                             @csrf
-                                <h5>Direktorat</h5>
-                            <select data-placeholder="INPUT DIREKTORAT" name="direktoratArsipTukin" id="direktoratArsipTukin" class="chosen-select well2 col-md-12 form-control" tabindex="2" style="width: 100%">
-                                <option value="">-- Pilih Direktorat --</option>
-
-                                @foreach ($direktorats as $direktorat)
-                                <option value="{{ $direktorat->direktorat_id }}">{{ $direktorat->direktorat }}</option>
-                                @endforeach
-                            </select>
+                        <h5>Direktorat</h5>
+                        <select name="direktorat" id="direktorat" class="form-control" style="width: 100%">
+                            <option value="">-- Pilih Direktorat --</option>
+                            @foreach ($direktorats as $direktorat)
+                            <option value="{{ $direktorat->direktorat_id }}">{{ $direktorat->direktorat }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                            <div class="col-md-2">
-                                <h5>Tahun</h5>
-                                <select name="tahun" id="tahun" class="well1 col-md-12 form-control">
-                                    <option value="">-- Pilih Tahun --</option>
-                                    @foreach ($years as $year)
-                                    <option value="{{ $year }}">{{ $year }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-info btn-md" type="submit" style="margin-top: 17%">Proses</button>
-                            </div>
-                        </form>
+                    <div class="col-md-2">
+                        <h5>Tahun</h5>
+                        <select name="tahun" id="tahun" class="well1 col-md-12 form-control">
+                            <option value="">-- Pilih Tahun --</option>
+                            @foreach ($years as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-info btn-md" type="submit" style="margin-top: 17%">Proses</button>
+                    </div>
+                </form>
                     <div class="col-md-3">
                         <a href="{{ route('arsiptukin.create') }}">
                             <button class="btn btn-success btn-md" style="margin-top: 11.5%; margin-left: 54%">Tambah Baru</button>

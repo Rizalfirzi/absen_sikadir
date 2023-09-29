@@ -5,7 +5,7 @@
             <!-- Kolom lg-5 -->
             <div class="col-lg-5 d-flex align-items-stretch">
                 <div class="col-lg-10">
-                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI BUKAN NON PNS<font color='#ff0000'></font>
+                    <h4><i class="fa fa-list fa-fw"></i> DATA PEGAWAI BUKAN NON PNS (Tidak Aktif)<font color='#ff0000'></font>
                     </h4>
                 </div>
             </div>
@@ -13,7 +13,7 @@
             <!-- Kolom lg-12 -->
 
             <div class="col-md-12">
-                <form id="filterForm" action="{{ route('karyawan_bukan_non_pns.filter') }}" method="POST">
+                <form id="filterForm" action="{{ route('karyawan_bukan_non_pns_tidak_aktif.filter') }}" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-md-4">
@@ -25,6 +25,8 @@
                                 @endforeach
                             </select>
                         </div>
+
+                     
                         <div class="col-md-4">
                             <h5>Satker / Unit Kerja</h5>
                             <div id="isisatker">
@@ -41,7 +43,7 @@
                         </div>
                         <div class="col-md-3 alert" style="padding-top: 25px">
                             <button class="btn btn-primary">Proses</button>
-                            <a href="{{ route('karyawan_bukan_non_pns.create') }}" class="btn btn-success">Tambah Baru</a>
+                            <a href="{{ route('karyawan_bukan_non_pns_off.create') }}" class="btn btn-success">Tambah Baru</a>
                         </div>
                     </div>
                 </form>
@@ -104,7 +106,6 @@
                                         style="display: none;" class="btn btn-sm btn-primary">Simpan</button>
                                     <button id="cancelButton{{ $data->id }}" onclick="CancelPEG({{ $data->id }})"
                                         style="display: none;" class="btn btn-sm btn-danger">Batal</button>
-                                      
                                 </div>
                             </td>
                         </tr>
